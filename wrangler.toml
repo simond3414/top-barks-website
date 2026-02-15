@@ -1,13 +1,11 @@
 # Cloudflare Pages configuration for Top Barks website
 name = "top-barks-website"
+
+# Pages uses compatibility flags at the top level
 compatibility_date = "2024-02-01"
 compatibility_flags = ["nodejs_compat"]
 
-# Pages projects use assets, not main entry point
-[site]
-bucket = "./dist"
-
-# KV Namespaces
+# KV Namespaces - simplified format
 [[kv_namespaces]]
 binding = "SESSION"
 id = "f506cc6e06674f0a98f48372f19d6651"
@@ -16,15 +14,9 @@ id = "f506cc6e06674f0a98f48372f19d6651"
 binding = "REVIEWS"
 id = "f506cc6e06674f0a98f48372f19d6651"
 
-# Cron Triggers - Daily at 3:00 AM UTC
-[triggers]
-crons = ["0 3 * * *"]
-
+# Public variables (not secrets)
 [vars]
 PLACE_ID = "ChIJicTHUo0xeUgRQTRgWtd797A"
 
-# Environment variables (secrets) - set via Cloudflare dashboard or wrangler secret
-# These should NOT be committed to git:
-# - RESEND_API_KEY
-# - GOOGLE_PLACES_API_KEY  
-# - ADMIN_PASSWORD
+# Note: Secrets (RESEND_API_KEY, GOOGLE_PLACES_API_KEY, ADMIN_PASSWORD) 
+# should be set in Cloudflare Dashboard, not in this file
