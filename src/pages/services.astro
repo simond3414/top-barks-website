@@ -18,19 +18,19 @@ const pageTitle = `Services | ${SITE.title}`;
     </div>
   </section>
 
-  <!-- Services Grid - TODO: Replace with shadcn/ui Card component -->
+  <!-- Services Grid - Logical Journey: Before Puppy → Puppy → Teen → Adult → Advanced -->
   <section class="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8">
     <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-      <!-- Dog Training -->
-      <a href="/services/dog-training" class="group block cursor-pointer rounded-2xl border border-beige-200 bg-white p-8 shadow-sm transition-all hover:-translate-y-1 hover:border-forest-300 hover:shadow-lg dark:border-earth-700 dark:bg-earth-900">
+      <!-- Puppy Pre-Planning -->
+      <a href="/services/puppy-pre-planning" class="group block cursor-pointer rounded-2xl border border-beige-200 bg-white p-8 shadow-sm transition-all hover:-translate-y-1 hover:border-forest-300 hover:shadow-lg dark:border-earth-700 dark:bg-earth-900">
         <div class="flex h-14 w-14 items-center justify-center rounded-full bg-forest-100 dark:bg-forest-900">
           <svg class="h-7 w-7 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
           </svg>
         </div>
-        <h3 class="mt-6 text-xl font-semibold text-forest-700 dark:text-forest-300">Dog Training</h3>
+        <h3 class="mt-6 text-xl font-semibold text-forest-700 dark:text-forest-300">Puppy Pre-Planning</h3>
         <p class="mt-3 text-earth-600 dark:text-earth-400">
-          General obedience and focus training for everyday use. One-to-one sessions tailored to your dog's needs in your own home.
+          Get expert guidance before bringing your puppy home. Breed selection, home preparation, and setting up for success from day one.
         </p>
         <span class="mt-6 inline-flex items-center text-forest-600 group-hover:text-forest-700 dark:text-forest-400">
           Learn more <svg class="ml-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
@@ -53,16 +53,32 @@ const pageTitle = `Services | ${SITE.title}`;
         </span>
       </a>
 
-      <!-- Gundog Training -->
-      <a href="/services/gundog-training" class="group block cursor-pointer rounded-2xl border border-beige-200 bg-white p-8 shadow-sm transition-all hover:-translate-y-1 hover:border-forest-300 hover:shadow-lg dark:border-earth-700 dark:bg-earth-900">
+      <!-- Adolescent Training -->
+      <a href="/services/adolescent-training" class="group block cursor-pointer rounded-2xl border border-beige-200 bg-white p-8 shadow-sm transition-all hover:-translate-y-1 hover:border-forest-300 hover:shadow-lg dark:border-earth-700 dark:bg-earth-900">
         <div class="flex h-14 w-14 items-center justify-center rounded-full bg-forest-100 dark:bg-forest-900">
           <svg class="h-7 w-7 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
           </svg>
         </div>
-        <h3 class="mt-6 text-xl font-semibold text-forest-700 dark:text-forest-300">Gundog Training</h3>
+        <h3 class="mt-6 text-xl font-semibold text-forest-700 dark:text-forest-300">Adolescent Training</h3>
         <p class="mt-3 text-earth-600 dark:text-earth-400">
-          Train your pet to be a gundog. Specialising in helping family pet gundogs and those who want to work their dogs. Competes at open level.
+          Specialist support for dogs aged 8-24 months. Navigate the challenging teenage phase with practical solutions for common adolescent behaviours.
+        </p>
+        <span class="mt-6 inline-flex items-center text-forest-600 group-hover:text-forest-700 dark:text-forest-400">
+          Learn more <svg class="ml-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+        </span>
+      </a>
+
+      <!-- Dog Training -->
+      <a href="/services/dog-training" class="group block cursor-pointer rounded-2xl border border-beige-200 bg-white p-8 shadow-sm transition-all hover:-translate-y-1 hover:border-forest-300 hover:shadow-lg dark:border-earth-700 dark:bg-earth-900">
+        <div class="flex h-14 w-14 items-center justify-center rounded-full bg-forest-100 dark:bg-forest-900">
+          <svg class="h-7 w-7 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        <h3 class="mt-6 text-xl font-semibold text-forest-700 dark:text-forest-300">Dog Training</h3>
+        <p class="mt-3 text-earth-600 dark:text-earth-400">
+          General obedience and focus training for everyday use. One-to-one sessions tailored to your dog's needs in your own home.
         </p>
         <span class="mt-6 inline-flex items-center text-forest-600 group-hover:text-forest-700 dark:text-forest-400">
           Learn more <svg class="ml-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
@@ -79,6 +95,22 @@ const pageTitle = `Services | ${SITE.title}`;
         <h3 class="mt-6 text-xl font-semibold text-forest-700 dark:text-forest-300">Training Walks</h3>
         <p class="mt-3 text-earth-600 dark:text-earth-400">
           Your pup's personal trainer. Professional training walks for puppies under 6 months. An alternative to regular dog walking with expert guidance.
+        </p>
+        <span class="mt-6 inline-flex items-center text-forest-600 group-hover:text-forest-700 dark:text-forest-400">
+          Learn more <svg class="ml-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+        </span>
+      </a>
+
+      <!-- Gundog Training -->
+      <a href="/services/gundog-training" class="group block cursor-pointer rounded-2xl border border-beige-200 bg-white p-8 shadow-sm transition-all hover:-translate-y-1 hover:border-forest-300 hover:shadow-lg dark:border-earth-700 dark:bg-earth-900">
+        <div class="flex h-14 w-14 items-center justify-center rounded-full bg-forest-100 dark:bg-forest-900">
+          <svg class="h-7 w-7 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+        </div>
+        <h3 class="mt-6 text-xl font-semibold text-forest-700 dark:text-forest-300">Gundog Training</h3>
+        <p class="mt-3 text-earth-600 dark:text-earth-400">
+          Train your pet to be a gundog. Specialising in helping family pet gundogs and those who want to work their dogs. Competes at open level.
         </p>
         <span class="mt-6 inline-flex items-center text-forest-600 group-hover:text-forest-700 dark:text-forest-400">
           Learn more <svg class="ml-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
@@ -111,38 +143,6 @@ const pageTitle = `Services | ${SITE.title}`;
         <h3 class="mt-6 text-xl font-semibold text-forest-700 dark:text-forest-300">Show Training</h3>
         <p class="mt-3 text-earth-600 dark:text-earth-400">
           One-to-one ringcraft training with Crufts experience. Group and best in show wins at open and championship show level. Specialises in gundogs.
-        </p>
-        <span class="mt-6 inline-flex items-center text-forest-600 group-hover:text-forest-700 dark:text-forest-400">
-          Learn more <svg class="ml-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
-        </span>
-      </a>
-
-      <!-- Adolescent Training -->
-      <a href="/services/adolescent-training" class="group block cursor-pointer rounded-2xl border border-beige-200 bg-white p-8 shadow-sm transition-all hover:-translate-y-1 hover:border-forest-300 hover:shadow-lg dark:border-earth-700 dark:bg-earth-900">
-        <div class="flex h-14 w-14 items-center justify-center rounded-full bg-forest-100 dark:bg-forest-900">
-          <svg class="h-7 w-7 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-          </svg>
-        </div>
-        <h3 class="mt-6 text-xl font-semibold text-forest-700 dark:text-forest-300">Adolescent Training</h3>
-        <p class="mt-3 text-earth-600 dark:text-earth-400">
-          Specialist support for dogs aged 8-24 months. Navigate the challenging teenage phase with practical solutions for common adolescent behaviours.
-        </p>
-        <span class="mt-6 inline-flex items-center text-forest-600 group-hover:text-forest-700 dark:text-forest-400">
-          Learn more <svg class="ml-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
-        </span>
-      </a>
-
-      <!-- Puppy Pre-Planning -->
-      <a href="/services/puppy-pre-planning" class="group block cursor-pointer rounded-2xl border border-beige-200 bg-white p-8 shadow-sm transition-all hover:-translate-y-1 hover:border-forest-300 hover:shadow-lg dark:border-earth-700 dark:bg-earth-900">
-        <div class="flex h-14 w-14 items-center justify-center rounded-full bg-forest-100 dark:bg-forest-900">
-          <svg class="h-7 w-7 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
-          </svg>
-        </div>
-        <h3 class="mt-6 text-xl font-semibold text-forest-700 dark:text-forest-300">Puppy Pre-Planning</h3>
-        <p class="mt-3 text-earth-600 dark:text-earth-400">
-          Get expert guidance before bringing your puppy home. Breed selection, home preparation, and setting up for success from day one.
         </p>
         <span class="mt-6 inline-flex items-center text-forest-600 group-hover:text-forest-700 dark:text-forest-400">
           Learn more <svg class="ml-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>

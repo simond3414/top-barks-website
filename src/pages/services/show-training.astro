@@ -54,6 +54,14 @@ const pageTitle = `Show Training | ${SITE.title}`;
                 <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
               </svg>
               <p class="text-earth-700 dark:text-earth-300">
+                <strong>Best HPR</strong> in the Gamekeeper classes at Crufts 2024
+              </p>
+            </div>
+            <div class="flex items-start gap-3">
+              <svg class="mt-1 h-6 w-6 flex-shrink-0 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
+              <p class="text-earth-700 dark:text-earth-300">
                 <strong>Top UK Bracco Italiano</strong> 2022
               </p>
             </div>
@@ -75,12 +83,11 @@ const pageTitle = `Show Training | ${SITE.title}`;
           </p>
           
           <div class="mt-6 flex flex-wrap gap-3">
-            <span class="rounded-full bg-forest-100 px-4 py-2 text-sm font-medium text-forest-700 dark:bg-forest-900 dark:text-forest-300">Clumber Spaniels</span>
-            <span class="rounded-full bg-forest-100 px-4 py-2 text-sm font-medium text-forest-700 dark:bg-forest-900 dark:text-forest-300">Field Spaniels</span>
-            <span class="rounded-full bg-forest-100 px-4 py-2 text-sm font-medium text-forest-700 dark:bg-forest-900 dark:text-forest-300">Italian Spinone</span>
-            <span class="rounded-full bg-forest-100 px-4 py-2 text-sm font-medium text-forest-700 dark:bg-forest-900 dark:text-forest-300">Cocker Spaniels</span>
-            <span class="rounded-full bg-forest-100 px-4 py-2 text-sm font-medium text-forest-700 dark:bg-forest-900 dark:text-forest-300">Bracchi Italiani</span>
-            <span class="rounded-full bg-forest-100 px-4 py-2 text-sm font-medium text-forest-700 dark:bg-forest-900 dark:text-forest-300">Crufts Experience</span>
+            <button type="button" class="rounded-full bg-forest-100 px-4 py-2 text-sm font-medium text-forest-700 transition hover:bg-forest-200 dark:bg-forest-900 dark:text-forest-300 dark:hover:bg-forest-800" data-hs-overlay="#hs-modal-clumber">Clumber Spaniels</button>
+            <button type="button" class="rounded-full bg-forest-100 px-4 py-2 text-sm font-medium text-forest-700 transition hover:bg-forest-200 dark:bg-forest-900 dark:text-forest-300 dark:hover:bg-forest-800" data-hs-overlay="#hs-modal-field">Field Spaniels</button>
+            <button type="button" class="rounded-full bg-forest-100 px-4 py-2 text-sm font-medium text-forest-700 transition hover:bg-forest-200 dark:bg-forest-900 dark:text-forest-300 dark:hover:bg-forest-800" data-hs-overlay="#hs-modal-spinone">Italian Spinone</button>
+            <button type="button" class="rounded-full bg-forest-100 px-4 py-2 text-sm font-medium text-forest-700 transition hover:bg-forest-200 dark:bg-forest-900 dark:text-forest-300 dark:hover:bg-forest-800" data-hs-overlay="#hs-modal-cocker">Cocker Spaniels</button>
+            <button type="button" class="rounded-full bg-forest-100 px-4 py-2 text-sm font-medium text-forest-700 transition hover:bg-forest-200 dark:bg-forest-900 dark:text-forest-300 dark:hover:bg-forest-800" data-hs-overlay="#hs-modal-bracco">Bracchi Italiani</button>
           </div>
         </div>
 
@@ -141,4 +148,125 @@ const pageTitle = `Show Training | ${SITE.title}`;
       </div>
     </div>
   </section>
+
+  <!-- Breed Information Modals -->
+  <!-- Clumber Spaniel Modal -->
+  <div id="hs-modal-clumber" class="hs-overlay fixed start-0 top-0 z-[80] hidden h-full w-full overflow-y-auto overflow-x-hidden [--body-scroll:true]">
+    <div class="hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 m-3 mt-0 opacity-0 transition-all ease-out sm:mx-auto sm:w-full sm:max-w-lg">
+      <div class="relative flex flex-col rounded-xl border border-beige-200 bg-white shadow-lg dark:border-earth-700 dark:bg-earth-900">
+        <div class="absolute end-2 top-2">
+          <button type="button" class="inline-flex h-8 w-8 items-center justify-center rounded-full border border-transparent text-earth-500 transition hover:bg-earth-100 hover:text-earth-700 focus:outline-none focus:ring-2 focus:ring-earth-500 dark:text-earth-400 dark:hover:bg-earth-800 dark:hover:text-earth-200" data-hs-overlay="#hs-modal-clumber">
+            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+          </button>
+        </div>
+        <div class="p-6">
+          <img src="https://images.unsplash.com/photo-1601758124096-1fd661873b80?w=600&h=400&fit=crop" alt="Clumber Spaniel" class="mb-4 h-48 w-full rounded-lg object-cover" />
+          <h3 class="text-xl font-bold text-forest-800 dark:text-forest-200">Clumber Spaniel</h3>
+          <p class="mt-2 text-earth-700 dark:text-earth-300">
+            The largest of all flushing spaniels. Dignified, gentle, and heavy-set with a white coat featuring lemon or orange markings. Known for their calm demeanor and steady work in the field.
+          </p>
+          <a href="https://www.thekennelclub.org.uk/search/breeds-a-to-z/breeds/gundog/spaniel-clumber/" target="_blank" class="mt-4 inline-flex items-center text-forest-600 hover:underline dark:text-forest-400">
+            Learn more at The Kennel Club
+            <svg class="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Field Spaniel Modal -->
+  <div id="hs-modal-field" class="hs-overlay fixed start-0 top-0 z-[80] hidden h-full w-full overflow-y-auto overflow-x-hidden [--body-scroll:true]">
+    <div class="hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 m-3 mt-0 opacity-0 transition-all ease-out sm:mx-auto sm:w-full sm:max-w-lg">
+      <div class="relative flex flex-col rounded-xl border border-beige-200 bg-white shadow-lg dark:border-earth-700 dark:bg-earth-900">
+        <div class="absolute end-2 top-2">
+          <button type="button" class="inline-flex h-8 w-8 items-center justify-center rounded-full border border-transparent text-earth-500 transition hover:bg-earth-100 hover:text-earth-700 focus:outline-none focus:ring-2 focus:ring-earth-500 dark:text-earth-400 dark:hover:bg-earth-800 dark:hover:text-earth-200" data-hs-overlay="#hs-modal-field">
+            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+          </button>
+        </div>
+        <div class="p-6">
+          <img src="https://images.unsplash.com/photo-1552053831-71594a27632d?w=600&h=400&fit=crop" alt="Field Spaniel" class="mb-4 h-48 w-full rounded-lg object-cover" />
+          <h3 class="text-xl font-bold text-forest-800 dark:text-forest-200">Field Spaniel</h3>
+          <p class="mt-2 text-earth-700 dark:text-earth-300">
+            A rare, sweet-natured breed similar to the Cocker but larger. Traditionally used for flushing and retrieving game, they have glossy coats and a docile temperament.
+          </p>
+          <a href="https://www.thekennelclub.org.uk/search/breeds-a-to-z/breeds/gundog/spaniel-field/" target="_blank" class="mt-4 inline-flex items-center text-forest-600 hover:underline dark:text-forest-400">
+            Learn more at The Kennel Club
+            <svg class="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Italian Spinone Modal -->
+  <div id="hs-modal-spinone" class="hs-overlay fixed start-0 top-0 z-[80] hidden h-full w-full overflow-y-auto overflow-x-hidden [--body-scroll:true]">
+    <div class="hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 m-3 mt-0 opacity-0 transition-all ease-out sm:mx-auto sm:w-full sm:max-w-lg">
+      <div class="relative flex flex-col rounded-xl border border-beige-200 bg-white shadow-lg dark:border-earth-700 dark:bg-earth-900">
+        <div class="absolute end-2 top-2">
+          <button type="button" class="inline-flex h-8 w-8 items-center justify-center rounded-full border border-transparent text-earth-500 transition hover:bg-earth-100 hover:text-earth-700 focus:outline-none focus:ring-2 focus:ring-earth-500 dark:text-earth-400 dark:hover:bg-earth-800 dark:hover:text-earth-200" data-hs-overlay="#hs-modal-spinone">
+            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+          </button>
+        </div>
+        <div class="p-6">
+          <img src="https://images.unsplash.com/photo-1568572933382-74d440642117?w=600&h=400&fit=crop" alt="Italian Spinone" class="mb-4 h-48 w-full rounded-lg object-cover" />
+          <h3 class="text-xl font-bold text-forest-800 dark:text-forest-200">Italian Spinone</h3>
+          <p class="mt-2 text-earth-700 dark:text-earth-300">
+            An ancient Italian gundog with great stamina. Strong, all-purpose hunter with a distinctive coarse coat and methodical hunting style. Hugely popular in Italy.
+          </p>
+          <a href="https://www.thekennelclub.org.uk/search/breeds-a-to-z/breeds/gundog/italian-spinone/" target="_blank" class="mt-4 inline-flex items-center text-forest-600 hover:underline dark:text-forest-400">
+            Learn more at The Kennel Club
+            <svg class="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cocker Spaniel Modal -->
+  <div id="hs-modal-cocker" class="hs-overlay fixed start-0 top-0 z-[80] hidden h-full w-full overflow-y-auto overflow-x-hidden [--body-scroll:true]">
+    <div class="hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 m-3 mt-0 opacity-0 transition-all ease-out sm:mx-auto sm:w-full sm:max-w-lg">
+      <div class="relative flex flex-col rounded-xl border border-beige-200 bg-white shadow-lg dark:border-earth-700 dark:bg-earth-900">
+        <div class="absolute end-2 top-2">
+          <button type="button" class="inline-flex h-8 w-8 items-center justify-center rounded-full border border-transparent text-earth-500 transition hover:bg-earth-100 hover:text-earth-700 focus:outline-none focus:ring-2 focus:ring-earth-500 dark:text-earth-400 dark:hover:bg-earth-800 dark:hover:text-earth-200" data-hs-overlay="#hs-modal-cocker">
+            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+          </button>
+        </div>
+        <div class="p-6">
+          <img src="https://images.unsplash.com/photo-1596492784531-6e6eb5ea2809?w=600&h=400&fit=crop" alt="Cocker Spaniel" class="mb-4 h-48 w-full rounded-lg object-cover" />
+          <h3 class="text-xl font-bold text-forest-800 dark:text-forest-200">Cocker Spaniel</h3>
+          <p class="mt-2 text-earth-700 dark:text-earth-300">
+            The "merry cocker" - popular family pet and gundog bred originally to hunt woodcock. Known for happy temperament and ever-wagging tail.
+          </p>
+          <a href="https://www.thekennelclub.org.uk/search/breeds-a-to-z/breeds/gundog/spaniel-cocker/" target="_blank" class="mt-4 inline-flex items-center text-forest-600 hover:underline dark:text-forest-400">
+            Learn more at The Kennel Club
+            <svg class="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bracco Italiano Modal -->
+  <div id="hs-modal-bracco" class="hs-overlay fixed start-0 top-0 z-[80] hidden h-full w-full overflow-y-auto overflow-x-hidden [--body-scroll:true]">
+    <div class="hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 m-3 mt-0 opacity-0 transition-all ease-out sm:mx-auto sm:w-full sm:max-w-lg">
+      <div class="relative flex flex-col rounded-xl border border-beige-200 bg-white shadow-lg dark:border-earth-700 dark:bg-earth-900">
+        <div class="absolute end-2 top-2">
+          <button type="button" class="inline-flex h-8 w-8 items-center justify-center rounded-full border border-transparent text-earth-500 transition hover:bg-earth-100 hover:text-earth-700 focus:outline-none focus:ring-2 focus:ring-earth-500 dark:text-earth-400 dark:hover:bg-earth-800 dark:hover:text-earth-200" data-hs-overlay="#hs-modal-bracco">
+            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+          </button>
+        </div>
+        <div class="p-6">
+          <img src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=600&h=400&fit=crop" alt="Bracco Italiano" class="mb-4 h-48 w-full rounded-lg object-cover" />
+          <h3 class="text-xl font-bold text-forest-800 dark:text-forest-200">Bracco Italiano</h3>
+          <p class="mt-2 text-earth-700 dark:text-earth-300">
+            Ancient Italian pointer breed. Harmoniously built with endurance and power. Gentle demeanor with enthusiastic hunting spirit and a distinctive trotting gait.
+          </p>
+          <a href="https://www.thekennelclub.org.uk/search/breeds-a-to-z/breeds/gundog/bracco-italiano/" target="_blank" class="mt-4 inline-flex items-center text-forest-600 hover:underline dark:text-forest-400">
+            Learn more at The Kennel Club
+            <svg class="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
 </MainLayout>
