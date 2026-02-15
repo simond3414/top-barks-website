@@ -34,14 +34,33 @@ function verifyAdminAuth(request: Request): boolean {
   return session === 'authenticated';
 }
 
+// Helper function to merge and deduplicate reviews
+function mergeAndDeduplicate(existing: Review[], fresh: Review[]): Review[] {
+  const allReviews = [...existing, ...fresh];
+  const seen = new Map<string, Review>();
+  
+  allReviews.forEach(review => {
+    // Create unique key: author + first 100 chars of text + date (YYYY-MM-DD)
+    const key = `${review.author}-${review.text.substring(0, 100)}-${review.date.substring(0, 10)}`;
+    // If same key exists, keep the one with newer timestamp in the ID
+    if (!seen.has(key)) {
+      seen.set(key, review);
+    }
+  });
+  
+  // Sort by date (newest first)
+  return Array.from(seen.values())
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+}
+
 // Fetch Google Reviews via Places API (New)
-async function fetchGoogleReviews(env: any): Promise<Review[]> {
+async function fetchGoogleReviews(env: any, existingReviews: Review[] = []): Promise<Review[]> {
   const apiKey = env.GOOGLE_PLACES_API_KEY;
   const placeId = env.PLACE_ID || 'ChIJicTHUo0xeUgRQTRgWtd797A';
   
   if (!apiKey || apiKey === 'your_google_places_api_key_here') {
     console.error('Google Places API key not configured');
-    return [];
+    return existingReviews;
   }
   
   try {
@@ -59,28 +78,31 @@ async function fetchGoogleReviews(env: any): Promise<Review[]> {
     
     if (!response.ok) {
       console.error('Google Places API error:', response.status, await response.text());
-      return [];
+      return existingReviews;
     }
     
     const data = await response.json();
     
     if (!data.reviews || !Array.isArray(data.reviews)) {
-      return [];
+      return existingReviews;
     }
     
-    return data.reviews.map((review: any, index: number) => ({
+    const freshReviews = data.reviews.map((review: any, index: number) => ({
       id: `google_${index}_${Date.now()}`,
       source: 'google' as const,
       author: review.authorAttribution?.displayName || 'Anonymous',
       rating: review.rating || 5,
       text: review.text?.text || review.originalText?.text || '',
       date: review.publishTime || new Date().toISOString(),
-      url: `https://g.page/r/${placeId}/review`
-    })).slice(0, 20); // Keep latest 20
+      url: `https://www.google.com/maps/place/?q=place_id:${placeId}`
+    }));
+    
+    // Merge with existing and deduplicate
+    return mergeAndDeduplicate(existingReviews, freshReviews);
     
   } catch (error) {
     console.error('Error fetching Google reviews:', error);
-    return [];
+    return existingReviews;
   }
 }
 
@@ -160,8 +182,8 @@ export const POST: APIRoute = async ({ request, locals }) => {
     };
     
     if (action === 'refresh_google') {
-      // Fetch fresh Google reviews
-      const googleReviews = await fetchGoogleReviews(env);
+      // Fetch fresh Google reviews, merging with existing ones
+      const googleReviews = await fetchGoogleReviews(env, data.googleReviews);
       
       data.googleReviews = googleReviews;
       data.lastUpdated = new Date().toISOString();
@@ -172,7 +194,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
       return new Response(
         JSON.stringify({ 
           success: true, 
-          message: `Refreshed ${googleReviews.length} Google reviews`,
+          message: `Accumulated ${googleReviews.length} unique Google reviews`,
           count: googleReviews.length,
           lastUpdated: data.lastUpdated
         }),

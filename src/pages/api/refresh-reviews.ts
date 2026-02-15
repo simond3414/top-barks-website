@@ -7,13 +7,7 @@ export const GET: APIRoute = async ({ locals }) => {
   try {
     const { env } = locals.runtime;
     
-    // Check if this is a cron trigger or manual request
-    // For manual refresh, use POST to /api/reviews with action: 'refresh_google'
-    
-    // Fetch Google reviews
-    const googleReviews = await fetchGoogleReviews(env);
-    
-    // Get existing data to preserve Facebook reviews
+    // Get existing data first to preserve existing reviews
     const cached = await env.REVIEWS?.get('reviews_data');
     const data = cached ? JSON.parse(cached) : {
       lastUpdated: new Date().toISOString(),
@@ -21,7 +15,10 @@ export const GET: APIRoute = async ({ locals }) => {
       facebookReviews: []
     };
     
-    // Update only Google reviews, preserve Facebook
+    // Fetch Google reviews, merging with existing ones
+    const googleReviews = await fetchGoogleReviews(env, data.googleReviews || []);
+    
+    // Update Google reviews (accumulated), preserve Facebook
     data.googleReviews = googleReviews;
     data.lastUpdated = new Date().toISOString();
     
@@ -31,7 +28,7 @@ export const GET: APIRoute = async ({ locals }) => {
     return new Response(
       JSON.stringify({
         success: true,
-        message: `Scheduled refresh: Updated ${googleReviews.length} Google reviews`,
+        message: `Scheduled refresh: Accumulated ${googleReviews.length} unique Google reviews`,
         count: googleReviews.length,
         lastUpdated: data.lastUpdated
       }),
@@ -67,14 +64,32 @@ export const POST: APIRoute = async ({ locals, request }) => {
   return GET({ locals, request, params: {}, url: new URL(request.url) } as any);
 };
 
+// Helper function to merge and deduplicate reviews
+function mergeAndDeduplicate(existing: any[], fresh: any[]): any[] {
+  const allReviews = [...existing, ...fresh];
+  const seen = new Map<string, any>();
+  
+  allReviews.forEach(review => {
+    // Create unique key: author + first 100 chars of text + date (YYYY-MM-DD)
+    const key = `${review.author}-${review.text.substring(0, 100)}-${review.date.substring(0, 10)}`;
+    if (!seen.has(key)) {
+      seen.set(key, review);
+    }
+  });
+  
+  // Sort by date (newest first)
+  return Array.from(seen.values())
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+}
+
 // Fetch Google Reviews via Places API (New)
-async function fetchGoogleReviews(env: any) {
+async function fetchGoogleReviews(env: any, existingReviews: any[] = []) {
   const apiKey = env.GOOGLE_PLACES_API_KEY;
   const placeId = env.PLACE_ID || 'ChIJicTHUo0xeUgRQTRgWtd797A';
   
   if (!apiKey || apiKey === 'your_google_places_api_key_here') {
     console.error('Google Places API key not configured');
-    return [];
+    return existingReviews;
   }
   
   try {
@@ -90,27 +105,30 @@ async function fetchGoogleReviews(env: any) {
     });
     
     if (!response.ok) {
-      return [];
+      return existingReviews;
     }
     
     const data = await response.json();
     
     if (!data.reviews || !Array.isArray(data.reviews)) {
-      return [];
+      return existingReviews;
     }
     
-    return data.reviews.map((review: any, index: number) => ({
+    const freshReviews = data.reviews.map((review: any, index: number) => ({
       id: `google_${index}_${Date.now()}`,
       source: 'google' as const,
       author: review.authorAttribution?.displayName || 'Anonymous',
       rating: review.rating || 5,
       text: review.text?.text || review.originalText?.text || '',
       date: review.publishTime || new Date().toISOString(),
-      url: `https://g.page/r/${placeId}/review`
+      url: `https://www.google.com/maps/place/?q=place_id:${placeId}`
     }));
+    
+    // Merge with existing and deduplicate
+    return mergeAndDeduplicate(existingReviews, freshReviews);
     
   } catch (error) {
     console.error('Error fetching Google reviews:', error);
-    return [];
+    return existingReviews;
   }
 }
