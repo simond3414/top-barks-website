@@ -145,21 +145,46 @@ export const prerender = false;
     }
     
     if (loginForm && passwordInput && errorDiv) {
-      loginForm.addEventListener('submit', function(e) {
+      loginForm.addEventListener('submit', async function(e) {
         e.preventDefault();
         
         const password = passwordInput.value;
+        const submitBtn = loginForm.querySelector('button[type="submit"]') as HTMLButtonElement | null;
         
-        if (password === 'Mollymoo1') {
-          document.cookie = 'admin_session=authenticated; path=/; max-age=86400; SameSite=Strict';
-          window.location.href = '/admin/dashboard';
-        } else {
-          errorDiv.textContent = 'Incorrect password';
-          errorDiv.classList.add('show');
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.textContent = 'Checking...';
+        }
+        
+        try {
+          // Validate password server-side
+          const response = await fetch('/api/auth', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ password })
+          });
           
-          setTimeout(function() {
-            errorDiv.classList.remove('show');
-          }, 3000);
+          const data = await response.json();
+          
+          if (data.success) {
+            document.cookie = 'admin_session=authenticated; path=/; max-age=86400; SameSite=Strict';
+            window.location.href = '/admin/dashboard';
+          } else {
+            errorDiv.textContent = 'Incorrect password';
+            errorDiv.classList.add('show');
+            
+            setTimeout(function() {
+              errorDiv.classList.remove('show');
+            }, 3000);
+          }
+        } catch (error) {
+          errorDiv.textContent = 'Error checking password. Please try again.';
+          errorDiv.classList.add('show');
+        } finally {
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Login';
+          }
         }
       });
     }
