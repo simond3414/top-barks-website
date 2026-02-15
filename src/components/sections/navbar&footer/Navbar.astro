@@ -20,13 +20,25 @@ const homeUrl = "/";
     aria-label="Global"
   >
     <div class="flex items-center justify-between">
-      <!-- Brand logo -->
+      <!-- Brand logo with text -->
       <a
-        class="flex-none rounded-lg text-xl font-bold outline-hidden ring-zinc-500 focus-visible:ring-3 dark:ring-zinc-200 dark:focus:outline-hidden"
+        class="flex items-center gap-3 rounded-lg outline-hidden ring-zinc-500 focus-visible:ring-3 dark:ring-zinc-200 dark:focus:outline-hidden"
         href={homeUrl}
         aria-label="Brand"
       >
         <BrandLogo variant="square" />
+        <span 
+          class="hidden font-bold text-forest-800 dark:text-forest-200 sm:inline" 
+          style="font-family: 'Poppins', sans-serif; font-size: 1.125rem;"
+        >
+          Top Barks Dog Training
+        </span>
+        <span 
+          class="font-bold text-forest-800 dark:text-forest-200 sm:hidden" 
+          style="font-family: 'Poppins', sans-serif; font-size: 1rem;"
+        >
+          Top Barks
+        </span>
       </a>
       <!-- Collapse toggle for smaller screens -->
       <div class="ml-auto mr-5 md:hidden">
