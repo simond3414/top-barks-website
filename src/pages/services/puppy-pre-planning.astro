@@ -1,7 +1,9 @@
 ---
 import MainLayout from "@/layouts/MainLayout.astro";
 import { Image } from "astro:assets";
-import puppyPrepImg from "@images/front_pic.jpg";
+import puppyPrepImg1 from "@images/puppy_pre_1.jpg";
+import puppyPrepImg2 from "@images/puppy_pre_2.jpg";
+import puppyPrepImg3 from "@images/puppy_pre_3.jpg";
 import { SITE } from "@data/constants";
 
 const pageTitle = `Puppy Pre-Planning | ${SITE.title}`;
@@ -144,7 +146,9 @@ const pageTitle = `Puppy Pre-Planning | ${SITE.title}`;
       </div>
 
       <div class="lg:sticky lg:top-8">
-        <Image src={puppyPrepImg} alt="Preparing for a new puppy" class="rounded-2xl object-cover shadow-lg" />
+        <Image src={puppyPrepImg1} alt="Woman holding a happy puppy in garden" class="rounded-2xl object-cover shadow-lg" />
+        <Image src={puppyPrepImg2} alt="Puppy in green basket - preparation for bringing home" class="rounded-2xl object-cover shadow-lg mt-6" />
+        <Image src={puppyPrepImg3} alt="Sleeping puppies - litter of puppies ready for new homes" class="rounded-2xl object-cover shadow-lg mt-6" />
       </div>
     </div>
   </section>
