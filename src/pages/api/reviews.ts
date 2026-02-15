@@ -64,26 +64,11 @@ async function fetchGoogleReviews(env: any): Promise<Review[]> {
     
     const data = await response.json();
     
-    // Debug logging
-    console.log('Google Places API response:', {
-      hasReviews: !!data.reviews,
-      reviewCount: data.reviews?.length || 0,
-      firstReviewKeys: data.reviews?.[0] ? Object.keys(data.reviews[0]) : null,
-      firstReviewSample: data.reviews?.[0] ? {
-        rating: data.reviews[0].rating,
-        hasText: !!data.reviews[0].text,
-        hasOriginalText: !!data.reviews[0].originalText,
-        hasAuthorAttribution: !!data.reviews[0].authorAttribution,
-        publishTime: data.reviews[0].publishTime
-      } : null
-    });
-    
     if (!data.reviews || !Array.isArray(data.reviews)) {
-      console.error('No reviews array in response:', data);
       return [];
     }
     
-    const mappedReviews = data.reviews.map((review: any, index: number) => ({
+    return data.reviews.map((review: any, index: number) => ({
       id: `google_${index}_${Date.now()}`,
       source: 'google' as const,
       author: review.authorAttribution?.displayName || 'Anonymous',
@@ -91,11 +76,7 @@ async function fetchGoogleReviews(env: any): Promise<Review[]> {
       text: review.text?.text || review.originalText?.text || '',
       date: review.publishTime || new Date().toISOString(),
       url: `https://g.page/r/${placeId}/review`
-    }));
-    
-    console.log(`Mapped ${mappedReviews.length} reviews successfully`);
-    
-    return mappedReviews.slice(0, 20); // Keep latest 20
+    })).slice(0, 20); // Keep latest 20
     
   } catch (error) {
     console.error('Error fetching Google reviews:', error);
@@ -182,14 +163,8 @@ export const POST: APIRoute = async ({ request, locals }) => {
       // Fetch fresh Google reviews
       const googleReviews = await fetchGoogleReviews(env);
       
-    data.googleReviews = googleReviews;
-    data.lastUpdated = new Date().toISOString();
-    
-    console.log('Saving to KV:', {
-      googleCount: data.googleReviews.length,
-      facebookCount: data.facebookReviews.length,
-      lastUpdated: data.lastUpdated
-    });
+      data.googleReviews = googleReviews;
+      data.lastUpdated = new Date().toISOString();
       
       // Save to KV
       await env.REVIEWS?.put('reviews_data', JSON.stringify(data));

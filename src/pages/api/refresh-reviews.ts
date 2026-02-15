@@ -90,25 +90,16 @@ async function fetchGoogleReviews(env: any) {
     });
     
     if (!response.ok) {
-      console.error('Google Places API error:', response.status, await response.text());
       return [];
     }
     
     const data = await response.json();
     
-    // Debug logging
-    console.log('Google Places API response (refresh):', {
-      hasReviews: !!data.reviews,
-      reviewCount: data.reviews?.length || 0,
-      firstReviewKeys: data.reviews?.[0] ? Object.keys(data.reviews[0]) : null
-    });
-    
     if (!data.reviews || !Array.isArray(data.reviews)) {
-      console.error('No reviews array in response:', data);
       return [];
     }
     
-    const mappedReviews = data.reviews.map((review: any, index: number) => ({
+    return data.reviews.map((review: any, index: number) => ({
       id: `google_${index}_${Date.now()}`,
       source: 'google' as const,
       author: review.authorAttribution?.displayName || 'Anonymous',
@@ -117,10 +108,6 @@ async function fetchGoogleReviews(env: any) {
       date: review.publishTime || new Date().toISOString(),
       url: `https://g.page/r/${placeId}/review`
     }));
-    
-    console.log(`Mapped ${mappedReviews.length} reviews from refresh`);
-    
-    return mappedReviews;
     
   } catch (error) {
     console.error('Error fetching Google reviews:', error);
