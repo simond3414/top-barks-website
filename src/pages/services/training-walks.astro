@@ -1,0 +1,121 @@
+---
+import MainLayout from "@/layouts/MainLayout.astro";
+import { Image } from "astro:assets";
+import trainingWalksImg from "@images/training_walks.JPG";
+import { SITE } from "@data/constants";
+
+const pageTitle = `Training Walks | ${SITE.title}`;
+---
+
+<MainLayout title={pageTitle}>
+  <!-- Hero Section - TODO: Replace with shadcn/ui Card component -->
+  <section class="mx-auto max-w-[85rem] px-4 py-14 sm:px-6 lg:px-8">
+    <div class="text-center">
+      <h1 class="text-4xl font-bold tracking-tight text-forest-800 dark:text-forest-200 sm:text-5xl">
+        Training Walks
+      </h1>
+      <p class="mt-4 text-xl text-earth-700 dark:text-earth-300">
+        Your pup's personal trainer
+      </p>
+    </div>
+  </section>
+
+  <!-- Content Section - TODO: Replace with shadcn/ui Card component -->
+  <section class="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8">
+    <div class="grid items-start gap-12 lg:grid-cols-2">
+      <div>
+        <h2 class="text-2xl font-bold text-forest-800 dark:text-forest-200">The Best Start for Your Puppy</h2>
+        <p class="mt-4 text-lg text-earth-700 dark:text-earth-300">
+          Give your pup the best start possible in the hands of the experts. Training walks last up to one hour and are the perfect alternative to regular dog walking or doggy day care.
+        </p>
+
+        <div class="mt-6 rounded-xl border border-beige-200 bg-forest-50 p-4 dark:border-earth-700 dark:bg-forest-950">
+          <p class="font-medium text-forest-800 dark:text-forest-200">
+            Ideally this service is for youngsters under 6 months old. It is perfect for new puppies (older dogs can be catered for too)!
+          </p>
+        </div>
+        
+        <div class="mt-8">
+          <h3 class="text-xl font-semibold text-forest-800 dark:text-forest-200">Who Are Training Walks For?</h3>
+          <p class="mt-4 text-earth-700 dark:text-earth-300">
+            If you work regularly throughout the day, or have a busy lifestyle, then this service is for you. Training walks can also be booked as a package with our regular training sessions so we can show you how to carry on the work we have done. Daily training sessions can be booked for your puppy with me.
+          </p>
+        </div>
+
+        <div class="mt-8">
+          <h3 class="text-xl font-semibold text-forest-800 dark:text-forest-200">What Makes Training Walks Different?</h3>
+          <p class="mt-4 text-earth-700 dark:text-earth-300">
+            I will come to your home, like a dog walker, but unlike a normal dog walker, you are getting a professional trainer working with your puppy, establishing the key skills it will need for life.
+          </p>
+          <p class="mt-4 text-earth-700 dark:text-earth-300">
+            I will also ensure your puppy has controlled exposure to the world which is an essential part of your pup's socialisation.
+          </p>
+        </div>
+
+        <div class="mt-8">
+          <h3 class="text-xl font-semibold text-forest-800 dark:text-forest-200">What We Teach</h3>
+          <p class="mt-4 text-earth-700 dark:text-earth-300">
+            What I teach is guided by you but generally the following specifics I find stand puppies in good stead for the rest of their lives:
+          </p>
+          
+          <div class="mt-6 grid gap-4 sm:grid-cols-2">
+            <!-- TODO: Replace with shadcn/ui Card component -->
+            <div class="flex items-start gap-3 rounded-lg border border-beige-200 bg-white p-4 dark:border-earth-700 dark:bg-earth-900">
+              <svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span class="text-earth-700 dark:text-earth-300">Calling your dog back to you</span>
+            </div>
+            <div class="flex items-start gap-3 rounded-lg border border-beige-200 bg-white p-4 dark:border-earth-700 dark:bg-earth-900">
+              <svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span class="text-earth-700 dark:text-earth-300">Meeting and greeting (not jumping up)</span>
+            </div>
+            <div class="flex items-start gap-3 rounded-lg border border-beige-200 bg-white p-4 dark:border-earth-700 dark:bg-earth-900">
+              <svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span class="text-earth-700 dark:text-earth-300">Walking on a lead</span>
+            </div>
+            <div class="flex items-start gap-3 rounded-lg border border-beige-200 bg-white p-4 dark:border-earth-700 dark:bg-earth-900">
+              <svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span class="text-earth-700 dark:text-earth-300">Dealing with the world's distractions</span>
+            </div>
+            <div class="flex items-start gap-3 rounded-lg border border-beige-200 bg-white p-4 dark:border-earth-700 dark:bg-earth-900">
+              <svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span class="text-earth-700 dark:text-earth-300">Confidence building</span>
+            </div>
+            <div class="flex items-start gap-3 rounded-lg border border-beige-200 bg-white p-4 dark:border-earth-700 dark:bg-earth-900">
+              <svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span class="text-earth-700 dark:text-earth-300">To wait patiently</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-8 rounded-2xl bg-forest-50 p-6 dark:bg-forest-950">
+          <h3 class="text-lg font-semibold text-forest-800 dark:text-forest-200">Pricing</h3>
+          <p class="mt-2 text-earth-700 dark:text-earth-300">
+            For pricing details please get in touch. Training walks can be booked as a standalone service or as part of a puppy training package.
+          </p>
+        </div>
+
+        <div class="mt-8">
+          <a href="/contact" class="inline-flex items-center justify-center rounded-full bg-forest-600 px-8 py-3 text-base font-medium text-white transition hover:bg-forest-700 dark:bg-forest-500 dark:hover:bg-forest-600">
+            Book Training Walks
+          </a>
+        </div>
+      </div>
+
+      <div class="lg:sticky lg:top-8">
+        <Image src={trainingWalksImg} alt="Training walk with a puppy" class="rounded-2xl object-cover shadow-lg" />
+      </div>
+    </div>
+  </section>
+</MainLayout>

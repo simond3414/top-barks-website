@@ -1,0 +1,124 @@
+---
+import MainLayout from "@/layouts/MainLayout.astro";
+import { Image } from "astro:assets";
+import showTrainingImg1 from "@images/show_training_1.JPG";
+import showTrainingImg2 from "@images/show_training_2.JPG";
+import showTrainingImg3 from "@images/show_training_3.jpg";
+import { SITE } from "@data/constants";
+
+const pageTitle = `Show Training | ${SITE.title}`;
+---
+
+<MainLayout title={pageTitle}>
+  <!-- Hero Section - TODO: Replace with shadcn/ui Card component -->
+  <section class="mx-auto max-w-[85rem] px-4 py-14 sm:px-6 lg:px-8">
+    <div class="text-center">
+      <h1 class="text-4xl font-bold tracking-tight text-forest-800 dark:text-forest-200 sm:text-5xl">
+        Show Training
+      </h1>
+      <p class="mt-4 text-xl text-earth-700 dark:text-earth-300">
+        One-to-one ringcraft training from an experienced show handler
+      </p>
+    </div>
+  </section>
+
+  <!-- Content Section - TODO: Replace with shadcn/ui Card component -->
+  <section class="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8">
+    <div class="grid items-start gap-12 lg:grid-cols-2">
+      <div>
+        <h2 class="text-2xl font-bold text-forest-800 dark:text-forest-200">Expert Ringcraft Training</h2>
+        <p class="mt-4 text-lg text-earth-700 dark:text-earth-300">
+          I offer ringcraft training on a one-to-one basis at your home or a venue of your choice. If you are looking to get started on the road to showing your dog to a high standard, and don't know where to start, these sessions are for you.
+        </p>
+
+        <div class="mt-8 rounded-xl border-l-4 border-forest-500 bg-forest-50 p-6 dark:bg-forest-950">
+          <h3 class="text-lg font-semibold text-forest-800 dark:text-forest-200">Mark's Show Experience</h3>
+          <p class="mt-2 text-earth-700 dark:text-earth-300">
+            I have a wealth of experience and show currently in the UK and Europe. I have appeared a number of times at Crufts with group and best in show wins to our credit at open and championship show level.
+          </p>
+        </div>
+
+        <div class="mt-8 rounded-xl border border-beige-200 bg-white p-6 dark:border-earth-700 dark:bg-earth-900">
+          <h3 class="text-lg font-semibold text-forest-700 dark:text-forest-300">Proudest Achievement</h3>
+          <div class="mt-4 flex items-start gap-3">
+            <svg class="mt-1 h-6 w-6 flex-shrink-0 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+            </svg>
+            <p class="text-earth-700 dark:text-earth-300">
+              <strong>Best Puppy in Show</strong> at the Scottish Kennel Club Show in August 2017
+            </p>
+          </div>
+        </div>
+
+        <div class="mt-8">
+          <h3 class="text-xl font-semibold text-forest-800 dark:text-forest-200">Specialisations</h3>
+          <p class="mt-4 text-earth-700 dark:text-earth-300">
+            I specialise in showing gundogs, having shown Clumber Spaniels and Italian Spinoni in the past. My expertise can help you and your dog succeed in the show ring.
+          </p>
+          
+          <div class="mt-6 flex flex-wrap gap-3">
+            <span class="rounded-full bg-forest-100 px-4 py-2 text-sm font-medium text-forest-700 dark:bg-forest-900 dark:text-forest-300">Gundogs</span>
+            <span class="rounded-full bg-forest-100 px-4 py-2 text-sm font-medium text-forest-700 dark:bg-forest-900 dark:text-forest-300">Clumber Spaniels</span>
+            <span class="rounded-full bg-forest-100 px-4 py-2 text-sm font-medium text-forest-700 dark:bg-forest-900 dark:text-forest-300">Italian Spinoni</span>
+            <span class="rounded-full bg-forest-100 px-4 py-2 text-sm font-medium text-forest-700 dark:bg-forest-900 dark:text-forest-300">Crufts Experience</span>
+          </div>
+        </div>
+
+        <div class="mt-8">
+          <h3 class="text-xl font-semibold text-forest-800 dark:text-forest-200">What You'll Learn</h3>
+          <ul class="mt-4 space-y-3">
+            <li class="flex items-start gap-3">
+              <svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span class="text-earth-700 dark:text-earth-300">Ring presentation and handling techniques</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span class="text-earth-700 dark:text-earth-300">Gaiting and movement in the ring</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span class="text-earth-700 dark:text-earth-300">Stacking and posing your dog</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span class="text-earth-700 dark:text-earth-300">Show etiquette and ring craft</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span class="text-earth-700 dark:text-earth-300">Building confidence for you and your dog</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="mt-8 rounded-2xl bg-beige-50 p-6 dark:bg-earth-950">
+          <h3 class="text-lg font-semibold text-forest-800 dark:text-forest-200">Pricing</h3>
+          <p class="mt-2 text-earth-700 dark:text-earth-300">
+            I offer both single lessons, blocks of 4 1-hour lessons and tailor made packages for locations within the York radius. Other areas are covered. Please <a href="/contact" class="text-forest-600 underline">contact us</a> for more details.
+          </p>
+        </div>
+
+        <div class="mt-8">
+          <a href="/contact" class="inline-flex items-center justify-center rounded-full bg-forest-600 px-8 py-3 text-base font-medium text-white transition hover:bg-forest-700 dark:bg-forest-500 dark:hover:bg-forest-600">
+            Book Show Training
+          </a>
+        </div>
+      </div>
+
+      <div class="space-y-6 lg:sticky lg:top-8">
+        <Image src={showTrainingImg1} alt="Mark at a dog show" class="rounded-2xl object-cover shadow-lg" />
+        <Image src={showTrainingImg2} alt="Dog show awards" class="rounded-2xl object-cover shadow-lg" />
+        <Image src={showTrainingImg3} alt="Mark at Crufts" class="rounded-2xl object-cover shadow-lg" />
+      </div>
+    </div>
+  </section>
+</MainLayout>

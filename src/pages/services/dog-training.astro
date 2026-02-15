@@ -1,0 +1,114 @@
+---
+import MainLayout from "@/layouts/MainLayout.astro";
+import { Image } from "astro:assets";
+import dogTrainingImg from "@images/dog_training.jpeg";
+import { SITE } from "@data/constants";
+
+const pageTitle = `Dog Training | ${SITE.title}`;
+---
+
+<MainLayout title={pageTitle}>
+  <!-- Hero Section - TODO: Replace with shadcn/ui Card component -->
+  <section class="mx-auto max-w-[85rem] px-4 py-14 sm:px-6 lg:px-8">
+    <div class="text-center">
+      <h1 class="text-4xl font-bold tracking-tight text-forest-800 dark:text-forest-200 sm:text-5xl">
+        Dog Training
+      </h1>
+      <p class="mt-4 text-xl text-earth-700 dark:text-earth-300">
+        Gain a better understanding of your best friend and learn basic obedience for everyday use
+      </p>
+    </div>
+  </section>
+
+  <!-- Content Section - TODO: Replace with shadcn/ui Card component -->
+  <section class="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8">
+    <div class="grid items-start gap-12 lg:grid-cols-2">
+      <div>
+        <h2 class="text-2xl font-bold text-forest-800 dark:text-forest-200">Training Programme</h2>
+        <p class="mt-4 text-lg text-earth-700 dark:text-earth-300">
+          Learning with your dog should be fun so sessions are aimed at both you and your dog enjoying your training together.
+        </p>
+        
+        <div class="mt-8 space-y-6">
+          <div class="rounded-xl border border-beige-200 bg-white p-6 dark:border-earth-700 dark:bg-earth-900">
+            <h3 class="flex items-center gap-3 text-lg font-semibold text-forest-700 dark:text-forest-300">
+              <svg class="h-6 w-6 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              General Obedience Training
+            </h3>
+            <p class="mt-2 text-earth-600 dark:text-earth-400">
+              Train basic cues for the usual obedience exercises, including sits, downs, lead walking, stays and recalls. The course does not follow a strict routine, and can be tailored to the individual dog and owner. The dog training programme is held in your own home, and lasts as long as your dog needs.
+            </p>
+          </div>
+
+          <div class="rounded-xl border border-beige-200 bg-white p-6 dark:border-earth-700 dark:bg-earth-900">
+            <h3 class="flex items-center gap-3 text-lg font-semibold text-forest-700 dark:text-forest-300">
+              <svg class="h-6 w-6 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+              </svg>
+              Focus and Control
+            </h3>
+            <p class="mt-2 text-earth-600 dark:text-earth-400">
+              Ideally suited for those dogs who do not pay attention to their owners on walks. I aim to improve your ability to control your dog in distracting environments.
+            </p>
+          </div>
+        </div>
+
+        <div class="mt-8">
+          <h3 class="text-xl font-semibold text-forest-800 dark:text-forest-200">Session Details</h3>
+          <ul class="mt-4 space-y-2 text-earth-700 dark:text-earth-300">
+            <li class="flex items-center gap-2">
+              <svg class="h-5 w-5 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              One hour sessions
+            </li>
+            <li class="flex items-center gap-2">
+              <svg class="h-5 w-5 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+              </svg>
+              One-to-one basis with you and your dog
+            </li>
+            <li class="flex items-center gap-2">
+              <svg class="h-5 w-5 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+              </svg>
+              Held in your own home
+            </li>
+            <li class="flex items-center gap-2">
+              <svg class="h-5 w-5 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+              </svg>
+              Flexible, tailored to your dog's needs
+            </li>
+          </ul>
+        </div>
+
+        <div class="mt-8 rounded-2xl bg-forest-50 p-6 dark:bg-forest-950">
+          <h3 class="text-lg font-semibold text-forest-800 dark:text-forest-200">Pricing</h3>
+          <p class="mt-2 text-earth-700 dark:text-earth-300">
+            I offer both single lessons, blocks of 4 x 1-hour lessons and tailor made packages for locations within the York radius. Other areas are covered. Please <a href="/contact" class="text-forest-600 underline">contact us</a> for a quote.
+          </p>
+        </div>
+
+        <div class="mt-8">
+          <a href="/contact" class="inline-flex items-center justify-center rounded-full bg-forest-600 px-8 py-3 text-base font-medium text-white transition hover:bg-forest-700 dark:bg-forest-500 dark:hover:bg-forest-600">
+            Book a Session
+          </a>
+        </div>
+      </div>
+
+      <div class="lg:sticky lg:top-8">
+        <Image src={dogTrainingImg} alt="Dog training session" class="rounded-2xl object-cover shadow-lg" />
+        <div class="mt-6 rounded-2xl border border-beige-200 bg-white p-6 dark:border-earth-700 dark:bg-earth-900">
+          <h3 class="text-lg font-semibold text-forest-800 dark:text-forest-200">Also Available: Training Walks</h3>
+          <p class="mt-2 text-earth-600 dark:text-earth-400">
+            Training walks are also available as a complement to your dog training programme. <a href="/services/training-walks" class="text-forest-600 underline">Learn more about training walks</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</MainLayout>

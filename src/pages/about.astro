@@ -1,0 +1,219 @@
+---
+import MainLayout from "@/layouts/MainLayout.astro";
+import { Image } from "astro:assets";
+import aboutImage1 from "@images/about_me_01.JPG";
+import aboutImage2 from "@images/about_me_02.JPG";
+import aboutImage3 from "@images/about_me_03.jpg";
+import aboutImage4 from "@images/about_me_04.jpg";
+import apdtLogo from "@images/APDT.png";
+import abtcLogo from "@images/ABTC.jpg";
+import charterLogo from "@images/UKDOG_CharterMember_Colour.jpg";
+---
+
+<MainLayout title="About Mark Sanderson | Top Barks Dog Training">
+  <!-- Hero Section - TODO: Replace with shadcn/ui Card component -->
+  <section class="mx-auto max-w-[85rem] px-4 py-14 sm:px-6 lg:px-8">
+    <div class="text-center">
+      <h1 class="text-4xl font-bold tracking-tight text-forest-800 dark:text-forest-200 sm:text-5xl">
+        About Me
+      </h1>
+      <p class="mt-4 text-xl text-earth-700 dark:text-earth-300">
+        Top Barks is run by professional dog trainer, Mark Sanderson
+      </p>
+    </div>
+  </section>
+
+  <!-- Qualifications Section - TODO: Replace with shadcn/ui Card component -->
+  <section class="bg-beige-50 py-16 dark:bg-earth-950">
+    <div class="mx-auto max-w-[85rem] px-4 sm:px-6 lg:px-8">
+      <h2 class="text-3xl font-bold text-forest-800 dark:text-forest-200">
+        Academic Qualifications
+      </h2>
+      <p class="mt-4 text-lg text-earth-700 dark:text-earth-300">
+        Mark holds a range of top-level academic qualifications in canine behaviour and training.
+      </p>
+
+      <div class="mt-10 grid gap-8 md:grid-cols-2">
+        <!-- BSc Hons - TODO: Replace with shadcn/ui Card component -->
+        <div class="rounded-2xl border border-beige-200 bg-white p-8 shadow-sm dark:border-earth-700 dark:bg-earth-900">
+          <div class="flex items-center gap-3">
+            <div class="flex h-12 w-12 items-center justify-center rounded-full bg-forest-100 dark:bg-forest-900">
+              <svg class="h-6 w-6 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+              </svg>
+            </div>
+            <h3 class="text-xl font-semibold text-forest-700 dark:text-forest-300">BSc Hons in Canine Behaviour and Training</h3>
+          </div>
+          <p class="mt-4 text-earth-600 dark:text-earth-400">
+            Mark holds his degree from the University of Hull. He was the first man in the UK to gain this qualification. The course covered a broad spectrum of practical and theoretical issues that affect all breeds of dogs. His specialism was in factors that influenced Cocker Spaniel behaviour.
+          </p>
+        </div>
+
+        <!-- FdSc - TODO: Replace with shadcn/ui Card component -->
+        <div class="rounded-2xl border border-beige-200 bg-white p-8 shadow-sm dark:border-earth-700 dark:bg-earth-900">
+          <div class="flex items-center gap-3">
+            <div class="flex h-12 w-12 items-center justify-center rounded-full bg-forest-100 dark:bg-forest-900">
+              <svg class="h-6 w-6 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+              </svg>
+            </div>
+            <h3 class="text-xl font-semibold text-forest-700 dark:text-forest-300">FdSc in Canine Behaviour and Training</h3>
+          </div>
+          <p class="mt-4 text-earth-600 dark:text-earth-400">
+            A precursor to the BSc Hons, Mark first developed his interest in dog training through his work for this Foundation Degree in 2006.
+          </p>
+        </div>
+
+        <!-- COAPE - TODO: Replace with shadcn/ui Card component -->
+        <div class="rounded-2xl border border-beige-200 bg-white p-8 shadow-sm dark:border-earth-700 dark:bg-earth-900">
+          <div class="flex items-center gap-3">
+            <div class="flex h-12 w-12 items-center justify-center rounded-full bg-forest-100 dark:bg-forest-900">
+              <svg class="h-6 w-6 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+              </svg>
+            </div>
+            <h3 class="text-xl font-semibold text-forest-700 dark:text-forest-300">COAPE Think Dog</h3>
+          </div>
+          <p class="mt-4 text-earth-600 dark:text-earth-400">
+            A qualification that focuses on the theory behind issues that affect dog trainers, such as nutrition, puppy development stages and dealing with behavioural problems.
+          </p>
+        </div>
+
+        <!-- CAP 2 - TODO: Replace with shadcn/ui Card component -->
+        <div class="rounded-2xl border border-beige-200 bg-white p-8 shadow-sm dark:border-earth-700 dark:bg-earth-900">
+          <div class="flex items-center gap-3">
+            <div class="flex h-12 w-12 items-center justify-center rounded-full bg-forest-100 dark:bg-forest-900">
+              <svg class="h-6 w-6 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" />
+              </svg>
+            </div>
+            <h3 class="text-xl font-semibold text-forest-700 dark:text-forest-300">CAP 2</h3>
+          </div>
+          <p class="mt-4 text-earth-600 dark:text-earth-400">
+            A practical award from Learning About Dogs, which demonstrated Mark's competency with the clicker training method.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Professional Memberships Section - TODO: Replace with shadcn/ui Card component -->
+  <section class="py-16">
+    <div class="mx-auto max-w-[85rem] px-4 sm:px-6 lg:px-8">
+      <h2 class="text-3xl font-bold text-forest-800 dark:text-forest-200">
+        Professional Memberships
+      </h2>
+      <p class="mt-4 text-lg text-earth-700 dark:text-earth-300">
+        Mark is a member of leading professional organisations committed to high standards in dog training.
+      </p>
+
+      <div class="mt-10 grid gap-8 md:grid-cols-3">
+        <!-- APDT - TODO: Replace with shadcn/ui Card component -->
+        <div class="rounded-2xl border border-beige-200 bg-white p-8 shadow-sm dark:border-earth-700 dark:bg-earth-900">
+          <img src={apdtLogo.src} alt="APDT Logo" class="h-16 w-auto object-contain" />
+          <h3 class="mt-6 text-xl font-semibold text-forest-700 dark:text-forest-300">APDT</h3>
+          <p class="mt-2 text-sm text-earth-500">Association of Pet Dog Trainers, UK</p>
+          <p class="mt-4 text-earth-600 dark:text-earth-400">
+            A voluntary organisation established to improve the welfare of dogs and the competence of dog owners through the promotion of training skills and techniques based on up-to-date, researched methods. They promote kind, fair and effective training.
+          </p>
+          <p class="mt-4 text-sm font-medium text-forest-600">MAPDT 09777</p>
+        </div>
+
+        <!-- Pet Professional Guild - TODO: Replace with shadcn/ui Card component -->
+        <div class="rounded-2xl border border-beige-200 bg-white p-8 shadow-sm dark:border-earth-700 dark:bg-earth-900">
+          <div class="flex h-16 items-center">
+            <svg class="h-12 w-12 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
+          </div>
+          <h3 class="mt-6 text-xl font-semibold text-forest-700 dark:text-forest-300">Pet Professional Guild</h3>
+          <p class="mt-4 text-earth-600 dark:text-earth-400">
+            A membership organisation representing pet industry professionals who are committed to results-based, science-based force-free training and pet care.
+          </p>
+        </div>
+
+        <!-- ABTC - TODO: Replace with shadcn/ui Card component -->
+        <div class="rounded-2xl border border-beige-200 bg-white p-8 shadow-sm dark:border-earth-700 dark:bg-earth-900">
+          <img src={abtcLogo.src} alt="ABTC Logo" class="h-16 w-auto object-contain" />
+          <h3 class="mt-6 text-xl font-semibold text-forest-700 dark:text-forest-300">ABTC</h3>
+          <p class="mt-2 text-sm text-earth-500">Animal Behaviour and Training Council</p>
+          <p class="mt-4 text-earth-600 dark:text-earth-400">
+            The regulatory body that represents animal trainers and animal behaviour therapists. It sets and maintains standards of knowledge and practical skills, maintains the national register of qualified professionals, and promotes the welfare of animals in their interactions with humans.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Philosophy Section - TODO: Replace with shadcn/ui Card component -->
+  <section class="bg-forest-50 py-16 dark:bg-forest-950">
+    <div class="mx-auto max-w-[85rem] px-4 sm:px-6 lg:px-8">
+      <div class="grid items-center gap-12 lg:grid-cols-2">
+        <div>
+          <h2 class="text-3xl font-bold text-forest-800 dark:text-forest-200">
+            Training Philosophy
+          </h2>
+          <blockquote class="mt-6 border-l-4 border-forest-500 pl-6 text-xl italic text-earth-700 dark:text-earth-300">
+            "I have been training all breeds of dogs for over fifteen years and I am currently owned by my own dogs! I train my dogs using reward based methods to enhance the dog/owner relationship. I use clicker training, alongside other methods, to ensure a happy dog and a happy owner."
+          </blockquote>
+          <p class="mt-4 text-lg font-medium text-forest-700 dark:text-forest-300">— Mark Sanderson, 2021</p>
+
+          <div class="mt-8 space-y-4">
+            <div class="flex items-center gap-3">
+              <svg class="h-6 w-6 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span class="text-earth-700 dark:text-earth-300">Reward-based, force-free methods</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <svg class="h-6 w-6 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span class="text-earth-700 dark:text-earth-300">Clicker training expertise</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <svg class="h-6 w-6 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span class="text-earth-700 dark:text-earth-300">Kind, fair and effective approach</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <svg class="h-6 w-6 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span class="text-earth-700 dark:text-earth-300">Strengthening dog-owner bonds</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+          <Image src={aboutImage1} alt="Mark Sanderson with his dogs" class="rounded-2xl object-cover shadow-lg" />
+          <Image src={aboutImage2} alt="Mark doing gundog training" class="rounded-2xl object-cover shadow-lg" />
+          <Image src={aboutImage3} alt="Mark with an award winning dog" class="rounded-2xl object-cover shadow-lg" />
+          <Image src={aboutImage4} alt="An award winning dog" class="rounded-2xl object-cover shadow-lg" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section - TODO: Replace with shadcn/ui Card component -->
+  <section class="py-16">
+    <div class="mx-auto max-w-[85rem] px-4 text-center sm:px-6 lg:px-8">
+      <h2 class="text-3xl font-bold text-forest-800 dark:text-forest-200">
+        Ready to Work Together?
+      </h2>
+      <p class="mt-4 text-lg text-earth-700 dark:text-earth-300">
+        With over 15 years of experience and top-level qualifications, I'm here to help you and your dog succeed.
+      </p>
+      <div class="mt-8 flex justify-center gap-4">
+        <a href="/contact" class="inline-flex items-center justify-center rounded-full bg-forest-600 px-8 py-3 text-base font-medium text-white transition hover:bg-forest-700 dark:bg-forest-500 dark:hover:bg-forest-600">
+          Get in Touch
+        </a>
+        <a href="/services" class="inline-flex items-center justify-center rounded-full border-2 border-forest-600 px-8 py-3 text-base font-medium text-forest-600 transition hover:bg-forest-50 dark:border-forest-400 dark:text-forest-400 dark:hover:bg-forest-950">
+          Our Services
+        </a>
+      </div>
+    </div>
+  </section>
+</MainLayout>

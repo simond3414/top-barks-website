@@ -1,0 +1,109 @@
+---
+import MainLayout from "@/layouts/MainLayout.astro";
+import { Image } from "astro:assets";
+import puppyTrainingImg from "@images/puppy_training.jpg";
+import { SITE } from "@data/constants";
+
+const pageTitle = `Puppy Training | ${SITE.title}`;
+---
+
+<MainLayout title={pageTitle}>
+  <!-- Hero Section - TODO: Replace with shadcn/ui Card component -->
+  <section class="mx-auto max-w-[85rem] px-4 py-14 sm:px-6 lg:px-8">
+    <div class="text-center">
+      <h1 class="text-4xl font-bold tracking-tight text-forest-800 dark:text-forest-200 sm:text-5xl">
+        Puppy Training
+      </h1>
+      <p class="mt-4 text-xl text-earth-700 dark:text-earth-300">
+        One-to-one puppy training programme for the best start in life
+      </p>
+    </div>
+  </section>
+
+  <!-- Content Section - TODO: Replace with shadcn/ui Card component -->
+  <section class="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8">
+    <div class="grid items-start gap-12 lg:grid-cols-2">
+      <div>
+        <h2 class="text-2xl font-bold text-forest-800 dark:text-forest-200">Why One-to-One Training?</h2>
+        <p class="mt-4 text-lg text-earth-700 dark:text-earth-300">
+          Training puppies on a one-to-one basis has a number of advantages over traditional group classes. I believe that training puppies in this way achieves great results.
+        </p>
+        
+        <div class="mt-8 grid gap-4 sm:grid-cols-2">
+          <!-- TODO: Replace with shadcn/ui Card component -->
+          <div class="rounded-xl border border-beige-200 bg-white p-5 dark:border-earth-700 dark:bg-earth-900">
+            <div class="flex h-10 w-10 items-center justify-center rounded-full bg-forest-100 dark:bg-forest-900">
+              <span class="text-lg font-bold text-forest-600">1</span>
+            </div>
+            <h3 class="mt-3 font-semibold text-forest-700 dark:text-forest-300">Calmer Puppies</h3>
+            <p class="mt-2 text-sm text-earth-600 dark:text-earth-400">Puppies are calmer because they are not over excited by other puppies, allowing them to concentrate and learn.</p>
+          </div>
+
+          <div class="rounded-xl border border-beige-200 bg-white p-5 dark:border-earth-700 dark:bg-earth-900">
+            <div class="flex h-10 w-10 items-center justify-center rounded-full bg-forest-100 dark:bg-forest-900">
+              <span class="text-lg font-bold text-forest-600">2</span>
+            </div>
+            <h3 class="mt-3 font-semibold text-forest-700 dark:text-forest-300">Relaxed Owners</h3>
+            <p class="mt-2 text-sm text-earth-600 dark:text-earth-400">Owners are more relaxed and able to concentrate, as they are not controlling an over excited puppy.</p>
+          </div>
+
+          <div class="rounded-xl border border-beige-200 bg-white p-5 dark:border-earth-700 dark:bg-earth-900">
+            <div class="flex h-10 w-10 items-center justify-center rounded-full bg-forest-100 dark:bg-forest-900">
+              <span class="text-lg font-bold text-forest-600">3</span>
+            </div>
+            <h3 class="mt-3 font-semibold text-forest-700 dark:text-forest-300">Specific Focus</h3>
+            <p class="mt-2 text-sm text-earth-600 dark:text-earth-400">Focus on specific exercises that are important to you, rather than concentrating on a generic syllabus.</p>
+          </div>
+
+          <div class="rounded-xl border border-beige-200 bg-white p-5 dark:border-earth-700 dark:bg-earth-900">
+            <div class="flex h-10 w-10 items-center justify-center rounded-full bg-forest-100 dark:bg-forest-900">
+              <span class="text-lg font-bold text-forest-600">4</span>
+            </div>
+            <h3 class="mt-3 font-semibold text-forest-700 dark:text-forest-300">Home Environment</h3>
+            <p class="mt-2 text-sm text-earth-600 dark:text-earth-400">Work in your home and on your walks so you get the training where you need it.</p>
+          </div>
+
+          <div class="rounded-xl border border-beige-200 bg-white p-5 dark:border-earth-700 dark:bg-earth-900">
+            <div class="flex h-10 w-10 items-center justify-center rounded-full bg-forest-100 dark:bg-forest-900">
+              <span class="text-lg font-bold text-forest-600">5</span>
+            </div>
+            <h3 class="mt-3 font-semibold text-forest-700 dark:text-forest-300">Flexible Times</h3>
+            <p class="mt-2 text-sm text-earth-600 dark:text-earth-400">Flexible training times to fit around your lifestyle and the pup's development so you never miss a lesson.</p>
+          </div>
+
+          <div class="rounded-xl border border-beige-200 bg-white p-5 dark:border-earth-700 dark:bg-earth-900">
+            <div class="flex h-10 w-10 items-center justify-center rounded-full bg-forest-100 dark:bg-forest-900">
+              <span class="text-lg font-bold text-forest-600">6</span>
+            </div>
+            <h3 class="mt-3 font-semibold text-forest-700 dark:text-forest-300">Social Learning</h3>
+            <p class="mt-2 text-sm text-earth-600 dark:text-earth-400">Tried and tested older dogs help teach your dog proper canine etiquette and how to talk dog.</p>
+          </div>
+        </div>
+
+        <div class="mt-8 rounded-2xl bg-forest-50 p-6 dark:bg-forest-950">
+          <h3 class="text-lg font-semibold text-forest-800 dark:text-forest-200">Training Walks Available</h3>
+          <p class="mt-2 text-earth-700 dark:text-earth-300">
+            I also offer training walks, so why not let Top Barks be your pup's personal trainer? I believe training walks are an ideal complement to the puppy training package. <a href="/services/training-walks" class="text-forest-600 underline">Learn more about training walks</a>.
+          </p>
+        </div>
+
+        <div class="mt-8 rounded-2xl bg-beige-50 p-6 dark:bg-earth-950">
+          <h3 class="text-lg font-semibold text-forest-800 dark:text-forest-200">Pricing</h3>
+          <p class="mt-2 text-earth-700 dark:text-earth-300">
+            For pricing details please get in touch. Flexible packages available to suit your puppy's needs and your schedule.
+          </p>
+        </div>
+
+        <div class="mt-8">
+          <a href="/contact" class="inline-flex items-center justify-center rounded-full bg-forest-600 px-8 py-3 text-base font-medium text-white transition hover:bg-forest-700 dark:bg-forest-500 dark:hover:bg-forest-600">
+            Start Your Puppy's Training
+          </a>
+        </div>
+      </div>
+
+      <div class="lg:sticky lg:top-8">
+        <Image src={puppyTrainingImg} alt="Puppy training session" class="rounded-2xl object-cover shadow-lg" />
+      </div>
+    </div>
+  </section>
+</MainLayout>

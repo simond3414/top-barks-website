@@ -3,145 +3,157 @@
 import MainLayout from "@/layouts/MainLayout.astro";
 import HeroSection from "@components/sections/landing/HeroSection.astro";
 import HeroSectionAlt from "@components/sections/landing/HeroSectionAlt.astro";
-import ClientsSection from "@components/sections/landing/ClientsSection.astro";
 import FeaturesGeneral from "@components/sections/features/FeaturesGeneral.astro";
-import FeaturesNavs from "@components/sections/features/FeaturesNavs.astro";
 import TestimonialsSection from "@components/sections/testimonials/TestimonialsSection.astro";
-import PricingSection from "@components/sections/pricing/PricingSection.astro";
 import FAQ from "@components/sections/misc/FAQ.astro";
-import AnnouncementBanner from "@components/ui/banners/AnnouncementBanner.astro";
-import heroImage from "@images/hero-image.avif";
+import heroImage from "@images/front_pic.png";
 import faqs from "@data/faqs.json";
 import features from "@data/features.json";
-import pricing from "@data/pricing.json";
-import featureImage from "@images/features-image.avif";
-import construction from "@images/construction-image.avif";
-import tools from "@images/automated-tools.avif";
-import dashboard from "@images/dashboard-image.avif";
-import { partnersData } from "@/data_files/constants";
-
-const avatarSrcs: Array<string> = [
-  "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80",
-  "https://images.unsplash.com/photo-1531927557220-a9e23c1e4794?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80",
-  "https://images.unsplash.com/photo-1541101767792-f9b2b1c4f127?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&&auto=format&fit=facearea&facepad=3&w=300&h=300&q=80",
-  "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80",
-];
+import apdtLogo from "@images/APDT.png";
+import abtcLogo from "@images/ABTC.jpg";
 ---
 
 <MainLayout>
-  <AnnouncementBanner
-    btnId="dismiss-button"
-    btnTitle="Explore ScrewFast on GitHub"
-    url="https://github.com/mearashadowfax/ScrewFast"
-  />
-
+  <!-- Hero Section - TODO: Replace with shadcn/ui Card component -->
   <HeroSection
-    title=`Equip Your Projects with <span
-        class="text-yellow-500 dark:text-yellow-400">ScrewFast</span>`
-    subTitle="Top-quality hardware tools and expert construction services for every project need."
-    primaryBtn="Start Exploring"
-    primaryBtnURL="/products"
-    secondaryBtn="Contact Sales Team"
+    title=`Top Barks <span
+        class="text-forest-600 dark:text-forest-400">Dog Training</span>`
+    subTitle="Professional dog training and behaviour consultation in York since 2006. Bringing people and their dogs together through reward-based, force-free methods."
+    primaryBtn="Our Services"
+    primaryBtnURL="/services"
+    secondaryBtn="Contact Mark"
     secondaryBtnURL="/contact"
-    withReview={true}
-    avatars={avatarSrcs}
-    rating=`<span class="font-bold">4.8</span> / 5`
-    starCount={4}
-    reviews=`From Over <span class="font-bold">12.8k</span> Reviews`
+    withReview={false}
     src={heroImage}
-    alt="Stack of ScrewFast product boxes containing assorted hardware tools"
+    alt="Mark Sanderson at Top Barks Dog Training with dogs"
   />
 
-  <ClientsSection
-    title="Trusted by Industry Leaders"
-    subTitle="Experience the reliability chosen by industry giants."
-    partners={partnersData}
-  />
-
+  <!-- Features/Why Choose Section - TODO: Replace with shadcn/ui Card component -->
   <FeaturesGeneral
-    title="Meeting Industry Demands"
-    subTitle="At ScrewFast, we tackle the unique challenges encountered in the hardware and construction sectors. From cutting-edge tools to expert services, we're dedicated to helping you overcome obstacles and achieve your goals."
-    src={featureImage}
-    alt="ScrewFast products in floating boxes"
+    title="Why Choose Top Barks?"
+    subTitle="I am an experienced and highly qualified York based dog trainer who specialises in helping people to train their dogs and tackle a range of behaviour problems. Established in 2006 with the aim of bringing people and their dogs together."
+    src={heroImage}
+    alt="Mark Sanderson with dogs"
     features={features}
   />
 
-  <FeaturesNavs
-    title=`Customize <span class="text-yellow-500 dark:text-yellow-400">ScrewFast</span>'s offerings to perfectly suit your hardware and construction needs.`
-    tabs={[
-      {
-        heading: "Cutting-Edge Tools",
-        content:
-          "Empower your projects with ScrewFast's cutting-edge tools. Experience enhanced efficiency in construction management with our sophisticated automated solutions.",
-        svg: "tools",
-        src: tools,
-        alt: "Yellow and black heavy equipment on brown grass field",
-        first: true,
-      },
-      {
-        heading: "Intuitive Dashboards",
-        content:
-          "Navigate with ease using ScrewFast's intuitive dashboards. Set up and oversee your projects seamlessly, with user-friendly interfaces designed for quick and effective workflow management.",
-        svg: "dashboard",
-        src: dashboard,
-        alt: "A screenshot or graphic representation of the intuitive dashboard",
-        second: true,
-      },
-      {
-        heading: "Robust Features",
-        content:
-          "Minimize complexity, maximize productivity. ScrewFast's robust features are engineered to streamline your construction process, delivering results that stand out for their excellence.",
-        svg: "house",
-        src: construction,
-        alt: "Gray metal building frame near tower crane during daytime",
-      },
-    ]}
-  />
+  <!-- Services Overview - TODO: Replace with shadcn/ui Card component -->
+  <section class="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
+    <div class="text-center">
+      <h2 class="text-3xl font-bold text-forest-800 dark:text-forest-200 md:text-4xl">Our Services</h2>
+      <p class="mt-4 text-lg text-earth-700 dark:text-earth-300">Expert training tailored to you and your dog</p>
+    </div>
+    <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <!-- Service Cards - TODO: Replace with shadcn/ui Card component -->
+      <div class="group rounded-2xl border border-beige-200 bg-white p-6 shadow-sm transition hover:shadow-md dark:border-earth-700 dark:bg-earth-900">
+        <h3 class="text-xl font-semibold text-forest-700 dark:text-forest-300">Dog Training</h3>
+        <p class="mt-3 text-earth-600 dark:text-earth-400">General obedience and focus training for everyday use. One-to-one sessions in your home.</p>
+        <a href="/services/dog-training" class="mt-4 inline-flex items-center text-forest-600 hover:text-forest-700 dark:text-forest-400">Learn more →</a>
+      </div>
+      <div class="group rounded-2xl border border-beige-200 bg-white p-6 shadow-sm transition hover:shadow-md dark:border-earth-700 dark:bg-earth-900">
+        <h3 class="text-xl font-semibold text-forest-700 dark:text-forest-300">Puppy Training</h3>
+        <p class="mt-3 text-earth-600 dark:text-earth-400">One-to-one puppy programmes with advantages over traditional group classes.</p>
+        <a href="/services/puppy-training" class="mt-4 inline-flex items-center text-forest-600 hover:text-forest-700 dark:text-forest-400">Learn more →</a>
+      </div>
+      <div class="group rounded-2xl border border-beige-200 bg-white p-6 shadow-sm transition hover:shadow-md dark:border-earth-700 dark:bg-earth-900">
+        <h3 class="text-xl font-semibold text-forest-700 dark:text-forest-300">Gundog Training</h3>
+        <p class="mt-3 text-earth-600 dark:text-earth-400">Train your pet to be a gundog. Specialising in working tests, trials, and shooting preparation.</p>
+        <a href="/services/gundog-training" class="mt-4 inline-flex items-center text-forest-600 hover:text-forest-700 dark:text-forest-400">Learn more →</a>
+      </div>
+      <div class="group rounded-2xl border border-beige-200 bg-white p-6 shadow-sm transition hover:shadow-md dark:border-earth-700 dark:bg-earth-900">
+        <h3 class="text-xl font-semibold text-forest-700 dark:text-forest-300">Training Walks</h3>
+        <p class="mt-3 text-earth-600 dark:text-earth-400">Your pup's personal trainer. Professional training walks for puppies under 6 months.</p>
+        <a href="/services/training-walks" class="mt-4 inline-flex items-center text-forest-600 hover:text-forest-700 dark:text-forest-400">Learn more →</a>
+      </div>
+      <div class="group rounded-2xl border border-beige-200 bg-white p-6 shadow-sm transition hover:shadow-md dark:border-earth-700 dark:bg-earth-900">
+        <h3 class="text-xl font-semibold text-forest-700 dark:text-forest-300">Behaviour Problems</h3>
+        <p class="mt-3 text-earth-600 dark:text-earth-400">Consultations for barking, aggression, inappropriate toileting, and other behavioural issues.</p>
+        <a href="/services/behaviour-problems" class="mt-4 inline-flex items-center text-forest-600 hover:text-forest-700 dark:text-forest-400">Learn more →</a>
+      </div>
+      <div class="group rounded-2xl border border-beige-200 bg-white p-6 shadow-sm transition hover:shadow-md dark:border-earth-700 dark:bg-earth-900">
+        <h3 class="text-xl font-semibold text-forest-700 dark:text-forest-300">Show Training</h3>
+        <p class="mt-3 text-earth-600 dark:text-earth-400">One-to-one ringcraft training. Crufts experience with group and best in show wins.</p>
+        <a href="/services/show-training" class="mt-4 inline-flex items-center text-forest-600 hover:text-forest-700 dark:text-forest-400">Learn more →</a>
+      </div>
+    </div>
+  </section>
 
+  <!-- Accreditations Section - TODO: Replace with shadcn/ui Card component -->
+  <section class="bg-beige-50 py-10 dark:bg-earth-950">
+    <div class="mx-auto max-w-[85rem] px-4 sm:px-6 lg:px-8">
+      <h2 class="text-center text-2xl font-bold text-forest-800 dark:text-forest-200">Professional Accreditations</h2>
+      <div class="mt-8 flex flex-wrap items-center justify-center gap-8">
+        <div class="flex flex-col items-center">
+          <img src={apdtLogo.src} alt="APDT - Association of Pet Dog Trainers" class="h-24 w-auto object-contain" />
+          <p class="mt-2 text-sm text-earth-600">Full Accredited Member</p>
+          <p class="text-xs text-earth-500">MAPDT 09777</p>
+        </div>
+        <div class="flex flex-col items-center">
+          <img src={abtcLogo.src} alt="ABTC - Animal Behaviour and Training Council" class="h-24 w-auto object-contain" />
+          <p class="mt-2 text-sm text-earth-600">Registered Trainer</p>
+        </div>
+      </div>
+      <p class="mt-6 text-center text-sm text-earth-600">
+        Mark Sanderson was the first man in the UK to gain a BSc Hons in Canine Behaviour and Training from the University of Hull
+      </p>
+    </div>
+  </section>
+
+  <!-- Testimonials Section - TODO: Replace with shadcn/ui Card component -->
   <TestimonialsSection
-    title="Fast-Track Your Projects"
-    subTitle="At ScrewFast, we ensure a swift start with instant account setup. Experience the speed of construction redefined."
+    title="What Our Clients Say"
+    subTitle="Join hundreds of satisfied dog owners who have transformed their relationship with their pets"
     ;
     testimonials={[
       {
         content:
-          "ScrewFast dramatically boosted our project efficiency. Setup was instant, and their rapid response times are phenomenal. Truly a game-changer in hardware and construction support!",
-        author: "Samantha Ruiz",
-        role: "Chief Operating Officer | ConstructIt Inc.",
+          "Mark's approach to training was exactly what we needed. His patience and expertise transformed our unruly spaniel into a well-behaved companion. The one-to-one sessions were invaluable.",
+        author: "Sarah & Max",
+        role: "Cocker Spaniel Owner",
         avatarSrc:
-          "https://images.unsplash.com/photo-1593104547489-5cfb3839a3b5?q=80&w=1453&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D8&auto=format&fit=facearea&facepad=2&w=320&h=320&q=80",
+          "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=300&auto=format&fit=crop",
       },
     ]}
     statistics={[
       {
-        count: "70k+",
+        count: "2006",
         description:
-          "customers equipped — from DIY to major construction firms",
+          "Established - over 15 years of experience",
       },
       {
-        count: "35%",
+        count: "1st",
         description:
-          "uptick in project efficiency with ScrewFast tools and services",
+          "First man in UK with BSc Hons Canine Behaviour",
       },
       {
-        count: "15.3%",
+        count: "APDT",
         description:
-          "reduction in maintenance costs reported by long-term clients",
+          "Full accredited member - promoting kind, fair, effective training",
       },
       {
-        count: "2x",
-        description: "quicker assembly using innovative fastening solutions",
+        count: "York",
+        description: "Based in Huntington, serving North Yorkshire",
       },
     ]}
   />
 
-  <PricingSection pricing={pricing} />
+  <!-- Google Reviews Widget Placeholder - TODO: Implement Google Reviews widget -->
+  <section class="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8">
+    <div class="rounded-2xl bg-forest-50 p-8 text-center dark:bg-forest-950">
+      <h2 class="text-2xl font-bold text-forest-800 dark:text-forest-200">Google Reviews</h2>
+      <p class="mt-4 text-earth-600 dark:text-earth-400">
+        <!-- TODO: Implement Google Reviews widget integration -->
+        Google Reviews widget will be integrated here. See our <a href="/reviews" class="text-forest-600 underline">Reviews page</a> for more details.
+      </p>
+    </div>
+  </section>
 
   <FAQ title="Frequently<br />asked questions" faqs={faqs} />
 
+  <!-- CTA Section - TODO: Replace with shadcn/ui Card component -->
   <HeroSectionAlt
-    title="Let's Build Together"
-    subTitle="ScrewFast is an open-source template, meticulously crafted with Astro, Tailwind CSS, and Preline UI frameworks."
-    url="https://github.com/mearashadowfax/ScrewFast"
+    title="Ready to Transform Your Dog's Behaviour?"
+    subTitle="Contact Mark today to discuss your training needs. Whether it's basic obedience, puppy training, or behavioural issues, we're here to help you and your dog succeed together."
+    url="/contact"
   />
 </MainLayout>

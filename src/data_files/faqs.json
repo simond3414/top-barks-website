@@ -1,29 +1,37 @@
 {
-  "subTitle": "Ask us anything about our brand and products, and get factual responses.",
+  "subTitle": "Common questions about our dog training services and methods.",
   "faqs": [
     {
-      "question": "What types of tools are included in the Starter Kit?",
-      "answer": "The Starter Kit features essential hand and power tools for diverse DIY projects, including hammers, drills, screwdrivers, and a variety of fasteners. It's a curated selection to help beginners and experienced DIYers alike tackle most home improvement tasks."
+      "question": "What training methods do you use?",
+      "answer": "I use reward-based, force-free training methods that are kind, fair, and effective. This includes clicker training and positive reinforcement techniques based on modern learning theory and scientific research. All methods are in keeping with the APDT's principles of kind, fair, and effective training."
     },
     {
-      "question": "Can I upgrade from the Starter Kit to the Professional Toolbox?",
-      "answer": "Absolutely! You can upgrade to the Professional Toolbox at any time to access a wider range of high-quality tools, enjoy priority customer support, and receive exclusive content. Contact our support team for a seamless transition."
+      "question": "Where do training sessions take place?",
+      "answer": "Most training sessions are held in your own home where your dog is most comfortable. This allows us to address real-life situations in your dog's natural environment. For certain services like gundog training, we may work in outdoor locations. I cover York and the surrounding North Yorkshire area."
     },
     {
-      "question": "What discounts are available for bulk orders through the Professional Toolbox plan?",
-      "answer": "Professional Toolbox members are entitled to exclusive discounts on bulk orders, the percentage of which may vary depending on the order volume. Get in touch with us to discuss your needs, and we'll provide a tailored discount structure."
+      "question": "How long are the training sessions?",
+      "answer": "Standard training sessions last one hour. This gives us enough time to work on training exercises while keeping your dog engaged and focused. For behaviour consultations, an initial 2-hour session is recommended to thoroughly assess and address issues."
     },
     {
-      "question": "What kind of customer support can I expect?",
-      "answer": "All our customers receive dedicated email support. With the Starter Kit, you'll receive our standard support, while the Professional Toolbox plan upgrades you to priority support, meaning faster response times and specialized assistance."
+      "question": "What qualifications do you have?",
+      "answer": "I hold a BSc Hons in Canine Behaviour and Training from the University of Hull (first man in the UK to gain this qualification), an FdSc in Canine Behaviour and Training, COAPE Think Dog qualification, and CAP 2 (clicker training competency). I'm also a full accredited member of the Association of Pet Dog Trainers (MAPDT 09777)."
     },
     {
-      "question": "How current are the online resources and tutorials?",
-      "answer": "We regularly update our online resources and tutorials to reflect the latest trends in DIY and construction, as well as introductions to new tools and techniques. Our material aims to be comprehensive and user-friendly for all skill levels."
+      "question": "Do you offer group classes?",
+      "answer": "I specialise in one-to-one training rather than group classes. Individual sessions allow us to focus entirely on your dog's specific needs, work at your dog's pace, and schedule sessions at times that suit you. Training in your home also means your dog learns in their natural environment."
     },
     {
-      "question": "Does ScrewFast offer services for large-scale construction projects?",
-      "answer": "Yes, our Enterprise Solutions are designed for larger companies requiring comprehensive services. We provide consultation, planning, and supply of high-grade tools and materials, as well as staffing solutions for substantial construction needs. Contact us for a customized quote."
+      "question": "What areas do you cover?",
+      "answer": "I'm based in Huntington, York, and primarily cover York and the surrounding North Yorkshire area within a reasonable radius. Other areas may be covered by arrangement - please contact me for a quote if you're outside the York area."
+    },
+    {
+      "question": "How do I book a session?",
+      "answer": "You can book a session by calling me on 01904 62 91 86 or 07932 63 28 55, emailing mark@topbarks.co.uk, or using the contact form on this website. I'll discuss your needs and arrange a time that suits you."
+    },
+    {
+      "question": "What is your cancellation policy?",
+      "answer": "I understand that circumstances can change. Please provide at least 24 hours notice if you need to cancel or reschedule a session. This allows me to offer the slot to another client. Repeated cancellations may result in forfeiture of that session."
     }
   ]
 }

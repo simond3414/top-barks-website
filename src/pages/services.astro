@@ -1,188 +1,185 @@
 ---
-// Import necessary components
 import MainLayout from "@/layouts/MainLayout.astro";
-import MainSection from "@components/ui/blocks/MainSection.astro";
-import LeftSection from "@components/ui/blocks/LeftSection.astro";
-import RightSection from "@components/ui/blocks/RightSection.astro";
-import FeaturesStats from "@components/sections/features/FeaturesStats.astro";
-
-// Import necessary images
-import blueprints from "@images/blueprints-image.avif";
-import personWorking from "@images/person-working.avif";
-import beforeAfter from "@images/before-after.avif";
-import constructionWorkers from "@images/construction-workers.avif";
-import aerialView from "@images/aerial-view.avif";
-import usingTools from "@images/using-tools.avif";
-import progressBuilding from "@images/progress-building.avif";
-import underConstruction from "@images/under-construction.avif";
 import { SITE } from "@data/constants";
 
-interface Article {
-  isRightSection: boolean;
-  title: string;
-  subTitle: string;
-  btnExists?: boolean;
-  btnTitle?: string;
-  btnURL?: string;
-  single?: boolean;
-  img?: any;
-  imgAlt?: string;
-  imgOne?: any;
-  imgOneAlt?: string;
-  imgTwo?: any;
-  imgTwoAlt?: string;
-}
-
-const articles: Article[] = [
-  {
-    isRightSection: true,
-    title: "Delivering Expert Guidance",
-    subTitle:
-      "Embarking on a construction project can be overwhelming. With our professional consultation services, we guide you through every stage, ensuring you make informed decisions. Whether you are a DIY enthusiast or a skilled contractor, our experts are on hand to offer tailored advice on product selection, project scope, and compliance with local regulations.",
-    single: false,
-    imgOne: blueprints,
-    imgOneAlt: "Blueprints and digital tablet with construction plans.",
-    imgTwo: personWorking,
-    imgTwoAlt: "Person working in the office",
-  },
-  {
-    isRightSection: false,
-    title: "Transforming Designs into Reality",
-    subTitle:
-      "Our skilled craftsmen bring precision and excellence to every construction project. From minor installations to substantial structural work, ScrewFast offers reliable construction services to turn your plans into tangible outcomes. We ensure the highest standards of safety and workmanship, utilizing top-quality tools and materials from our extensive inventory.",
-    img: beforeAfter,
-    imgAlt: "Construction site before and after",
-    btnExists: true,
-    btnTitle: "Learn More",
-    btnURL: "#",
-  },
-  {
-    isRightSection: true,
-    title: "Navigating Projects with Professional Oversight",
-    subTitle:
-      "Effective project management is at the heart of any successful build. ScrewFast provides thorough planning and robust management services that keep your project on time and within budget. Let us handle the complexities of workflow coordination, resource allocation, and stakeholder communication while you focus on your vision.",
-    single: false,
-    imgOne: constructionWorkers,
-    imgOneAlt: "Construction workers orchestrating a project",
-    imgTwo: aerialView,
-    imgTwoAlt: "Aerial view of managed construction",
-  },
-  {
-    isRightSection: false,
-    title: "Ensuring Long-lasting Performance",
-    subTitle:
-      "Our commitment to your project doesn't end at completion. ScrewFast offers ongoing maintenance and support services to ensure your construction's longevity and performance. From regular check-ups to emergency assistance, our responsive team is there to provide seamless support.",
-    img: usingTools,
-    imgAlt:
-      "Man in orange and black vest wearing white helmet holding yellow and black power tool",
-  },
-  {
-    isRightSection: true,
-    title: "Crafting Bespoke Strategies for Unique Challenges",
-    subTitle:
-      "For our larger enterprise clients, ScrewFast offers custom solutions designed to meet specific industry challenges. By understanding your unique needs, we engineer tailored strategies aimed at optimizing your operations, enhancing efficiency, and driving your business forward.",
-    single: false,
-    imgOne: progressBuilding,
-    imgOneAlt: "In progress building structure",
-    imgTwo: underConstruction,
-    imgTwoAlt: "Brown and gray building under construction",
-    btnExists: true,
-    btnTitle: "Read more",
-    btnURL: "#",
-  },
-];
-
-const pageTitle: string = `Services | ${SITE.title}`;
-const metaDescription =
-  "Uniting expertise with your vision, ScrewFast provides exceptional service and comprehensive solutions in the hardware and construction industry, from consultation to project completion.";
-const ogTitle = "Expert Consultation Services | ScrewFast";
+const pageTitle = `Services | ${SITE.title}`;
 ---
 
-<MainLayout
-  title={pageTitle}
-  customDescription={metaDescription}
-  customOgTitle={ogTitle}
-  structuredData={{
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "@id": "https://screwfast.uk/services",
-    url: "https://screwfast.uk/services",
-    name: "Expert Consultation Services | ScrewFast",
-    description:
-      "Uniting expertise with your vision, ScrewFast provides exceptional service and comprehensive solutions in the hardware and construction industry, from consultation to project completion.",
-    isPartOf: {
-      "@type": "WebSite",
-      url: "https://screwfast.uk",
-      name: "ScrewFast",
-      description:
-        "ScrewFast offers top-tier hardware tools and expert construction services to meet all your project needs.",
-    },
-    inLanguage: "en-US",
-  }}
->
-  {/* MainSection is the introductory section of the page, it also contains a CTA button */}
-  <MainSection
-    title="Uniting Expertise with Your Vision"
-    subTitle="At ScrewFast, we take pride in providing comprehensive solutions and exceptional service in the hardware and construction industry. Our experienced team is dedicated to supporting your project from inception to completion with a range of specialized services."
-    btnExists={true}
-    btnTitle="Schedule a Consultation"
-    btnURL="#"
-  />
-  {/* RightSection and LeftSection contain details about various services along with pertinent imagery.
-  They alternate for variety in design.
-  The 'btnExists' property is used to toggle the display of a button in these sections.
-  When btnExists={true}, a button is displayed.
-  This can be used to link to more detailed information or related resources.
-  RightSection can also conditionally render one or two images based on the 'single' property.
-  If 'single' is true, it displays one image, otherwise it displays two.
-  */}
-  {
-    articles.map((article) => {
-      return article.isRightSection ? (
-        <RightSection
-          title={article.title}
-          subTitle={article.subTitle}
-          single={article.single}
-          imgOne={article.imgOne}
-          imgOneAlt={article.imgOneAlt}
-          imgTwo={article.imgTwo}
-          imgTwoAlt={article.imgTwoAlt}
-          btnExists={article.btnExists}
-          btnTitle={article.btnTitle}
-          btnURL={article.btnURL}
-        />
-      ) : (
-        <LeftSection
-          title={article.title}
-          subTitle={article.subTitle}
-          img={article.img}
-          imgAlt={article.imgAlt}
-          btnExists={article.btnExists}
-          btnTitle={article.btnTitle}
-          btnURL={article.btnURL}
-        />
-      );
-    })
-  }
-  {/* FeaturesStats section showcases essential stats valuable to users */}
-  <FeaturesStats
-    title="By the Numbers"
-    subTitle="Our commitment to quality and reliability is evident in every project we undertake. At ScrewFast, we are dedicated to delivering industry-leading services that ensure your construction projects are built to last."
-    mainStatTitle="96%"
-    mainStatSubTitle="of our clients rate their experience with ScrewFast as exceptional"
-    stats={[
-      {
-        stat: "99.8%",
-        description: "project completion rate",
-      },
-      {
-        stat: "5,000+",
-        description: "successful installations",
-      },
-      {
-        stat: "85%",
-        description: "client growth year-over-year",
-      },
-    ]}
-  />
+<MainLayout title={pageTitle}>
+  <!-- Hero Section - TODO: Replace with shadcn/ui Card component -->
+  <section class="mx-auto max-w-[85rem] px-4 py-14 sm:px-6 lg:px-8">
+    <div class="text-center">
+      <h1 class="text-4xl font-bold tracking-tight text-forest-800 dark:text-forest-200 sm:text-5xl">
+        Our Services
+      </h1>
+      <p class="mt-4 text-xl text-earth-700 dark:text-earth-300">
+        Expert dog training and behaviour consultation tailored to you and your dog
+      </p>
+    </div>
+  </section>
+
+  <!-- Services Grid - TODO: Replace with shadcn/ui Card component -->
+  <section class="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8">
+    <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+      <!-- Dog Training -->
+      <div class="group rounded-2xl border border-beige-200 bg-white p-8 shadow-sm transition hover:shadow-md dark:border-earth-700 dark:bg-earth-900">
+        <div class="flex h-14 w-14 items-center justify-center rounded-full bg-forest-100 dark:bg-forest-900">
+          <svg class="h-7 w-7 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        <h3 class="mt-6 text-xl font-semibold text-forest-700 dark:text-forest-300">Dog Training</h3>
+        <p class="mt-3 text-earth-600 dark:text-earth-400">
+          General obedience and focus training for everyday use. One-to-one sessions tailored to your dog's needs in your own home.
+        </p>
+        <a href="/services/dog-training" class="mt-6 inline-flex items-center text-forest-600 hover:text-forest-700 dark:text-forest-400">
+          Learn more <svg class="ml-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+        </a>
+      </div>
+
+      <!-- Puppy Training -->
+      <div class="group rounded-2xl border border-beige-200 bg-white p-8 shadow-sm transition hover:shadow-md dark:border-earth-700 dark:bg-earth-900">
+        <div class="flex h-14 w-14 items-center justify-center rounded-full bg-forest-100 dark:bg-forest-900">
+          <svg class="h-7 w-7 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        <h3 class="mt-6 text-xl font-semibold text-forest-700 dark:text-forest-300">Puppy Training</h3>
+        <p class="mt-3 text-earth-600 dark:text-earth-400">
+          One-to-one puppy programmes with advantages over traditional group classes. Calmer learning environment with flexible scheduling.
+        </p>
+        <a href="/services/puppy-training" class="mt-6 inline-flex items-center text-forest-600 hover:text-forest-700 dark:text-forest-400">
+          Learn more <svg class="ml-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+        </a>
+      </div>
+
+      <!-- Gundog Training -->
+      <div class="group rounded-2xl border border-beige-200 bg-white p-8 shadow-sm transition hover:shadow-md dark:border-earth-700 dark:bg-earth-900">
+        <div class="flex h-14 w-14 items-center justify-center rounded-full bg-forest-100 dark:bg-forest-900">
+          <svg class="h-7 w-7 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+        </div>
+        <h3 class="mt-6 text-xl font-semibold text-forest-700 dark:text-forest-300">Gundog Training</h3>
+        <p class="mt-3 text-earth-600 dark:text-earth-400">
+          Train your pet to be a gundog. Specialising in helping family pet gundogs and those who want to work their dogs. Competes at open level.
+        </p>
+        <a href="/services/gundog-training" class="mt-6 inline-flex items-center text-forest-600 hover:text-forest-700 dark:text-forest-400">
+          Learn more <svg class="ml-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+        </a>
+      </div>
+
+      <!-- Training Walks -->
+      <div class="group rounded-2xl border border-beige-200 bg-white p-8 shadow-sm transition hover:shadow-md dark:border-earth-700 dark:bg-earth-900">
+        <div class="flex h-14 w-14 items-center justify-center rounded-full bg-forest-100 dark:bg-forest-900">
+          <svg class="h-7 w-7 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+          </svg>
+        </div>
+        <h3 class="mt-6 text-xl font-semibold text-forest-700 dark:text-forest-300">Training Walks</h3>
+        <p class="mt-3 text-earth-600 dark:text-earth-400">
+          Your pup's personal trainer. Professional training walks for puppies under 6 months. An alternative to regular dog walking with expert guidance.
+        </p>
+        <a href="/services/training-walks" class="mt-6 inline-flex items-center text-forest-600 hover:text-forest-700 dark:text-forest-400">
+          Learn more <svg class="ml-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+        </a>
+      </div>
+
+      <!-- Behaviour Problems -->
+      <div class="group rounded-2xl border border-beige-200 bg-white p-8 shadow-sm transition hover:shadow-md dark:border-earth-700 dark:bg-earth-900">
+        <div class="flex h-14 w-14 items-center justify-center rounded-full bg-forest-100 dark:bg-forest-900">
+          <svg class="h-7 w-7 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+          </svg>
+        </div>
+        <h3 class="mt-6 text-xl font-semibold text-forest-700 dark:text-forest-300">Behaviour Problems</h3>
+        <p class="mt-3 text-earth-600 dark:text-earth-400">
+          Consultations for barking, aggression, inappropriate toileting, and other behavioural issues. Two-hour dedicated sessions to understand and help.
+        </p>
+        <a href="/services/behaviour-problems" class="mt-6 inline-flex items-center text-forest-600 hover:text-forest-700 dark:text-forest-400">
+          Learn more <svg class="ml-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+        </a>
+      </div>
+
+      <!-- Show Training -->
+      <div class="group rounded-2xl border border-beige-200 bg-white p-8 shadow-sm transition hover:shadow-md dark:border-earth-700 dark:bg-earth-900">
+        <div class="flex h-14 w-14 items-center justify-center rounded-full bg-forest-100 dark:bg-forest-900">
+          <svg class="h-7 w-7 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+          </svg>
+        </div>
+        <h3 class="mt-6 text-xl font-semibold text-forest-700 dark:text-forest-300">Show Training</h3>
+        <p class="mt-3 text-earth-600 dark:text-earth-400">
+          One-to-one ringcraft training with Crufts experience. Group and best in show wins at open and championship show level. Specialises in gundogs.
+        </p>
+        <a href="/services/show-training" class="mt-6 inline-flex items-center text-forest-600 hover:text-forest-700 dark:text-forest-400">
+          Learn more <svg class="ml-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Training Philosophy Section - TODO: Replace with shadcn/ui Card component -->
+  <section class="bg-beige-50 py-16 dark:bg-earth-950">
+    <div class="mx-auto max-w-[85rem] px-4 sm:px-6 lg:px-8">
+      <div class="text-center">
+        <h2 class="text-3xl font-bold text-forest-800 dark:text-forest-200">Our Training Philosophy</h2>
+        <p class="mt-4 text-lg text-earth-700 dark:text-earth-300">
+          All services are based on reward-based, force-free methods that are kind, fair, and effective
+        </p>
+      </div>
+
+      <div class="mt-10 grid gap-8 md:grid-cols-3">
+        <div class="rounded-xl border border-beige-200 bg-white p-6 text-center dark:border-earth-700 dark:bg-earth-900">
+          <div class="flex h-16 w-16 items-center justify-center rounded-full bg-forest-100 mx-auto dark:bg-forest-900">
+            <svg class="h-8 w-8 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+            </svg>
+          </div>
+          <h3 class="mt-4 text-lg font-semibold text-forest-700 dark:text-forest-300">Kind</h3>
+          <p class="mt-2 text-earth-600 dark:text-earth-400">Force-free methods that never use punishment or intimidation</p>
+        </div>
+
+        <div class="rounded-xl border border-beige-200 bg-white p-6 text-center dark:border-earth-700 dark:bg-earth-900">
+          <div class="flex h-16 w-16 items-center justify-center rounded-full bg-forest-100 mx-auto dark:bg-forest-900">
+            <svg class="h-8 w-8 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />
+            </svg>
+          </div>
+          <h3 class="mt-4 text-lg font-semibold text-forest-700 dark:text-forest-300">Fair</h3>
+          <p class="mt-2 text-earth-600 dark:text-earth-400">Clear communication and realistic expectations for both dog and owner</p>
+        </div>
+
+        <div class="rounded-xl border border-beige-200 bg-white p-6 text-center dark:border-earth-700 dark:bg-earth-900">
+          <div class="flex h-16 w-16 items-center justify-center rounded-full bg-forest-100 mx-auto dark:bg-forest-900">
+            <svg class="h-8 w-8 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <h3 class="mt-4 text-lg font-semibold text-forest-700 dark:text-forest-300">Effective</h3>
+          <p class="mt-2 text-earth-600 dark:text-earth-400">Science-based methods backed by over 15 years of experience</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section - TODO: Replace with shadcn/ui Card component -->
+  <section class="py-16">
+    <div class="mx-auto max-w-[85rem] px-4 text-center sm:px-6 lg:px-8">
+      <h2 class="text-3xl font-bold text-forest-800 dark:text-forest-200">
+        Ready to Get Started?
+      </h2>
+      <p class="mt-4 text-lg text-earth-700 dark:text-earth-300">
+        Contact Mark to discuss which service is right for you and your dog
+      </p>
+      <div class="mt-8 flex justify-center gap-4">
+        <a href="/contact" class="inline-flex items-center justify-center rounded-full bg-forest-600 px-8 py-3 text-base font-medium text-white transition hover:bg-forest-700 dark:bg-forest-500 dark:hover:bg-forest-600">
+          Get in Touch
+        </a>
+        <a href="/about" class="inline-flex items-center justify-center rounded-full border-2 border-forest-600 px-8 py-3 text-base font-medium text-forest-600 transition hover:bg-forest-50 dark:border-forest-400 dark:text-forest-400 dark:hover:bg-forest-950">
+          About Mark
+        </a>
+      </div>
+    </div>
+  </section>
 </MainLayout>
