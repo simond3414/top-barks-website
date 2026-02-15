@@ -7,8 +7,8 @@ interface Props {
 const { variant = "square", class: className = "" } = Astro.props;
 
 const logoSrc = variant === "square" 
-  ? "/images/logos/2026_Logo_V3_with_2006.svg?v=3" 
-  : "/images/logos/2026_Logo_V3_with_2006.svg?v=3";
+  ? "/images/logos/Square_Logo.png?v=4" 
+  : "/images/logos/2026_Logo_V3_with_2006.png?v=4";
   
 const altText = "Top Barks Dog Training - Established 2006";
 ---
@@ -16,8 +16,8 @@ const altText = "Top Barks Dog Training - Established 2006";
 <img 
   src={logoSrc} 
   alt={altText}
-  width="160"
+  width="40"
   height="40"
   class={className || "h-10 w-auto object-contain inline-block"}
-  style="display: inline-block; min-width: 120px; min-height: 40px;"
+  style="display: inline-block; min-width: 40px; min-height: 40px;"
 />
