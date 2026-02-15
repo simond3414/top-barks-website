@@ -130,6 +130,15 @@ export const GET: APIRoute = async ({ locals }) => {
     
     const data: ReviewsData = JSON.parse(cached);
     
+    // Fix old URLs in stored reviews (migrate from g.page to google.com/maps)
+    const placeId = 'ChIJicTHUo0xeUgRQTRgWtd797A';
+    data.googleReviews = data.googleReviews.map(review => {
+      if (review.url && review.url.includes('g.page/r/')) {
+        return { ...review, url: `https://www.google.com/maps/place/?q=place_id:${placeId}` };
+      }
+      return review;
+    });
+    
     // Merge and sort reviews
     const allReviews = [...data.googleReviews, ...data.facebookReviews];
     allReviews.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
