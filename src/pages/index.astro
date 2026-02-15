@@ -11,6 +11,9 @@ import faqs from "@data/faqs.json";
 import features from "@data/features.json";
 import apdtLogo from "@images/APDT.png";
 import abtcLogo from "@images/ABTC.jpg";
+import bestDogTrainer1 from "@images/best_dog_trainer_2025_1.jpg";
+import bestDogTrainer2 from "@images/best_dog_trainer_2025_2.jpg";
+import ukDogCharter from "@images/UKDOG_CharterMember_Colour.jpg";
 ---
 
 <MainLayout>
@@ -32,6 +35,22 @@ import abtcLogo from "@images/ABTC.jpg";
     subTitle="I am an experienced and highly qualified York based dog trainer who specialises in helping people to train their dogs and tackle a range of behaviour problems. Established in 2006 with the aim of bringing people and their dogs together."
     features={features}
   />
+
+  <!-- Awards & Recognition Section - TODO: Replace with shadcn/ui Card component -->
+  <section class="bg-yellow-50 py-10 dark:bg-earth-900">
+    <div class="mx-auto max-w-[85rem] px-4 sm:px-6 lg:px-8">
+      <h2 class="text-center text-2xl font-bold text-forest-800 dark:text-forest-200">Awards & Recognition</h2>
+      <p class="mt-2 text-center text-earth-600 dark:text-earth-400">Quality Business Awards 2025 - York</p>
+      <div class="mt-8 flex flex-wrap items-center justify-center gap-8">
+        <div class="flex flex-col items-center">
+          <img src={bestDogTrainer1.src} alt="Best Dog Trainer 2025 Award" class="h-24 w-auto object-contain" />
+        </div>
+        <div class="flex flex-col items-center">
+          <img src={bestDogTrainer2.src} alt="Top Barks Dog Training - Quality Business Award" class="h-24 w-auto object-contain" />
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- Services Overview - TODO: Replace with shadcn/ui Card component -->
   <section class="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
@@ -87,6 +106,10 @@ import abtcLogo from "@images/ABTC.jpg";
         <div class="flex flex-col items-center">
           <img src={abtcLogo.src} alt="ABTC - Animal Behaviour and Training Council" class="h-24 w-auto object-contain" />
           <p class="mt-2 text-sm text-earth-600">Registered Trainer</p>
+        </div>
+        <div class="flex flex-col items-center">
+          <img src={ukDogCharter.src} alt="UK Dog Behaviour and Training Charter - Charter Member" class="h-24 w-auto object-contain" />
+          <p class="mt-2 text-sm text-earth-600">Charter Member</p>
         </div>
       </div>
       <p class="mt-6 text-center text-sm text-earth-600">
