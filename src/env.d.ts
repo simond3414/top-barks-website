@@ -10,10 +10,22 @@ declare namespace App {
         RESEND_FROM_EMAIL?: string;
         CONTACT_EMAIL?: string;
         RESEND_TEST_MODE?: string;
-        [key: string]: string | undefined;
+        GOOGLE_PLACES_API_KEY?: string;
+        PLACE_ID?: string;
+        ADMIN_PASSWORD?: string;
+        REVIEWS?: KVNamespace;
+        [key: string]: string | KVNamespace | undefined;
       };
     };
   }
+}
+
+// KV Namespace type for Cloudflare Workers
+declare interface KVNamespace {
+  get(key: string): Promise<string | null>;
+  put(key: string, value: string): Promise<void>;
+  delete(key: string): Promise<void>;
+  list(options?: { prefix?: string; limit?: number; cursor?: string }): Promise<{ keys: { name: string }[]; list_complete: boolean; cursor?: string }>;
 }
 
 declare module "*.jpg" {

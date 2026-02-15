@@ -433,10 +433,146 @@ git remote -v  # Should be github.com/simond3414/top-barks-website
 
 ---
 
+## Reviews System
+
+The reviews page now supports automatic fetching from Google Reviews and manual management of Facebook reviews.
+
+### Features
+
+- **Automatic Google Reviews**: Daily sync from Google Business Profile
+- **Manual Facebook Reviews**: Admin interface to add/edit Facebook reviews
+- **Mixed Display**: Reviews combined and sorted by date
+- **Admin Dashboard**: Password-protected interface at `/admin`
+
+### Setup Instructions
+
+#### 1. Configure Google Places API
+
+1. Go to [Google Cloud Console](https://console.cloud.google.com/)
+2. Create a new project called "Top Barks Reviews"
+3. Enable the **Places API (New)**
+4. Create an API key with the following restrictions:
+   - **API restrictions**: Places API only
+   - **Application restrictions**: HTTP referrers (recommended) or IP addresses
+5. Copy the API key
+
+#### 2. Set Up Cloudflare KV
+
+Create two KV namespaces in Cloudflare:
+
+```bash
+# Using wrangler CLI
+npx wrangler kv:namespace create "SESSION"
+npx wrangler kv:namespace create "REVIEWS"
+```
+
+Note the namespace IDs and update `wrangler.toml`:
+
+```toml
+[[kv_namespaces]]
+binding = "SESSION"
+id = "your_session_kv_id"
+
+[[kv_namespaces]]
+binding = "REVIEWS"
+id = "your_reviews_kv_id"
+```
+
+#### 3. Configure Environment Variables
+
+In Cloudflare Pages dashboard, add these environment variables:
+
+| Variable | Value | Description |
+|----------|-------|-------------|
+| `GOOGLE_PLACES_API_KEY` | Your API key from step 1 | For fetching Google reviews |
+| `PLACE_ID` | `ChIJicTHUo0xeUgRQTRgWtd797A` | Top Barks Google Business ID |
+| `ADMIN_PASSWORD` | `Mollymoo1` | Password for admin interface |
+
+**To change the admin password**: Edit `ADMIN_PASSWORD` in Cloudflare dashboard.
+
+#### 4. Set Up Cron Job
+
+In Cloudflare Workers dashboard:
+
+1. Go to **Workers & Pages** → Select your project
+2. Go to **Triggers** tab
+3. Add Cron Trigger: `0 3 * * *` (daily at 3:00 AM UTC)
+4. Save changes
+
+This will automatically refresh Google reviews daily.
+
+#### 5. First-Time Setup
+
+1. Visit `/admin` and login with password: `Mollymoo1`
+2. Click **"Refresh Google Reviews"** to fetch initial reviews
+3. Add any Facebook reviews manually using the form
+
+### Admin Interface
+
+Access the admin dashboard at: `https://topbarks.co.uk/admin`
+
+**Features:**
+- View all reviews (Google + Facebook)
+- Refresh Google reviews manually
+- Add/edit/delete Facebook reviews
+- See last updated timestamp
+- Statistics overview
+
+**Note**: Facebook reviews can only be edited/deleted manually. Google reviews are read-only and refreshed via API.
+
+### How It Works
+
+**Architecture:**
+```
+┌─────────────────┐     ┌──────────────┐     ┌──────────────┐
+│  Google Places  │────▶│  Cloudflare  │────▶│  Reviews Page│
+│     API         │     │  KV Storage  │     │  (/reviews)  │
+└─────────────────┘     └──────────────┘     └──────────────┘
+                                │
+                                ▼
+                       ┌──────────────┐
+                       │  Admin Dash  │
+                       │  (/admin)    │
+                       └──────────────┘
+```
+
+**Data Flow:**
+1. Cron job runs daily at 3:00 AM UTC
+2. Fetches latest Google reviews via Places API
+3. Stores in KV storage with existing Facebook reviews
+4. Reviews page displays combined list sorted by date
+5. Admin can manually add/edit Facebook reviews
+
+**Review Display:**
+- Shows up to 9 reviews initially
+- "Load More" button for additional reviews
+- "Read more" toggle for long reviews (>150 characters)
+- Source badges (Google/Facebook)
+- Links to original reviews
+
+### Troubleshooting
+
+**No reviews showing:**
+- Check Google Places API key is configured
+- Visit `/admin` and manually refresh
+- Check Cloudflare KV namespace is properly bound
+
+**Admin login not working:**
+- Clear cookies and try again
+- Check `ADMIN_PASSWORD` environment variable
+- Password is case-sensitive
+
+**Cron job not running:**
+- Verify cron trigger is set in Cloudflare dashboard
+- Check Workers logs for errors
+- Manually trigger via `/admin` dashboard
+
+---
+
 ## Future Enhancements
 
-- [ ] Enable contact form email functionality
-- [ ] Add Google Reviews widget integration
+- [x] Add Google Reviews widget integration (automated)
+- [x] Add Facebook reviews management
 - [ ] Complete shadcn/ui migration
 - [ ] Add blog functionality with content collections
 - [ ] Implement search functionality

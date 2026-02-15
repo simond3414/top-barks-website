@@ -1,0 +1,42 @@
+# Cloudflare Workers configuration for Top Barks website
+name = "top-barks-website"
+main = "./dist/_worker.js"
+compatibility_date = "2024-02-01"
+compatibility_flags = ["nodejs_compat"]
+
+# KV Namespaces
+[[kv_namespaces]]
+binding = "SESSION"
+id = "your_session_kv_namespace_id"
+preview_id = "your_session_kv_preview_id"
+
+[[kv_namespaces]]
+binding = "REVIEWS"
+id = "your_reviews_kv_namespace_id"
+preview_id = "your_reviews_kv_preview_id"
+
+# Cron Triggers - Daily at 3:00 AM UTC
+crons = ["0 3 * * *"]
+
+[vars]
+PLACE_ID = "ChIJicTHUo0xeUgRQTRgWtd797A"
+
+# Environment variables (secrets) - set via Cloudflare dashboard or wrangler secret
+# These should NOT be committed to git:
+# - RESEND_API_KEY
+# - GOOGLE_PLACES_API_KEY
+# - ADMIN_PASSWORD
+
+[env.production]
+name = "top-barks-website"
+
+[[env.production.kv_namespaces]]
+binding = "SESSION"
+id = "your_production_session_kv_id"
+
+[[env.production.kv_namespaces]]
+binding = "REVIEWS"
+id = "your_production_reviews_kv_id"
+
+[env.production.vars]
+PLACE_ID = "ChIJicTHUo0xeUgRQTRgWtd797A"

@@ -1,0 +1,454 @@
+---
+export const prerender = false;
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reviews Dashboard | Top Barks</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f5f5; min-height: 100vh; }
+    .header { background: #3d6b3d; color: white; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; }
+    .header h1 { font-size: 24px; font-family: 'Poppins', sans-serif; }
+    .header button { background: rgba(255, 255, 255, 0.2); color: white; border: 1px solid white; padding: 8px 16px; border-radius: 6px; cursor: pointer; transition: all 0.3s; }
+    .header button:hover { background: white; color: #3d6b3d; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 40px; }
+    .stat-card { background: white; padding: 24px; border-radius: 12px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); }
+    .stat-card h3 { color: #666; font-size: 14px; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .stat-card .number { font-size: 32px; font-weight: bold; color: #3d6b3d; }
+    .actions { background: white; padding: 24px; border-radius: 12px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); margin-bottom: 40px; }
+    .actions h2 { margin-bottom: 20px; color: #333; }
+    .action-buttons { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn { padding: 12px 24px; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.3s; }
+    .btn-primary { background: #3d6b3d; color: white; }
+    .btn-primary:hover { background: #2d5a2d; }
+    .btn-secondary { background: #e0e0e0; color: #333; }
+    .btn-secondary:hover { background: #d0d0d0; }
+    .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+    .reviews-section { background: white; padding: 24px; border-radius: 12px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); }
+    .reviews-section h2 { margin-bottom: 20px; color: #333; }
+    .last-updated { color: #666; font-size: 14px; margin-bottom: 20px; }
+    .review-card { border: 1px solid #e0e0e0; border-radius: 8px; padding: 16px; margin-bottom: 16px; transition: box-shadow 0.3s; }
+    .review-card:hover { box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); }
+    .review-header { display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px; }
+    .review-meta { display: flex; align-items: center; gap: 12px; }
+    .source-badge { padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; text-transform: uppercase; }
+    .source-google { background: #e8f5e9; color: #3d6b3d; }
+    .source-facebook { background: #e3f2fd; color: #1976d2; }
+    .reviewer-name { font-weight: 600; color: #333; }
+    .rating { color: #ffc107; font-size: 18px; }
+    .review-date { color: #999; font-size: 12px; }
+    .review-text { color: #555; line-height: 1.6; margin-bottom: 12px; }
+    .review-actions { display: flex; gap: 8px; }
+    .review-actions button { padding: 6px 12px; border: 1px solid #ddd; background: white; border-radius: 4px; cursor: pointer; font-size: 12px; transition: all 0.3s; }
+    .review-actions button:hover { background: #f5f5f5; }
+    .review-actions .delete-btn { color: #c33; border-color: #fcc; }
+    .review-actions .delete-btn:hover { background: #fee; }
+    .no-reviews { text-align: center; padding: 40px; color: #999; }
+    .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.5); z-index: 1000; align-items: center; justify-content: center; }
+    .modal-overlay.show { display: flex; }
+    .modal { background: white; padding: 32px; border-radius: 16px; width: 90%; max-width: 500px; max-height: 90vh; overflow-y: auto; }
+    .modal h2 { margin-bottom: 24px; color: #333; }
+    .form-group { margin-bottom: 20px; }
+    .form-group label { display: block; margin-bottom: 8px; color: #555; font-weight: 500; font-size: 14px; }
+    .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 14px; font-family: inherit; }
+    .form-group input:focus, .form-group textarea:focus, .form-group select:focus { outline: none; border-color: #3d6b3d; }
+    .form-group textarea { min-height: 100px; resize: vertical; }
+    .modal-actions { display: flex; gap: 12px; justify-content: flex-end; margin-top: 24px; }
+    .loading { display: inline-block; width: 20px; height: 20px; border: 3px solid #fff; border-radius: 50%; border-top-color: transparent; animation: spin 1s ease-in-out infinite; vertical-align: middle; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .message { padding: 12px 16px; border-radius: 8px; margin-bottom: 20px; font-size: 14px; display: none; }
+    .message.show { display: block; }
+    .message.success { background: #e8f5e9; color: #3d6b3d; border: 1px solid #c8e6c9; }
+    .message.error { background: #fee; color: #c33; border: 1px solid #fcc; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Top Barks - Reviews Dashboard</h1>
+    <button onclick="logout()">Logout</button>
+  </div>
+  
+  <div class="container">
+    <div id="message" class="message"></div>
+    
+    <div class="stats">
+      <div class="stat-card">
+        <h3>Total Reviews</h3>
+        <div class="number" id="totalCount">-</div>
+      </div>
+      <div class="stat-card">
+        <h3>Google Reviews</h3>
+        <div class="number" id="googleCount">-</div>
+      </div>
+      <div class="stat-card">
+        <h3>Facebook Reviews</h3>
+        <div class="number" id="facebookCount">-</div>
+      </div>
+      <div class="stat-card">
+        <h3>Last Updated</h3>
+        <div class="number" style="font-size: 14px;" id="lastUpdated">-</div>
+      </div>
+    </div>
+    
+    <div class="actions">
+      <h2>Actions</h2>
+      <div class="action-buttons">
+        <button class="btn btn-primary" onclick="refreshGoogleReviews()" id="refreshBtn">
+          <span id="refreshSpinner"></span>
+          Refresh Google Reviews
+        </button>
+        <button class="btn btn-secondary" onclick="openAddModal()">
+          + Add Facebook Review
+        </button>
+      </div>
+    </div>
+    
+    <div class="reviews-section">
+      <h2>All Reviews</h2>
+      <div class="last-updated" id="lastUpdatedText">Loading...</div>
+      <div id="reviewsList">
+        <div class="no-reviews">Loading reviews...</div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="modal-overlay" id="modal">
+    <div class="modal">
+      <h2 id="modalTitle">Add Facebook Review</h2>
+      <form id="reviewForm">
+        <input type="hidden" id="reviewId">
+        <div class="form-group">
+          <label for="author">Reviewer Name *</label>
+          <input type="text" id="author" required placeholder="e.g., Sarah Johnson">
+        </div>
+        <div class="form-group">
+          <label for="rating">Rating *</label>
+          <select id="rating" required>
+            <option value="5">★★★★★ (5 stars)</option>
+            <option value="4">★★★★☆ (4 stars)</option>
+            <option value="3">★★★☆☆ (3 stars)</option>
+            <option value="2">★★☆☆☆ (2 stars)</option>
+            <option value="1">★☆☆☆☆ (1 star)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="reviewText">Review Text *</label>
+          <textarea id="reviewText" required placeholder="Enter the review text..."></textarea>
+        </div>
+        <div class="form-group">
+          <label for="reviewDate">Date *</label>
+          <input type="date" id="reviewDate" required>
+        </div>
+        <div class="form-group">
+          <label for="reviewUrl">Review URL (optional)</label>
+          <input type="url" id="reviewUrl" placeholder="https://facebook.com/...">
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="saveBtn">Save Review</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Check authentication
+    if (!document.cookie.includes('admin_session=authenticated')) {
+      window.location.href = '/admin';
+    }
+    
+    // Type definitions
+    interface Review {
+      id: string;
+      source: 'google' | 'facebook';
+      author: string;
+      rating: number;
+      text: string;
+      date: string;
+      url?: string;
+    }
+    
+    let currentReviews: Review[] = [];
+    let editingId: string | null = null;
+    
+    // Load reviews on page load
+    loadReviews();
+    
+    async function loadReviews(): Promise<void> {
+      try {
+        const response = await fetch('/api/reviews');
+        const data = await response.json();
+        
+        if (data.reviews) {
+          currentReviews = data.reviews;
+          displayReviews(data.reviews);
+          updateStats(data);
+        }
+      } catch (error) {
+        console.error('Error loading reviews:', error);
+        showMessage('Error loading reviews', 'error');
+      }
+    }
+    
+    function displayReviews(reviews: Review[]): void {
+      const container = document.getElementById('reviewsList');
+      if (!container) return;
+      
+      if (reviews.length === 0) {
+        container.innerHTML = '<div class="no-reviews">No reviews yet. Click "Refresh Google Reviews" to fetch reviews.</div>';
+        return;
+      }
+      
+      container.innerHTML = reviews.map(review => {
+        const fullText = review.text || '';
+        const isLong = fullText.length > 200;
+        const displayText = isLong ? fullText.substring(0, 200) + '...' : fullText;
+        
+        return `
+          <div class="review-card">
+            <div class="review-header">
+              <div class="review-meta">
+                <span class="source-badge source-${review.source}">${review.source}</span>
+                <span class="reviewer-name">${escapeHtml(review.author)}</span>
+                <span class="rating">${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}</span>
+              </div>
+              <span class="review-date">${formatDate(review.date)}</span>
+            </div>
+            <div class="review-text">${escapeHtml(displayText)}${isLong ? '...' : ''}</div>
+            ${review.url ? `<a href="${escapeHtml(review.url)}" target="_blank" style="font-size: 12px; color: #3d6b3d;">View Original →</a>` : ''}
+            ${review.source === 'facebook' ? `
+              <div class="review-actions">
+                <button onclick="editReview('${review.id}')">Edit</button>
+                <button class="delete-btn" onclick="deleteReview('${review.id}')">Delete</button>
+              </div>
+            ` : ''}
+          </div>
+        `;
+      }).join('');
+    }
+    
+    function updateStats(data: any): void {
+      const totalCountEl = document.getElementById('totalCount');
+      const googleCountEl = document.getElementById('googleCount');
+      const facebookCountEl = document.getElementById('facebookCount');
+      const lastUpdatedEl = document.getElementById('lastUpdated');
+      const lastUpdatedTextEl = document.getElementById('lastUpdatedText');
+      
+      if (totalCountEl) totalCountEl.textContent = data.reviews?.length || 0;
+      if (googleCountEl) googleCountEl.textContent = data.googleCount || 0;
+      if (facebookCountEl) facebookCountEl.textContent = data.facebookCount || 0;
+      
+      if (data.lastUpdated && lastUpdatedEl) {
+        const date = new Date(data.lastUpdated);
+        lastUpdatedEl.textContent = date.toLocaleDateString('en-GB');
+        if (lastUpdatedTextEl) {
+          lastUpdatedTextEl.textContent = `Last updated: ${date.toLocaleString('en-GB')}`;
+        }
+      } else if (lastUpdatedTextEl) {
+        lastUpdatedTextEl.textContent = 'Never updated';
+      }
+    }
+    
+    async function refreshGoogleReviews(): Promise<void> {
+      const btn = document.getElementById('refreshBtn') as HTMLButtonElement | null;
+      const spinner = document.getElementById('refreshSpinner');
+      
+      if (btn) btn.disabled = true;
+      if (spinner) spinner.className = 'loading';
+      
+      try {
+        const response = await fetch('/api/reviews', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'refresh_google' })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+          showMessage(`Successfully refreshed ${data.count} Google reviews`, 'success');
+          await loadReviews();
+        } else {
+          showMessage(data.message || 'Error refreshing reviews', 'error');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        showMessage('Error refreshing reviews. Make sure API key is configured.', 'error');
+      } finally {
+        if (btn) btn.disabled = false;
+        if (spinner) spinner.className = '';
+      }
+    }
+    
+    function openAddModal(): void {
+      editingId = null;
+      const modalTitle = document.getElementById('modalTitle');
+      const modal = document.getElementById('modal');
+      const reviewForm = document.getElementById('reviewForm') as HTMLFormElement | null;
+      const reviewDate = document.getElementById('reviewDate') as HTMLInputElement | null;
+      
+      if (modalTitle) modalTitle.textContent = 'Add Facebook Review';
+      if (reviewForm) reviewForm.reset();
+      if (reviewDate) reviewDate.value = new Date().toISOString().split('T')[0];
+      if (modal) modal.classList.add('show');
+    }
+    
+    function editReview(id: string): void {
+      const review = currentReviews.find(r => r.id === id);
+      if (!review) return;
+      
+      editingId = id;
+      const modalTitle = document.getElementById('modalTitle');
+      const modal = document.getElementById('modal');
+      const reviewIdInput = document.getElementById('reviewId') as HTMLInputElement | null;
+      const authorInput = document.getElementById('author') as HTMLInputElement | null;
+      const ratingSelect = document.getElementById('rating') as HTMLSelectElement | null;
+      const reviewTextArea = document.getElementById('reviewText') as HTMLTextAreaElement | null;
+      const reviewDateInput = document.getElementById('reviewDate') as HTMLInputElement | null;
+      const reviewUrlInput = document.getElementById('reviewUrl') as HTMLInputElement | null;
+      
+      if (modalTitle) modalTitle.textContent = 'Edit Facebook Review';
+      if (reviewIdInput) reviewIdInput.value = id;
+      if (authorInput) authorInput.value = review.author;
+      if (ratingSelect) ratingSelect.value = String(review.rating);
+      if (reviewTextArea) reviewTextArea.value = review.text;
+      if (reviewDateInput) reviewDateInput.value = review.date.split('T')[0];
+      if (reviewUrlInput) reviewUrlInput.value = review.url || '';
+      if (modal) modal.classList.add('show');
+    }
+    
+    function closeModal(): void {
+      const modal = document.getElementById('modal');
+      if (modal) modal.classList.remove('show');
+    }
+    
+    const reviewForm = document.getElementById('reviewForm');
+    if (reviewForm) {
+      reviewForm.addEventListener('submit', async function(e: Event) {
+        e.preventDefault();
+        
+        const saveBtn = document.getElementById('saveBtn') as HTMLButtonElement | null;
+        const authorInput = document.getElementById('author') as HTMLInputElement | null;
+        const ratingSelect = document.getElementById('rating') as HTMLSelectElement | null;
+        const reviewTextArea = document.getElementById('reviewText') as HTMLTextAreaElement | null;
+        const reviewDateInput = document.getElementById('reviewDate') as HTMLInputElement | null;
+        const reviewUrlInput = document.getElementById('reviewUrl') as HTMLInputElement | null;
+        
+        if (!authorInput || !ratingSelect || !reviewTextArea || !reviewDateInput) return;
+        
+        if (saveBtn) {
+          saveBtn.disabled = true;
+          saveBtn.textContent = 'Saving...';
+        }
+        
+        const reviewData = {
+          action: editingId ? null : 'add_facebook',
+          id: editingId,
+          author: authorInput.value,
+          rating: parseInt(ratingSelect.value),
+          text: reviewTextArea.value,
+          date: reviewDateInput.value,
+          url: reviewUrlInput?.value || ''
+        };
+        
+        try {
+          const method = editingId ? 'PUT' : 'POST';
+          const response = await fetch('/api/reviews', {
+            method,
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(reviewData)
+          });
+          
+          const data = await response.json();
+          
+          if (data.success) {
+            showMessage(editingId ? 'Review updated' : 'Review added', 'success');
+            closeModal();
+            await loadReviews();
+          } else {
+            showMessage(data.message || 'Error saving review', 'error');
+          }
+        } catch (error) {
+          console.error('Error:', error);
+          showMessage('Error saving review', 'error');
+        } finally {
+          if (saveBtn) {
+            saveBtn.disabled = false;
+            saveBtn.textContent = 'Save Review';
+          }
+        }
+      });
+    }
+    
+    async function deleteReview(id: string): Promise<void> {
+      if (!confirm('Are you sure you want to delete this review?')) return;
+      
+      try {
+        const response = await fetch('/api/reviews', {
+          method: 'DELETE',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+          showMessage('Review deleted', 'success');
+          await loadReviews();
+        } else {
+          showMessage(data.message || 'Error deleting review', 'error');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        showMessage('Error deleting review', 'error');
+      }
+    }
+    
+    function showMessage(text: string, type: 'success' | 'error'): void {
+      const msg = document.getElementById('message');
+      if (!msg) return;
+      
+      msg.textContent = text;
+      msg.className = `message ${type} show`;
+      
+      setTimeout(function() {
+        msg.classList.remove('show');
+      }, 5000);
+    }
+    
+    function logout(): void {
+      document.cookie = 'admin_session=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+      window.location.href = '/admin';
+    }
+    
+    function escapeHtml(text: string): string {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+    
+    function formatDate(dateString: string): string {
+      const date = new Date(dateString);
+      return date.toLocaleDateString('en-GB', { 
+        day: 'numeric', 
+        month: 'short', 
+        year: 'numeric' 
+      });
+    }
+    
+    // Close modal on overlay click
+    const modal = document.getElementById('modal');
+    if (modal) {
+      modal.addEventListener('click', function(e: Event) {
+        if ((e.target as HTMLElement).id === 'modal') {
+          closeModal();
+        }
+      });
+    }
+  </script>
+</body>
+</html>

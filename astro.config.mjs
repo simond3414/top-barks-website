@@ -13,6 +13,8 @@ export default defineConfig({
       enabled: true,
     },
   }),
+  // KV namespace bindings for reviews
+  // Requires: wrangler kv:namespace create "REVIEWS"
   // https://docs.astro.build/en/guides/images/#authorizing-remote-images
   site: "https://topbarks.co.uk",
   image: {
