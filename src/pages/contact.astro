@@ -192,6 +192,30 @@ const pageTitle = `Contact | ${SITE.title}`;
     const formMessage = document.getElementById('form-message');
     const form = e.target as HTMLFormElement;
     
+    // Clear previous messages
+    formMessage!.className = 'mt-4 hidden text-center text-sm';
+    
+    // Basic client-side validation
+    const name = (form.elements.namedItem('name') as HTMLInputElement).value.trim();
+    const email = (form.elements.namedItem('email') as HTMLInputElement).value.trim();
+    const message = (form.elements.namedItem('message') as HTMLTextAreaElement).value.trim();
+    
+    if (!name || !email || !message) {
+      formMessage!.textContent = 'Please fill in all required fields (Name, Email, and Message).';
+      formMessage!.className = 'mt-4 text-center text-sm text-amber-600 dark:text-amber-400';
+      formMessage!.classList.remove('hidden');
+      return;
+    }
+    
+    // Email format validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      formMessage!.textContent = 'Please enter a valid email address.';
+      formMessage!.className = 'mt-4 text-center text-sm text-amber-600 dark:text-amber-400';
+      formMessage!.classList.remove('hidden');
+      return;
+    }
+    
     // Disable submit button during submission
     submitBtn.disabled = true;
     submitBtn.textContent = 'Sending...';
@@ -215,16 +239,46 @@ const pageTitle = `Contact | ${SITE.title}`;
       const result = await response.json();
       
       if (result.success) {
-        formMessage!.textContent = result.message;
-        formMessage!.className = 'mt-4 text-center text-sm text-green-600 dark:text-green-400';
+        formMessage!.innerHTML = `
+          <div class="flex items-center justify-center gap-2">
+            <svg class="h-5 w-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+            <span>${result.message}</span>
+          </div>
+        `;
+        formMessage!.className = 'mt-6 rounded-lg bg-green-50 p-4 text-center text-sm font-medium text-green-800 dark:bg-green-900/20 dark:text-green-200';
         form.reset();
+        
+        // Scroll to message
+        formMessage!.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
       } else {
-        formMessage!.textContent = result.message || 'There was an error. Please try again.';
-        formMessage!.className = 'mt-4 text-center text-sm text-red-600 dark:text-red-400';
+        formMessage!.innerHTML = `
+          <div class="flex items-center justify-center gap-2">
+            <svg class="h-5 w-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span>${result.message || 'There was an error. Please try again.'}</span>
+          </div>
+        `;
+        formMessage!.className = 'mt-6 rounded-lg bg-red-50 p-4 text-center text-sm font-medium text-red-800 dark:bg-red-900/20 dark:text-red-200';
+        
+        // Scroll to message
+        formMessage!.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
       }
     } catch (error) {
-      formMessage!.textContent = 'There was an error sending your message. Please try again later.';
-      formMessage!.className = 'mt-4 text-center text-sm text-red-600 dark:text-red-400';
+      formMessage!.innerHTML = `
+        <div class="flex items-center justify-center gap-2">
+          <svg class="h-5 w-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span>There was an error sending your message. Please try again later or contact us directly at mark@topbarks.co.uk</span>
+        </div>
+      `;
+      formMessage!.className = 'mt-6 rounded-lg bg-red-50 p-4 text-center text-sm font-medium text-red-800 dark:bg-red-900/20 dark:text-red-200';
+      
+      // Scroll to message
+      formMessage!.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     } finally {
       formMessage!.classList.remove('hidden');
       submitBtn.disabled = false;
