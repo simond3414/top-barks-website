@@ -78,13 +78,14 @@ async function fetchGoogleReviews(env: any) {
   }
   
   try {
-    const url = `https://places.googleapis.com/v1/places/${placeId}?fields=reviews`;
+    // Places API (New) endpoint - use specific field subfields
+    const url = `https://places.googleapis.com/v1/places/${placeId}?fields=reviews.rating,reviews.text.text,reviews.originalText.text,reviews.authorAttribution.displayName,reviews.authorAttribution.uri,reviews.publishTime`;
     
     const response = await fetch(url, {
       headers: {
         'Content-Type': 'application/json',
         'X-Goog-Api-Key': apiKey,
-        'X-Goog-FieldMask': 'reviews'
+        'X-Goog-FieldMask': 'reviews.rating,reviews.text.text,reviews.originalText.text,reviews.authorAttribution.displayName,reviews.authorAttribution.uri,reviews.publishTime'
       }
     });
     
@@ -95,11 +96,19 @@ async function fetchGoogleReviews(env: any) {
     
     const data = await response.json();
     
+    // Debug logging
+    console.log('Google Places API response (refresh):', {
+      hasReviews: !!data.reviews,
+      reviewCount: data.reviews?.length || 0,
+      firstReviewKeys: data.reviews?.[0] ? Object.keys(data.reviews[0]) : null
+    });
+    
     if (!data.reviews || !Array.isArray(data.reviews)) {
+      console.error('No reviews array in response:', data);
       return [];
     }
     
-    return data.reviews.map((review: any, index: number) => ({
+    const mappedReviews = data.reviews.map((review: any, index: number) => ({
       id: `google_${index}_${Date.now()}`,
       source: 'google' as const,
       author: review.authorAttribution?.displayName || 'Anonymous',
@@ -107,7 +116,11 @@ async function fetchGoogleReviews(env: any) {
       text: review.text?.text || review.originalText?.text || '',
       date: review.publishTime || new Date().toISOString(),
       url: `https://g.page/r/${placeId}/review`
-    })).slice(0, 20);
+    }));
+    
+    console.log(`Mapped ${mappedReviews.length} reviews from refresh`);
+    
+    return mappedReviews;
     
   } catch (error) {
     console.error('Error fetching Google reviews:', error);
