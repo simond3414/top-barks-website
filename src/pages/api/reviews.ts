@@ -233,7 +233,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
           }),
           { status: 200 }
         );
-      } catch (error) {
+      } catch (error: any) {
         return new Response(
           JSON.stringify({ 
             success: true, 
