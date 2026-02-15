@@ -1,6 +1,21 @@
 /// <reference path="../.astro/types.d.ts" />
 /// <reference types="astro/client" />
 
+// Type declarations for Cloudflare runtime environment
+declare namespace App {
+  interface Locals {
+    runtime: {
+      env: {
+        RESEND_API_KEY?: string;
+        RESEND_FROM_EMAIL?: string;
+        CONTACT_EMAIL?: string;
+        RESEND_TEST_MODE?: string;
+        [key: string]: string | undefined;
+      };
+    };
+  }
+}
+
 declare module "*.jpg" {
   const value: import("astro/assets").ImageMetadata;
   export default value;

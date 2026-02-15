@@ -45,8 +45,11 @@ function getClientIp(request: Request): string {
   return 'unknown';
 }
 
-export const POST: APIRoute = async ({ request }) => {
+export const POST: APIRoute = async ({ request, locals }) => {
   try {
+    // Access environment variables from Cloudflare runtime
+    const { env } = locals.runtime;
+    
     const ip = getClientIp(request);
     
     // Check rate limit
@@ -88,7 +91,7 @@ export const POST: APIRoute = async ({ request }) => {
     }
 
     const timestamp = new Date().toISOString();
-    const testMode = import.meta.env.RESEND_TEST_MODE === 'true';
+    const testMode = env.RESEND_TEST_MODE === 'true';
     
     // Log submission regardless of test mode
     console.log('Contact form submission:', {
@@ -114,9 +117,9 @@ export const POST: APIRoute = async ({ request }) => {
     }
 
     // Check for Resend API key
-    const resendApiKey = import.meta.env.RESEND_API_KEY;
+    const resendApiKey = env.RESEND_API_KEY;
     if (!resendApiKey || resendApiKey === 'your_resend_api_key_here') {
-      console.error('Resend API key not configured');
+      console.error('Resend API key not configured. Available env vars:', Object.keys(env));
       return new Response(
         JSON.stringify({ 
           success: false, 
@@ -129,8 +132,8 @@ export const POST: APIRoute = async ({ request }) => {
     // Initialize Resend
     const resend = new Resend(resendApiKey);
     
-    const fromEmail = import.meta.env.RESEND_FROM_EMAIL || 'noreply@email.snapshothistory.xyz';
-    const toEmail = import.meta.env.CONTACT_EMAIL || 'mark@topbarks.co.uk';
+    const fromEmail = env.RESEND_FROM_EMAIL || 'noreply@email.snapshothistory.xyz';
+    const toEmail = env.CONTACT_EMAIL || 'mark@topbarks.co.uk';
     
     // Format service name for display
     const serviceDisplay = service 
