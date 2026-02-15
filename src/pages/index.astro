@@ -46,6 +46,30 @@ import ukDogCharter from "@images/UKDOG_CharterMember_Colour.jpg";
     </div>
   </HeroSection>
 
+  <!-- Accreditations Section - Moved up to fill gap and provide immediate credibility -->
+  <section class="bg-beige-50 py-8 dark:bg-earth-950">
+    <div class="mx-auto max-w-[85rem] px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-wrap items-center justify-center gap-8">
+        <div class="flex flex-col items-center">
+          <img src={apdtLogo.src} alt="APDT - Association of Pet Dog Trainers" class="h-20 w-auto object-contain" />
+          <p class="mt-2 text-sm text-earth-600">Full Accredited Member</p>
+          <p class="text-xs text-earth-500">MAPDT 09777</p>
+        </div>
+        <div class="flex flex-col items-center">
+          <img src={abtcLogo.src} alt="ABTC - Animal Behaviour and Training Council" class="h-20 w-auto object-contain" />
+          <p class="mt-2 text-sm text-earth-600">Registered Trainer</p>
+        </div>
+        <div class="flex flex-col items-center">
+          <img src={ukDogCharter.src} alt="UK Dog Behaviour and Training Charter - Charter Member" class="h-20 w-auto object-contain" />
+          <p class="mt-2 text-sm text-earth-600">Charter Member</p>
+        </div>
+      </div>
+      <p class="mt-4 text-center text-sm text-earth-600">
+        Mark Sanderson was the first man in the UK to gain a BSc Hons in Canine Behaviour and Training from the University of Hull
+      </p>
+    </div>
+  </section>
+
   <!-- Features/Why Choose Section - TODO: Replace with shadcn/ui Card component -->
   <FeaturesGeneral
     title="Why Choose Top Barks?"
@@ -107,31 +131,6 @@ import ukDogCharter from "@images/UKDOG_CharterMember_Colour.jpg";
         <p class="mt-3 text-earth-600 dark:text-earth-400">One-to-one ringcraft training. Crufts experience with group and best in show wins.</p>
         <a href="/services/show-training" class="mt-4 inline-flex items-center text-forest-600 hover:text-forest-700 dark:text-forest-400">Learn more →</a>
       </div>
-    </div>
-  </section>
-
-  <!-- Accreditations Section - TODO: Replace with shadcn/ui Card component -->
-  <section class="bg-beige-50 py-10 dark:bg-earth-950">
-    <div class="mx-auto max-w-[85rem] px-4 sm:px-6 lg:px-8">
-      <h2 class="text-center text-2xl font-bold text-forest-800 dark:text-forest-200">Professional Accreditations</h2>
-      <div class="mt-8 flex flex-wrap items-center justify-center gap-8">
-        <div class="flex flex-col items-center">
-          <img src={apdtLogo.src} alt="APDT - Association of Pet Dog Trainers" class="h-24 w-auto object-contain" />
-          <p class="mt-2 text-sm text-earth-600">Full Accredited Member</p>
-          <p class="text-xs text-earth-500">MAPDT 09777</p>
-        </div>
-        <div class="flex flex-col items-center">
-          <img src={abtcLogo.src} alt="ABTC - Animal Behaviour and Training Council" class="h-24 w-auto object-contain" />
-          <p class="mt-2 text-sm text-earth-600">Registered Trainer</p>
-        </div>
-        <div class="flex flex-col items-center">
-          <img src={ukDogCharter.src} alt="UK Dog Behaviour and Training Charter - Charter Member" class="h-24 w-auto object-contain" />
-          <p class="mt-2 text-sm text-earth-600">Charter Member</p>
-        </div>
-      </div>
-      <p class="mt-6 text-center text-sm text-earth-600">
-        Mark Sanderson was the first man in the UK to gain a BSc Hons in Canine Behaviour and Training from the University of Hull
-      </p>
     </div>
   </section>
 
