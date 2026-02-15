@@ -3,6 +3,9 @@ import sharp from "sharp";
 import ico from "sharp-ico";
 import path from "node:path";
 
+// Disable prerendering - sharp requires Node.js runtime
+export const prerender = false;
+
 const faviconSrc = path.resolve("src/images/icon.png");
 
 export const GET: APIRoute = async () => {

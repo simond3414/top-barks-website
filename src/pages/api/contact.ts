@@ -1,6 +1,9 @@
 import type { APIRoute } from 'astro';
 import { Resend } from 'resend';
 
+// Disable prerendering for API routes that need to handle POST requests dynamically
+export const prerender = false;
+
 // Simple rate limiting (in-memory, resets on server restart)
 // In production, use Redis or a database
 const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
