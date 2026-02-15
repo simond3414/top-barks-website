@@ -1,0 +1,151 @@
+---
+import MainLayout from "@/layouts/MainLayout.astro";
+import { Image } from "astro:assets";
+import puppyPrepImg from "@images/front_pic.jpg";
+import { SITE } from "@data/constants";
+
+const pageTitle = `Puppy Pre-Planning | ${SITE.title}`;
+---
+
+<MainLayout title={pageTitle}>
+  <!-- Hero Section - TODO: Replace with shadcn/ui Card component -->
+  <section class="mx-auto max-w-[85rem] px-4 py-14 sm:px-6 lg:px-8">
+    <div class="text-center">
+      <h1 class="text-4xl font-bold tracking-tight text-forest-800 dark:text-forest-200 sm:text-5xl">
+        Puppy Pre-Planning
+      </h1>
+      <p class="mt-4 text-xl text-earth-700 dark:text-earth-300">
+        Get everything right before your puppy arrives
+      </p>
+    </div>
+  </section>
+
+  <!-- Content Section - TODO: Replace with shadcn/ui Card component -->
+  <section class="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8">
+    <div class="grid items-start gap-12 lg:grid-cols-2">
+      <div>
+        <h2 class="text-2xl font-bold text-forest-800 dark:text-forest-200">Start on the Right Foot</h2>
+        <p class="mt-4 text-lg text-earth-700 dark:text-earth-300">
+          Buying a puppy can have lots of difficulties. The decisions you make before bringing your puppy home will affect the next 10-15 years of your life together. Getting it right from the start saves time, money, and heartache down the road.
+        </p>
+
+        <div class="mt-8 rounded-xl border-l-4 border-forest-500 bg-forest-50 p-6 dark:bg-forest-950">
+          <h3 class="text-lg font-semibold text-forest-800 dark:text-forest-200">Why Pre-Planning Matters</h3>
+          <p class="mt-2 text-earth-700 dark:text-earth-300">
+            Many behavioural problems stem from poor preparation or choosing a puppy that's not suited to your lifestyle. We can help you choose the right puppy for you and ensure that before you bring it home, everything is in place for when it arrives.
+          </p>
+        </div>
+
+        <div class="mt-8">
+          <h3 class="text-xl font-semibold text-forest-800 dark:text-forest-200">What We Help With</h3>
+          
+          <div class="mt-6 space-y-4">
+            <div class="rounded-xl border border-beige-200 bg-white p-6 dark:border-earth-700 dark:bg-earth-900">
+              <div class="flex items-center gap-3">
+                <div class="flex h-10 w-10 items-center justify-center rounded-full bg-forest-100 font-bold text-forest-600 dark:bg-forest-900">
+                  1
+                </div>
+                <h4 class="text-lg font-semibold text-forest-700 dark:text-forest-300">Choosing the Right Puppy</h4>
+              </div>
+              <p class="mt-3 text-earth-600 dark:text-earth-400">
+                Breed selection, temperament assessment, and finding reputable breeders. We help you match a puppy's characteristics to your lifestyle, living situation, and experience level.
+              </p>
+            </div>
+
+            <div class="rounded-xl border border-beige-200 bg-white p-6 dark:border-earth-700 dark:bg-earth-900">
+              <div class="flex items-center gap-3">
+                <div class="flex h-10 w-10 items-center justify-center rounded-full bg-forest-100 font-bold text-forest-600 dark:bg-forest-900">
+                  2
+                </div>
+                <h4 class="text-lg font-semibold text-forest-700 dark:text-forest-300">Home Preparation</h4>
+              </div>
+              <p class="mt-3 text-earth-600 dark:text-earth-400">
+                Setting up safe spaces, puppy-proofing your home, and creating the right environment. We'll advise on essential equipment, bed placement, and establishing routines from day one.
+              </p>
+            </div>
+
+            <div class="rounded-xl border border-beige-200 bg-white p-6 dark:border-earth-700 dark:bg-earth-900">
+              <div class="flex items-center gap-3">
+                <div class="flex h-10 w-10 items-center justify-center rounded-full bg-forest-100 font-bold text-forest-600 dark:bg-forest-900">
+                  3
+                </div>
+                <h4 class="text-lg font-semibold text-forest-700 dark:text-forest-300">Planning Your First Days</h4>
+              </div>
+              <p class="mt-3 text-earth-600 dark:text-earth-400">
+                Routine planning, feeding schedules, toilet training strategies, and socialisation planning. Having a clear plan reduces stress for both you and your new puppy.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-8 rounded-2xl bg-beige-50 p-6 dark:bg-earth-950">
+          <h3 class="text-lg font-semibold text-forest-800 dark:text-forest-200">Consultation Options</h3>
+          <p class="mt-2 text-earth-700 dark:text-earth-300">
+            This could either be a face-to-face consultation at your home or a telephone consultation. Both formats provide comprehensive guidance tailored to your specific situation.
+          </p>
+          <ul class="mt-4 space-y-2">
+            <li class="flex items-start gap-2">
+              <svg class="mt-1 h-4 w-4 flex-shrink-0 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span class="text-earth-700 dark:text-earth-300"><strong>Face-to-face:</strong> Ideal for home environment assessment and hands-on equipment advice</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <svg class="mt-1 h-4 w-4 flex-shrink-0 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span class="text-earth-700 dark:text-earth-300"><strong>Telephone:</strong> Convenient for breed selection and general planning discussions</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="mt-8">
+          <h3 class="text-xl font-semibold text-forest-800 dark:text-forest-200">Benefits of Pre-Planning</h3>
+          <ul class="mt-4 space-y-3">
+            <li class="flex items-start gap-3">
+              <svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span class="text-earth-700 dark:text-earth-300">Start on the right foot from day one</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span class="text-earth-700 dark:text-earth-300">Avoid common mistakes that lead to problems later</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span class="text-earth-700 dark:text-earth-300">Peace of mind knowing you're prepared</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span class="text-earth-700 dark:text-earth-300">Set your puppy up for a lifetime of success</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="mt-8 rounded-2xl bg-beige-50 p-6 dark:bg-earth-950">
+          <h3 class="text-lg font-semibold text-forest-800 dark:text-forest-200">Pricing</h3>
+          <p class="mt-2 text-earth-700 dark:text-earth-300">
+            Consultations available for the York area and surrounding regions. Please contact us to discuss your specific needs and receive a personalised quote.
+          </p>
+        </div>
+
+        <div class="mt-8">
+          <a href="/contact" class="inline-flex items-center justify-center rounded-full bg-forest-600 px-8 py-3 text-base font-medium text-white transition hover:bg-forest-700 dark:bg-forest-500 dark:hover:bg-forest-600">
+            Book Pre-Planning Session
+          </a>
+        </div>
+      </div>
+
+      <div class="lg:sticky lg:top-8">
+        <Image src={puppyPrepImg} alt="Preparing for a new puppy" class="rounded-2xl object-cover shadow-lg" />
+      </div>
+    </div>
+  </section>
+</MainLayout>

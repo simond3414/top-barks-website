@@ -1,0 +1,137 @@
+---
+import MainLayout from "@/layouts/MainLayout.astro";
+import { Image } from "astro:assets";
+import adolescentImg from "@images/dog_training.jpeg";
+import { SITE } from "@data/constants";
+
+const pageTitle = `Adolescent Life Skills Training | ${SITE.title}`;
+---
+
+<MainLayout title={pageTitle}>
+  <!-- Hero Section - TODO: Replace with shadcn/ui Card component -->
+  <section class="mx-auto max-w-[85rem] px-4 py-14 sm:px-6 lg:px-8">
+    <div class="text-center">
+      <h1 class="text-4xl font-bold tracking-tight text-forest-800 dark:text-forest-200 sm:text-5xl">
+        Adolescent Life Skills Training
+      </h1>
+      <p class="mt-4 text-xl text-earth-700 dark:text-earth-300">
+        Specialist support for dogs aged 8-24 months
+      </p>
+    </div>
+  </section>
+
+  <!-- Content Section - TODO: Replace with shadcn/ui Card component -->
+  <section class="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8">
+    <div class="grid items-start gap-12 lg:grid-cols-2">
+      <div>
+        <h2 class="text-2xl font-bold text-forest-800 dark:text-forest-200">Navigating the Teenage Years</h2>
+        <p class="mt-4 text-lg text-earth-700 dark:text-earth-300">
+          Adolescent dogs can cause a lot of problems. Between 8 and 24 months, your dog goes through significant developmental changes that can test even the most patient owner. This is an awkward age between puppyhood and adulthood where many dogs display challenging behaviours that seem to appear out of nowhere.
+        </p>
+
+        <div class="mt-8 rounded-xl border-l-4 border-forest-500 bg-forest-50 p-6 dark:bg-forest-950">
+          <h3 class="text-lg font-semibold text-forest-800 dark:text-forest-200">A Critical Time</h3>
+          <p class="mt-2 text-earth-700 dark:text-earth-300">
+            Lots of dogs at this age get rehomed. The combination of increased independence, selective hearing, and boundary testing can make this period particularly challenging. Without proper guidance, what should be a temporary phase can become a permanent problem.
+          </p>
+        </div>
+
+        <div class="mt-8">
+          <h3 class="text-xl font-semibold text-forest-800 dark:text-forest-200">Common Adolescent Challenges</h3>
+          <ul class="mt-4 space-y-3">
+            <li class="flex items-start gap-3">
+              <svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span class="text-earth-700 dark:text-earth-300">Regression in previously learned training</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span class="text-earth-700 dark:text-earth-300">Selective hearing and ignoring commands</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span class="text-earth-700 dark:text-earth-300">Increased independence and boundary testing</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span class="text-earth-700 dark:text-earth-300">Excitement and distraction in new environments</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span class="text-earth-700 dark:text-earth-300">Changes in social behaviour with other dogs</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="mt-8 rounded-2xl bg-beige-50 p-6 dark:bg-earth-950">
+          <h3 class="text-lg font-semibold text-forest-800 dark:text-forest-200">Our Approach</h3>
+          <p class="mt-2 text-earth-700 dark:text-earth-300">
+            We offer practical solutions for dogs at this tricky stage. Our adolescent training focuses on reinforcing foundations while respecting your dog's developmental needs. We work with you to navigate this challenging period and prepare your dog for a well-behaved adulthood.
+          </p>
+          <p class="mt-4 text-earth-700 dark:text-earth-300">
+            Sessions are tailored to your dog's specific challenges and your lifestyle, ensuring training fits naturally into your routine rather than adding extra stress.
+          </p>
+        </div>
+
+        <div class="mt-8">
+          <h3 class="text-xl font-semibold text-forest-800 dark:text-forest-200">What You'll Learn</h3>
+          <ul class="mt-4 space-y-3">
+            <li class="flex items-start gap-3">
+              <svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span class="text-earth-700 dark:text-earth-300">Managing teenage rebellion with patience and consistency</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span class="text-earth-700 dark:text-earth-300">Reinforcing training foundations without frustration</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span class="text-earth-700 dark:text-earth-300">Setting boundaries that stick through adolescence</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="mt-0.5 h-5 w-5 flex-shrink-0 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span class="text-earth-700 dark:text-earth-300">Preparing your dog for well-behaved adulthood</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="mt-8 rounded-2xl bg-beige-50 p-6 dark:bg-earth-950">
+          <h3 class="text-lg font-semibold text-forest-800 dark:text-forest-200">Pricing & Availability</h3>
+          <p class="mt-2 text-earth-700 dark:text-earth-300">
+            Flexible packages available including single sessions and blocks of lessons. Sessions can be held at your home or at locations convenient to you in the York area. Other areas covered on request.
+          </p>
+          <p class="mt-4 text-earth-700 dark:text-earth-300">
+            Contact us for a quote tailored to your dog's needs.
+          </p>
+        </div>
+
+        <div class="mt-8">
+          <a href="/contact" class="inline-flex items-center justify-center rounded-full bg-forest-600 px-8 py-3 text-base font-medium text-white transition hover:bg-forest-700 dark:bg-forest-500 dark:hover:bg-forest-600">
+            Book Adolescent Training
+          </a>
+        </div>
+      </div>
+
+      <div class="lg:sticky lg:top-8">
+        <Image src={adolescentImg} alt="Adolescent dog training session" class="rounded-2xl object-cover shadow-lg" />
+      </div>
+    </div>
+  </section>
+</MainLayout>

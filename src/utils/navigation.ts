@@ -13,6 +13,8 @@ const footerLinks = [
     links: [
       { name: "Dog Training", url: "/services/dog-training" },
       { name: "Puppy Training", url: "/services/puppy-training" },
+      { name: "Adolescent Training", url: "/services/adolescent-training" },
+      { name: "Puppy Pre-Planning", url: "/services/puppy-pre-planning" },
       { name: "Gundog Training", url: "/services/gundog-training" },
       { name: "Training Walks", url: "/services/training-walks" },
       { name: "Behaviour Problems", url: "/services/behaviour-problems" },
