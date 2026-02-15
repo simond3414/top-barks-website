@@ -136,14 +136,21 @@ export const prerender = false;
           <input type="text" id="author" required placeholder="e.g., Sarah Johnson">
         </div>
         <div class="form-group">
-          <label for="rating">Rating *</label>
-          <select id="rating" required>
+          <label for="rating">Rating (optional - leave empty for recommendation)</label>
+          <select id="rating">
+            <option value="">-- No star rating (Recommendation) --</option>
             <option value="5">★★★★★ (5 stars)</option>
             <option value="4">★★★★☆ (4 stars)</option>
             <option value="3">★★★☆☆ (3 stars)</option>
             <option value="2">★★☆☆☆ (2 stars)</option>
             <option value="1">★☆☆☆☆ (1 star)</option>
           </select>
+        </div>
+        <div class="form-group">
+          <label for="isRecommendation">
+            <input type="checkbox" id="isRecommendation" checked style="width: auto; margin-right: 8px;">
+            Mark as Recommendation (no star rating)
+          </label>
         </div>
         <div class="form-group">
           <label for="reviewText">Review Text *</label>
@@ -154,8 +161,11 @@ export const prerender = false;
           <input type="date" id="reviewDate" required>
         </div>
         <div class="form-group">
-          <label for="reviewUrl">Review URL (optional)</label>
-          <input type="url" id="reviewUrl" placeholder="https://facebook.com/...">
+          <label for="reviewUrl">Facebook Post URL or Embed Code</label>
+          <textarea id="reviewUrl" placeholder="Paste the Facebook post URL or the full iframe embed code here..." rows="3"></textarea>
+          <small style="color: #666; font-size: 12px; display: block; margin-top: 4px;">
+            Tip: You can paste the full iframe embed code - the URL will be extracted automatically
+          </small>
         </div>
         <div class="modal-actions">
           <button type="button" class="btn btn-secondary" id="cancelBtn">Cancel</button>
@@ -214,11 +224,13 @@ export const prerender = false;
         const reviewTextArea = document.getElementById('reviewText');
         /** @type {HTMLInputElement|null} */
         const reviewDateInput = document.getElementById('reviewDate');
-        /** @type {HTMLInputElement|null} */
+        /** @type {HTMLTextAreaElement|null} */
         const reviewUrlInput = document.getElementById('reviewUrl');
+        /** @type {HTMLInputElement|null} */
+        const isRecommendationInput = document.getElementById('isRecommendation');
         
-        if (!authorInput || !ratingSelect || !reviewTextArea || !reviewDateInput) {
-          showMessage('Missing required fields', 'error');
+        if (!authorInput || !reviewTextArea || !reviewDateInput) {
+          showMessage('Missing required fields (author, text, and date are required)', 'error');
           return;
         }
         
@@ -227,15 +239,21 @@ export const prerender = false;
           saveBtn.textContent = 'Saving...';
         }
         
+        // Build review data
         const reviewData = {
           action: editingId ? null : 'add_facebook',
           id: editingId,
           author: authorInput.value,
-          rating: parseInt(ratingSelect.value),
           text: reviewTextArea.value,
           date: reviewDateInput.value,
-          url: reviewUrlInput?.value || ''
+          url: reviewUrlInput?.value || '',
+          isRecommendation: isRecommendationInput?.checked ?? true
         };
+        
+        // Only add rating if provided
+        if (ratingSelect && ratingSelect.value) {
+          reviewData.rating = parseInt(ratingSelect.value);
+        }
         
         try {
           const method = editingId ? 'PUT' : 'POST';
@@ -300,18 +318,34 @@ export const prerender = false;
         const isLong = fullText.length > 200;
         const displayText = isLong ? fullText.substring(0, 200) + '...' : fullText;
         
+        // Handle rating display - show stars if rated, "Recommended" badge if not
+        let ratingDisplay = '';
+        if (review.rating) {
+          ratingDisplay = `<span class="rating">${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}</span>`;
+        } else if (review.source === 'facebook') {
+          ratingDisplay = `<span class="source-badge source-facebook" style="background: #e8f5e9; color: #2e7d32;">✓ Recommended</span>`;
+        }
+        
+        // Handle URL display
+        let urlDisplay = '';
+        if (review.url) {
+          urlDisplay = `<a href="${escapeHtml(review.url)}" target="_blank" style="font-size: 12px; color: #3d6b3d; display: block; margin-top: 8px;">View Original →</a>`;
+        } else if (review.source === 'facebook') {
+          urlDisplay = `<span style="font-size: 12px; color: #999; display: block; margin-top: 8px;">No link available</span>`;
+        }
+        
         return `
           <div class="review-card" data-review-id="${review.id}" data-review-source="${review.source}">
             <div class="review-header">
               <div class="review-meta">
                 <span class="source-badge source-${review.source}">${review.source}</span>
                 <span class="reviewer-name">${escapeHtml(review.author)}</span>
-                <span class="rating">${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}</span>
+                ${ratingDisplay}
               </div>
               <span class="review-date">${formatDate(review.date)}</span>
             </div>
             <div class="review-text">${escapeHtml(displayText)}${isLong ? '...' : ''}</div>
-            ${review.url ? `<a href="${escapeHtml(review.url)}" target="_blank" style="font-size: 12px; color: #3d6b3d;">View Original →</a>` : ''}
+            ${urlDisplay}
             ${review.source === 'facebook' ? `
               <div class="review-actions">
                 <button class="edit-btn" data-action="edit">Edit</button>
@@ -478,10 +512,19 @@ export const prerender = false;
       const reviewForm = document.getElementById('reviewForm');
       /** @type {HTMLInputElement|null} */
       const reviewDate = document.getElementById('reviewDate');
+      /** @type {HTMLInputElement|null} */
+      const isRecommendationInput = document.getElementById('isRecommendation');
+      /** @type {HTMLSelectElement|null} */
+      const ratingSelect = document.getElementById('rating');
       
       if (modalTitle) modalTitle.textContent = 'Add Facebook Review';
       if (reviewForm) reviewForm.reset();
       if (reviewDate) reviewDate.value = new Date().toISOString().split('T')[0];
+      
+      // Set defaults for new review
+      if (isRecommendationInput) isRecommendationInput.checked = true;
+      if (ratingSelect) ratingSelect.value = ''; // No rating by default
+      
       if (modal) modal.classList.add('show');
     }
     
@@ -507,16 +550,32 @@ export const prerender = false;
       const reviewTextArea = document.getElementById('reviewText');
       /** @type {HTMLInputElement|null} */
       const reviewDateInput = document.getElementById('reviewDate');
-      /** @type {HTMLInputElement|null} */
+      /** @type {HTMLTextAreaElement|null} */
       const reviewUrlInput = document.getElementById('reviewUrl');
+      /** @type {HTMLInputElement|null} */
+      const isRecommendationInput = document.getElementById('isRecommendation');
       
       if (modalTitle) modalTitle.textContent = 'Edit Facebook Review';
       if (reviewIdInput) reviewIdInput.value = id;
       if (authorInput) authorInput.value = review.author;
-      if (ratingSelect) ratingSelect.value = String(review.rating);
       if (reviewTextArea) reviewTextArea.value = review.text;
       if (reviewDateInput) reviewDateInput.value = review.date.split('T')[0];
       if (reviewUrlInput) reviewUrlInput.value = review.url || '';
+      
+      // Handle rating - if no rating, select the "no rating" option and check recommendation
+      if (ratingSelect) {
+        if (review.rating) {
+          ratingSelect.value = String(review.rating);
+        } else {
+          ratingSelect.value = '';
+        }
+      }
+      
+      // Set recommendation checkbox - default to true if no rating
+      if (isRecommendationInput) {
+        isRecommendationInput.checked = review.isRecommendation !== false && !review.rating;
+      }
+      
       if (modal) modal.classList.add('show');
     }
     

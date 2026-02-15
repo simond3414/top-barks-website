@@ -6,10 +6,11 @@ interface Review {
   id: string;
   source: 'google' | 'facebook';
   author: string;
-  rating: number;
+  rating?: number;
   text: string;
   date: string;
   url?: string;
+  isRecommendation?: boolean;
 }
 
 interface ReviewsData {
@@ -21,6 +22,38 @@ interface ReviewsData {
 // Admin authentication - simple session-based
 const ADMIN_PASSWORD = 'Mollymoo1';
 const SESSION_DURATION = 24 * 60 * 60 * 1000; // 24 hours
+
+// Extract Facebook URL from iframe embed code or direct URL
+function extractFacebookUrl(input: string): string | null {
+  if (!input || input.trim() === '') return null;
+  
+  const trimmed = input.trim();
+  
+  // Handle direct URL
+  if (trimmed.startsWith('http')) {
+    return trimmed;
+  }
+  
+  // Extract from iframe embed code
+  // Look for href="..." or href=... in the embed code
+  const hrefMatch = trimmed.match(/href=["']([^"']+)["']/);
+  if (hrefMatch) {
+    try {
+      const decoded = decodeURIComponent(hrefMatch[1]);
+      // Ensure it's a valid Facebook URL
+      if (decoded.includes('facebook.com')) {
+        return decoded;
+      }
+    } catch {
+      // If decoding fails, return as-is if it looks like a URL
+      if (hrefMatch[1].includes('facebook.com')) {
+        return hrefMatch[1];
+      }
+    }
+  }
+  
+  return null;
+}
 
 function verifyAdminAuth(request: Request): boolean {
   const cookie = request.headers.get('cookie');
@@ -279,25 +312,33 @@ export const POST: APIRoute = async ({ request, locals }) => {
     }
     
     if (action === 'add_facebook') {
-      const { author, rating, text, date, url } = body;
+      const { author, rating, text, date, url, isRecommendation } = body;
       
-      // Validate
-      if (!author || !rating || !text || !date) {
+      // Validate - rating is now optional
+      if (!author || !text || !date) {
         return new Response(
-          JSON.stringify({ success: false, message: 'Missing required fields' }),
+          JSON.stringify({ success: false, message: 'Missing required fields (author, text, date are required)' }),
           { status: 400 }
         );
       }
+      
+      // Extract URL from iframe embed code or use direct URL
+      const extractedUrl = url ? extractFacebookUrl(url) : null;
       
       const newReview: Review = {
         id: `fb_${Date.now()}`,
         source: 'facebook',
         author,
-        rating: parseInt(rating),
         text,
         date,
-        url: url || 'https://facebook.com/topbarks'
+        url: extractedUrl || undefined,
+        isRecommendation: isRecommendation !== false // Default to true
       };
+      
+      // Only add rating if provided and valid
+      if (rating && rating !== '' && !isNaN(parseInt(rating))) {
+        newReview.rating = parseInt(rating);
+      }
       
       data.facebookReviews.unshift(newReview);
       data.lastUpdated = new Date().toISOString();
@@ -338,7 +379,7 @@ export const PUT: APIRoute = async ({ request, locals }) => {
     }
     
     const { env } = locals.runtime;
-    const { id, author, rating, text, date, url } = await request.json();
+    const { id, author, rating, text, date, url, isRecommendation } = await request.json();
     
     const cached = await env.REVIEWS?.get('reviews_data');
     if (!cached) {
@@ -358,15 +399,41 @@ export const PUT: APIRoute = async ({ request, locals }) => {
       );
     }
     
-    data.facebookReviews[index] = {
-      ...data.facebookReviews[index],
-      author: author || data.facebookReviews[index].author,
-      rating: rating ? parseInt(rating) : data.facebookReviews[index].rating,
-      text: text || data.facebookReviews[index].text,
-      date: date || data.facebookReviews[index].date,
-      url: url || data.facebookReviews[index].url
+    const existingReview = data.facebookReviews[index];
+    
+    // Build updated review
+    const updatedReview: Review = {
+      ...existingReview,
+      author: author || existingReview.author,
+      text: text || existingReview.text,
+      date: date || existingReview.date,
     };
     
+    // Handle rating - can be removed by setting to empty/null
+    if (rating !== undefined) {
+      if (rating === '' || rating === null) {
+        delete updatedReview.rating;
+      } else {
+        updatedReview.rating = parseInt(rating);
+      }
+    }
+    
+    // Handle URL extraction from iframe code
+    if (url !== undefined) {
+      if (url === '' || url === null) {
+        delete updatedReview.url;
+      } else {
+        const extractedUrl = extractFacebookUrl(url);
+        updatedReview.url = extractedUrl || undefined;
+      }
+    }
+    
+    // Handle recommendation flag
+    if (isRecommendation !== undefined) {
+      updatedReview.isRecommendation = isRecommendation;
+    }
+    
+    data.facebookReviews[index] = updatedReview;
     data.lastUpdated = new Date().toISOString();
     await env.REVIEWS?.put('reviews_data', JSON.stringify(data));
     
