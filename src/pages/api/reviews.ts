@@ -35,19 +35,34 @@ function extractFacebookUrl(input: string): string | null {
   }
   
   // Extract from iframe embed code
-  // Look for href="..." or href=... in the embed code
-  const hrefMatch = trimmed.match(/href=["']([^"']+)["']/);
-  if (hrefMatch) {
+  // Facebook iframes have src="https://www.facebook.com/plugins/post.php?href=URL_ENCODED_POST_URL"
+  const srcMatch = trimmed.match(/src=["']([^"']+)["']/);
+  if (srcMatch) {
     try {
-      const decoded = decodeURIComponent(hrefMatch[1]);
-      // Ensure it's a valid Facebook URL
-      if (decoded.includes('facebook.com')) {
-        return decoded;
+      const srcUrl = srcMatch[1];
+      
+      // Parse the src URL to extract the href query parameter
+      const urlObj = new URL(srcUrl);
+      const hrefParam = urlObj.searchParams.get('href');
+      
+      if (hrefParam) {
+        // The href parameter contains the actual Facebook post URL (already decoded by URLSearchParams)
+        if (hrefParam.includes('facebook.com')) {
+          return hrefParam;
+        }
       }
     } catch {
-      // If decoding fails, return as-is if it looks like a URL
-      if (hrefMatch[1].includes('facebook.com')) {
-        return hrefMatch[1];
+      // If URL parsing fails, try regex fallback
+      const hrefParamMatch = trimmed.match(/href=([^&\s"']+)/);
+      if (hrefParamMatch) {
+        try {
+          const decoded = decodeURIComponent(hrefParamMatch[1]);
+          if (decoded.includes('facebook.com')) {
+            return decoded;
+          }
+        } catch {
+          // If all fails, return null
+        }
       }
     }
   }
