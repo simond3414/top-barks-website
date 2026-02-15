@@ -179,6 +179,73 @@ export const POST: APIRoute = async ({ request, locals }) => {
       );
     }
     
+    if (action === 'test_api') {
+      // Test if Google Places API key is configured and working
+      const apiKey = env.GOOGLE_PLACES_API_KEY;
+      const placeId = env.PLACE_ID || 'ChIJicTHUo0xeUgRQTRgWtd797A';
+      
+      if (!apiKey || apiKey === 'your_google_places_api_key_here') {
+        return new Response(
+          JSON.stringify({ 
+            success: true, 
+            apiConfigured: false,
+            message: 'Google Places API key not configured'
+          }),
+          { status: 200 }
+        );
+      }
+      
+      try {
+        // Make a test API call
+        const url = `https://places.googleapis.com/v1/places/${placeId}?fields=reviews`;
+        
+        const response = await fetch(url, {
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Goog-Api-Key': apiKey,
+            'X-Goog-FieldMask': 'reviews'
+          }
+        });
+        
+        if (!response.ok) {
+          const errorText = await response.text();
+          return new Response(
+            JSON.stringify({ 
+              success: true, 
+              apiConfigured: true,
+              apiWorking: false,
+              message: `API returned error ${response.status}: ${errorText}`
+            }),
+            { status: 200 }
+          );
+        }
+        
+        const apiData = await response.json();
+        const reviewCount = apiData.reviews?.length || 0;
+        
+        return new Response(
+          JSON.stringify({ 
+            success: true, 
+            apiConfigured: true,
+            apiWorking: true,
+            count: reviewCount,
+            message: `API is working! Found ${reviewCount} reviews.`
+          }),
+          { status: 200 }
+        );
+      } catch (error) {
+        return new Response(
+          JSON.stringify({ 
+            success: true, 
+            apiConfigured: true,
+            apiWorking: false,
+            message: `API call failed: ${error.message}`
+          }),
+          { status: 200 }
+        );
+      }
+    }
+    
     if (action === 'add_facebook') {
       const { author, rating, text, date, url } = body;
       
