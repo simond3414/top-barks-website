@@ -231,22 +231,25 @@ function formatDate(dateString: string) {
           }
         } else {
           // Show empty state
-          document.getElementById('reviewsContainer').innerHTML = `
-            <div class="col-span-full rounded-2xl border border-beige-200 bg-beige-50 p-12 text-center dark:border-earth-700 dark:bg-earth-950">
-              <p class="text-lg text-earth-600 dark:text-earth-400">No reviews available yet.</p>
-              <p class="mt-2 text-sm text-earth-500">Check back soon or visit our Google Business Profile to see reviews.</p>
-              <a href="https://g.page/r/ChIJicTHUo0xeUgRQTRgWtd797A/review" 
-                 target="_blank" 
-                 rel="noopener noreferrer"
-                 class="mt-4 inline-flex items-center gap-2 rounded-full bg-forest-600 px-6 py-2 text-sm font-medium text-white transition hover:bg-forest-700"
-              >
-                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12.545,10.239v3.821h5.445c-0.712,2.315-2.647,3.972-5.445,3.972c-3.332,0-6.033-2.701-6.033-6.032s2.701-6.032,6.033-6.032c1.498,0,2.866,0.549,3.921,1.453l2.814-2.814C17.503,2.988,15.139,2,12.545,2C7.021,2,2.543,6.477,2.543,12s4.478,10,10.002,10c8.396,0,10.249-7.85,9.426-11.748L12.545,10.239z"/>
-                </svg>
-                View on Google
-              </a>
-            </div>
-          `;
+          const emptyContainer = document.getElementById('reviewsContainer');
+          if (emptyContainer) {
+            emptyContainer.innerHTML = `
+              <div class="col-span-full rounded-2xl border border-beige-200 bg-beige-50 p-12 text-center dark:border-earth-700 dark:bg-earth-950">
+                <p class="text-lg text-earth-600 dark:text-earth-400">No reviews available yet.</p>
+                <p class="mt-2 text-sm text-earth-500">Check back soon or visit our Google Business Profile to see reviews.</p>
+                <a href="https://g.page/r/ChIJicTHUo0xeUgRQTRgWtd797A/review" 
+                   target="_blank" 
+                   rel="noopener noreferrer"
+                   class="mt-4 inline-flex items-center gap-2 rounded-full bg-forest-600 px-6 py-2 text-sm font-medium text-white transition hover:bg-forest-700"
+                >
+                  <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12.545,10.239v3.821h5.445c-0.712,2.315-2.647,3.972-5.445,3.972c-3.332,0-6.033-2.701-6.033-6.032s2.701-6.032,6.033-6.032c1.498,0,2.866,0.549,3.921,1.453l2.814-2.814C17.503,2.988,15.139,2,12.545,2C7.021,2,2.543,6.477,2.543,12s4.478,10,10.002,10c8.396,0,10.249-7.85,9.426-11.748L12.545,10.239z"/>
+                  </svg>
+                  View on Google
+                </a>
+              </div>
+            `;
+          }
         }
       } catch (error) {
         console.error('Error loading reviews:', error);
@@ -255,6 +258,7 @@ function formatDate(dateString: string) {
 
     function renderReviews(reviews: any[]) {
       const container = document.getElementById('reviewsContainer');
+      if (!container) return;
       
       container.innerHTML = reviews.map(review => {
         const fullText = review.text || '';
