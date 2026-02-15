@@ -289,7 +289,7 @@ function formatDate(dateString: string) {
                 ${escapeHtml(displayText)}
               </p>
               ${isLong ? `
-                <button class="read-more-btn mt-2 text-sm font-medium text-forest-600 hover:text-forest-700 dark:text-forest-400" onclick="toggleReadMore(this)">
+                <button class="read-more-btn mt-2 text-sm font-medium text-forest-600 hover:text-forest-700 dark:text-forest-400" data-review-id="${review.id}">
                   Read more
                 </button>
               ` : ''}
@@ -317,6 +317,18 @@ function formatDate(dateString: string) {
           </div>
         `;
       }).join('');
+      
+      // Attach event listeners to read more buttons
+      attachReadMoreListeners();
+    }
+    
+    function attachReadMoreListeners() {
+      const buttons = document.querySelectorAll('.read-more-btn');
+      buttons.forEach(btn => {
+        btn.addEventListener('click', function(this: HTMLButtonElement) {
+          toggleReadMore(this);
+        });
+      });
     }
 
     function toggleReadMore(btn: HTMLButtonElement) {
@@ -349,6 +361,11 @@ function formatDate(dateString: string) {
     }
 
     // Load reviews on page load
-    document.addEventListener('DOMContentLoaded', loadReviews);
+    document.addEventListener('DOMContentLoaded', () => {
+      // Attach listeners to any server-side rendered reviews first
+      attachReadMoreListeners();
+      // Then load fresh reviews from API
+      loadReviews();
+    });
   </script>
 </MainLayout>
