@@ -24,8 +24,21 @@ import ukDogCharter from "@images/UKDOG_CharterMember_Colour.jpg";
     alt="Mark Sanderson at Top Barks Dog Training with dogs"
   >
     <!-- Quick Links Section - 5 Main Navigation Buttons (now in left column below logo) -->
-    <div slot="custom-buttons" class="mt-8 flex flex-wrap gap-3">
-      <a href="/services" class="inline-flex items-center justify-center gap-x-2 rounded-lg bg-forest-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-forest-700 focus:outline-hidden focus-visible:ring-3 focus-visible:ring-forest-500 dark:bg-forest-600 dark:hover:bg-forest-700">
+    <div slot="custom-buttons" class="mt-8">
+      <!-- Popular Services Heading with Visual Element -->
+      <div class="mb-4 flex items-center justify-center gap-3">
+        <div class="h-px w-12 bg-forest-300 dark:bg-forest-700"></div>
+        <div class="flex items-center gap-2">
+          <svg class="h-5 w-5 text-forest-600 dark:text-forest-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+          <span class="text-sm font-bold uppercase tracking-wider text-forest-700 dark:text-forest-300">Popular Services</span>
+        </div>
+        <div class="h-px w-12 bg-forest-300 dark:bg-forest-700"></div>
+      </div>
+      
+      <div class="flex flex-wrap gap-3">
+        <a href="/services" class="inline-flex items-center justify-center gap-x-2 rounded-lg bg-forest-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-forest-700 focus:outline-hidden focus-visible:ring-3 focus-visible:ring-forest-500 dark:bg-forest-600 dark:hover:bg-forest-700">
         Our Services
         <svg class="size-4" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
       </a>
@@ -38,10 +51,11 @@ import ukDogCharter from "@images/UKDOG_CharterMember_Colour.jpg";
       <a href="/reviews" class="inline-flex items-center justify-center rounded-lg border border-earth-300 bg-white px-4 py-3 text-sm font-semibold text-earth-700 transition hover:bg-earth-50 focus:outline-hidden focus-visible:ring-3 focus-visible:ring-earth-500 dark:border-earth-600 dark:bg-earth-800 dark:text-earth-200 dark:hover:bg-earth-700">
         Reviews
       </a>
-      <a href="/contact" class="inline-flex items-center justify-center gap-x-2 rounded-lg bg-forest-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-forest-700 focus:outline-hidden focus-visible:ring-3 focus-visible:ring-forest-500 dark:bg-forest-600 dark:hover:bg-forest-700">
-        Contact
-        <svg class="size-4" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-      </a>
+        <a href="/contact" class="inline-flex items-center justify-center gap-x-2 rounded-lg bg-forest-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-forest-700 focus:outline-hidden focus-visible:ring-3 focus-visible:ring-forest-500 dark:bg-forest-600 dark:hover:bg-forest-700">
+          Contact
+          <svg class="size-4" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+      </div>
     </div>
     
     <!-- Experience & Credibility Text -->
@@ -147,7 +161,7 @@ import ukDogCharter from "@images/UKDOG_CharterMember_Colour.jpg";
   <!-- Testimonials Section - TODO: Replace with shadcn/ui Card component -->
   <TestimonialsSection
     title="What Our Clients Say"
-    subTitle="Join hundreds of satisfied dog owners who have transformed their relationship with their pets"
+    subTitle="Join thousands of satisfied dog owners who have transformed their relationship with their pets"
     ;
     testimonials={[
       {
