@@ -17,9 +17,5 @@ id = "f506cc6e06674f0a98f48372f19d6651"
 binding = "REVIEWS"
 id = "f506cc6e06674f0a98f48372f19d6651"
 
-# Public variables (not secrets)
-[vars]
-PLACE_ID = "ChIJicTHUo0xeUgRQTRgWtd797A"
-
-# Note: Secrets (RESEND_API_KEY, GOOGLE_PLACES_API_KEY, ADMIN_PASSWORD) 
+# Note: Environment variables (PLACE_ID, RESEND_API_KEY, GOOGLE_PLACES_API_KEY, ADMIN_PASSWORD) 
 # should be set in Cloudflare Dashboard, not in this file
