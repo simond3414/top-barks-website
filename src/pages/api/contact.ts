@@ -131,7 +131,7 @@ export const POST: APIRoute = async ({ request }) => {
     
     // Format service name for display
     const serviceDisplay = service 
-      ? service.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
+      ? service.split('-').map((word: string) => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
       : 'Not specified';
 
     // Send email using Resend
