@@ -3,8 +3,10 @@ import MainLayout from "@/layouts/MainLayout.astro";
 import { Image } from "astro:assets";
 import contactImg from "@images/contact.JPG";
 import { SITE } from "@data/constants";
+import { getDropdownServices, getServiceDisplayName } from "@data/services";
 
 const pageTitle = `Contact | Dog Trainer York | ${SITE.title}`;
+const services = getDropdownServices();
 ---
 
 <MainLayout title={pageTitle}>
@@ -73,12 +75,9 @@ const pageTitle = `Contact | Dog Trainer York | ${SITE.title}`;
               class="mt-1 block w-full rounded-lg border border-beige-300 bg-white px-4 py-2 text-earth-900 focus:border-forest-500 focus:outline-none dark:border-earth-600 dark:bg-earth-800 dark:text-white"
             >
               <option value="">Select a service...</option>
-              <option value="dog-training">Dog Training</option>
-              <option value="puppy-training">Puppy Training</option>
-              <option value="gundog-training">Gundog Training</option>
-              <option value="training-walks">Training Walks</option>
-              <option value="behaviour-problems">Behaviour Problems</option>
-              <option value="show-training">Show Training</option>
+              {services.map((service) => (
+                <option value={service.id}>{getServiceDisplayName(service)}</option>
+              ))}
               <option value="other">Other / Not Sure</option>
             </select>
           </div>
