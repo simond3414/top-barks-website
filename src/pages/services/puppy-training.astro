@@ -2,6 +2,7 @@
 import MainLayout from "@/layouts/MainLayout.astro";
 import { Image } from "astro:assets";
 import puppyTrainingImg from "@images/puppy_training.jpg";
+import puppyTraining2026Img from "@images/puppy_training_2026.jpg";
 import { SITE } from "@data/constants";
 
 const pageTitle = `Puppy Training York | Expert 1-to-1 Puppy Classes | ${SITE.title}`;
@@ -120,8 +121,9 @@ const pageTitle = `Puppy Training York | Expert 1-to-1 Puppy Classes | ${SITE.ti
         </div>
       </div>
 
-      <div class="lg:sticky lg:top-8">
-        <Image src={puppyTrainingImg} alt="Puppy training session" class="rounded-2xl object-cover shadow-lg" />
+      <div class="lg:sticky lg:top-8 space-y-4">
+        <Image src={puppyTraining2026Img} alt="Puppy and adult dog training together" class="rounded-2xl object-cover shadow-lg w-full" />
+        <Image src={puppyTrainingImg} alt="Puppy training session" class="rounded-2xl object-cover shadow-lg w-3/4 mx-auto" />
       </div>
     </div>
   </section>
