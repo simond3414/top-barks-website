@@ -19,6 +19,12 @@ export const prerender = false;
     .stat-card { background: white; padding: 24px; border-radius: 12px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); }
     .stat-card h3 { color: #666; font-size: 14px; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
     .stat-card .number { font-size: 32px; font-weight: bold; color: #3d6b3d; }
+    .tabs { display: flex; gap: 4px; margin-bottom: 20px; border-bottom: 2px solid #e0e0e0; }
+    .tab { padding: 12px 24px; border: none; background: none; font-size: 14px; font-weight: 600; color: #666; cursor: pointer; transition: all 0.3s; border-bottom: 2px solid transparent; margin-bottom: -2px; }
+    .tab:hover { color: #3d6b3d; }
+    .tab.active { color: #3d6b3d; border-bottom-color: #3d6b3d; }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
     .actions { background: white; padding: 24px; border-radius: 12px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); margin-bottom: 40px; }
     .actions h2 { margin-bottom: 20px; color: #333; }
     .action-buttons { display: flex; gap: 12px; flex-wrap: wrap; }
@@ -74,54 +80,103 @@ export const prerender = false;
 </head>
 <body>
   <div class="header">
-    <h1>Top Barks - Reviews Dashboard</h1>
+    <h1>Top Barks - Admin Dashboard</h1>
     <button id="logoutBtn">Logout</button>
   </div>
-  
+
   <div class="container">
     <div id="message" class="message"></div>
-    
-    <div class="stats">
-      <div class="stat-card">
-        <h3>Total Reviews</h3>
-        <div class="number" id="totalCount">-</div>
+
+    <div class="tabs">
+      <button class="tab active" data-tab="reviews">Reviews</button>
+      <button class="tab" data-tab="resources">Resources</button>
+    </div>
+
+    <!-- Reviews Tab -->
+    <div id="reviews-tab" class="tab-content active">
+      <div class="stats">
+        <div class="stat-card">
+          <h3>Total Reviews</h3>
+          <div class="number" id="totalCount">-</div>
+        </div>
+        <div class="stat-card">
+          <h3>Google Reviews</h3>
+          <div class="number" id="googleCount">-</div>
+        </div>
+        <div class="stat-card">
+          <h3>Facebook Reviews</h3>
+          <div class="number" id="facebookCount">-</div>
+        </div>
+        <div class="stat-card">
+          <h3>Last Updated</h3>
+          <div class="number" style="font-size: 14px;" id="lastUpdated">-</div>
+        </div>
       </div>
-      <div class="stat-card">
-        <h3>Google Reviews</h3>
-        <div class="number" id="googleCount">-</div>
+
+      <div class="actions">
+        <h2>Actions</h2>
+        <div class="action-buttons">
+          <button class="btn btn-primary" id="refreshBtn">
+            <span id="refreshSpinner"></span>
+            Refresh Google Reviews
+          </button>
+          <button class="btn btn-secondary" id="addReviewBtn">
+            + Add Facebook Review
+          </button>
+          <button class="btn btn-warning" id="testApiBtn">
+            Test API Key
+          </button>
+        </div>
+        <div id="apiStatus" class="api-status" style="display: none;"></div>
       </div>
-      <div class="stat-card">
-        <h3>Facebook Reviews</h3>
-        <div class="number" id="facebookCount">-</div>
-      </div>
-      <div class="stat-card">
-        <h3>Last Updated</h3>
-        <div class="number" style="font-size: 14px;" id="lastUpdated">-</div>
+
+      <div class="reviews-section">
+        <h2>All Reviews</h2>
+        <div class="last-updated" id="lastUpdatedText">Loading...</div>
+        <div id="reviewsList">
+          <div class="no-reviews">Loading reviews...</div>
+        </div>
       </div>
     </div>
-    
-    <div class="actions">
-      <h2>Actions</h2>
-      <div class="action-buttons">
-        <button class="btn btn-primary" id="refreshBtn">
-          <span id="refreshSpinner"></span>
-          Refresh Google Reviews
-        </button>
-        <button class="btn btn-secondary" id="addReviewBtn">
-          + Add Facebook Review
-        </button>
-        <button class="btn btn-warning" id="testApiBtn">
-          Test API Key
-        </button>
+
+    <!-- Resources Tab -->
+    <div id="resources-tab" class="tab-content">
+      <div class="stats">
+        <div class="stat-card">
+          <h3>Total Resources</h3>
+          <div class="number" id="resourcesCount">-</div>
+        </div>
+        <div class="stat-card">
+          <h3>Categories</h3>
+          <div class="number" id="categoriesCount">7</div>
+        </div>
+        <div class="stat-card">
+          <h3>Storage Used</h3>
+          <div class="number" style="font-size: 24px;" id="storageUsed">6.3 MB</div>
+        </div>
+        <div class="stat-card">
+          <h3>Last Sync</h3>
+          <div class="number" style="font-size: 14px;" id="lastSync">-</div>
+        </div>
       </div>
-      <div id="apiStatus" class="api-status" style="display: none;"></div>
-    </div>
-    
-    <div class="reviews-section">
-      <h2>All Reviews</h2>
-      <div class="last-updated" id="lastUpdatedText">Loading...</div>
-      <div id="reviewsList">
-        <div class="no-reviews">Loading reviews...</div>
+
+      <div class="actions">
+        <h2>Actions</h2>
+        <div class="action-buttons">
+          <button class="btn btn-primary" id="refreshResourcesBtn">
+            <span id="resourcesSpinner"></span>
+            Refresh Resources List
+          </button>
+        </div>
+        <div id="resourcesStatus" class="api-status" style="display: none;"></div>
+      </div>
+
+      <div class="reviews-section">
+        <h2>Client Resources</h2>
+        <div class="last-updated" id="resourcesLastUpdated">Loading resources...</div>
+        <div id="resourcesList">
+          <div class="no-reviews">Loading resources...</div>
+        </div>
       </div>
     </div>
   </div>
@@ -195,6 +250,14 @@ export const prerender = false;
     document.getElementById('cancelBtn')?.addEventListener('click', closeModal);
     document.getElementById('logoutBtn')?.addEventListener('click', logout);
     document.getElementById('testApiBtn')?.addEventListener('click', testApiKey);
+
+    // Tab switching
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        const tabName = tab.getAttribute('data-tab');
+        switchTab(tabName || '');
+      });
+    });
     
     // Close modal on overlay click
     const modal = document.getElementById('modal');
@@ -611,6 +674,155 @@ export const prerender = false;
       }
     }
     
+    // Tab switching
+    /**
+     * @param {string} tabName
+     */
+    function switchTab(tabName) {
+      // Update tab buttons
+      document.querySelectorAll('.tab').forEach(tab => {
+        tab.classList.remove('active');
+        if (tab.getAttribute('data-tab') === tabName) {
+          tab.classList.add('active');
+        }
+      });
+
+      // Update tab content
+      document.querySelectorAll('.tab-content').forEach(content => {
+        content.classList.remove('active');
+      });
+      const contentElement = document.getElementById(tabName + '-tab');
+      if (contentElement) {
+        contentElement.classList.add('active');
+      }
+
+      // Load resources if switching to resources tab
+      if (tabName === 'resources') {
+        loadResources();
+      }
+    }
+
+    // Resources management
+    let currentResources = [];
+
+    async function loadResources() {
+      const statusDiv = document.getElementById('resourcesStatus');
+      const listDiv = document.getElementById('resourcesList');
+      const lastUpdatedDiv = document.getElementById('resourcesLastUpdated');
+
+      if (statusDiv) {
+        statusDiv.style.display = 'block';
+        statusDiv.className = 'api-status';
+        statusDiv.textContent = 'Loading resources...';
+      }
+
+      try {
+        const response = await fetch('/api/resources');
+        const data = await response.json();
+
+        if (data.success) {
+          currentResources = data.files;
+          displayResources(data.byCategory);
+
+          // Update stats
+          const resourcesCountEl = document.getElementById('resourcesCount');
+          if (resourcesCountEl) {
+            resourcesCountEl.textContent = data.total || 0;
+          }
+
+          const lastSyncEl = document.getElementById('lastSync');
+          if (lastSyncEl) {
+            lastSyncEl.textContent = new Date().toLocaleString('en-GB');
+          }
+
+          if (lastUpdatedDiv) {
+            lastUpdatedDiv.textContent = `Last synced: ${new Date().toLocaleString('en-GB')}`;
+          }
+
+          if (statusDiv) {
+            statusDiv.className = 'api-status ok';
+            statusDiv.innerHTML = '✓ Resources loaded successfully';
+          }
+        } else {
+          if (statusDiv) {
+            statusDiv.className = 'api-status error';
+            statusDiv.textContent = '✗ Error: ' + (data.message || 'Failed to load resources');
+          }
+          if (listDiv) {
+            listDiv.innerHTML = '<div class="no-reviews">Error loading resources. Please check R2 bucket configuration.</div>';
+          }
+        }
+      } catch (error) {
+        console.error('Error loading resources:', error);
+        if (statusDiv) {
+          statusDiv.className = 'api-status error';
+          statusDiv.textContent = '✗ Error: ' + error.message;
+        }
+        if (listDiv) {
+          listDiv.innerHTML = '<div class="no-reviews">Error loading resources. Make sure TOPBARKS_RESOURCES R2 bucket is configured.</div>';
+        }
+      }
+    }
+
+    /**
+     * @param {Record<string, any>} byCategory
+     */
+    function displayResources(byCategory) {
+      const container = document.getElementById('resourcesList');
+      if (!container) return;
+
+      if (!byCategory || Object.keys(byCategory).length === 0) {
+        container.innerHTML = '<div class="no-reviews">No resources found. Please upload PDFs to the R2 bucket.</div>';
+        return;
+      }
+
+      let html = '';
+
+      for (const [category, files] of Object.entries(byCategory)) {
+        html += `
+          <div style="margin-bottom: 32px;">
+            <h3 style="color: #3d6b3d; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid #e0e0e0;">
+              ${escapeHtml(category)}
+            </h3>
+            <div style="display: grid; gap: 12px;">
+        `;
+
+        for (const file of files) {
+          html += `
+            <div class="review-card" style="display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <div style="font-weight: 600; color: #333; margin-bottom: 4px;">${escapeHtml(file.displayName)}</div>
+                <div style="font-size: 12px; color: #666;">${escapeHtml(file.filename)} • ${escapeHtml(file.size || 'Unknown')}</div>
+              </div>
+              <a href="/api/resources?file=${encodeURIComponent(file.filename)}" 
+                 target="_blank" 
+                 class="btn btn-primary" 
+                 style="text-decoration: none; padding: 8px 16px; font-size: 13px;">
+                Download
+              </a>
+            </div>
+          `;
+        }
+
+        html += '</div></div>';
+      }
+
+      container.innerHTML = html;
+    }
+
+    document.getElementById('refreshResourcesBtn')?.addEventListener('click', async function() {
+      const btn = document.getElementById('refreshResourcesBtn');
+      const spinner = document.getElementById('resourcesSpinner');
+
+      if (btn) btn.disabled = true;
+      if (spinner) spinner.className = 'loading';
+
+      await loadResources();
+
+      if (btn) btn.disabled = false;
+      if (spinner) spinner.className = '';
+    });
+
     /**
      * @param {string} text
      * @param {string} type
@@ -618,20 +830,20 @@ export const prerender = false;
     function showMessage(text, type) {
       const msg = document.getElementById('message');
       if (!msg) return;
-      
+
       msg.textContent = text;
       msg.className = `message ${type} show`;
-      
+
       setTimeout(function() {
         msg.classList.remove('show');
       }, 5000);
     }
-    
+
     function logout() {
       document.cookie = 'admin_session=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
       window.location.href = '/admin';
     }
-    
+
     /**
      * @param {string} text
      * @returns {string}
@@ -641,17 +853,17 @@ export const prerender = false;
       div.textContent = text;
       return div.innerHTML;
     }
-    
+
     /**
      * @param {string} dateString
      * @returns {string}
      */
     function formatDate(dateString) {
       const date = new Date(dateString);
-      return date.toLocaleDateString('en-GB', { 
-        day: 'numeric', 
-        month: 'short', 
-        year: 'numeric' 
+      return date.toLocaleDateString('en-GB', {
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric'
       });
     }
   </script>

@@ -17,5 +17,11 @@ id = "f506cc6e06674f0a98f48372f19d6651"
 binding = "REVIEWS"
 id = "f506cc6e06674f0a98f48372f19d6651"
 
+# R2 Bucket for storing client resources
+# Create with: wrangler r2 bucket create topbarks-resources
+[[r2_buckets]]
+binding = "TOPBARKS_RESOURCES"
+bucket_name = "topbarks-resources"
+
 # Note: Environment variables (PLACE_ID, RESEND_API_KEY, GOOGLE_PLACES_API_KEY, ADMIN_PASSWORD) 
 # should be set in Cloudflare Dashboard, not in this file
