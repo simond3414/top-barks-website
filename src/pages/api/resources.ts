@@ -349,6 +349,81 @@ export const POST: APIRoute = async ({ request, locals }) => {
         );
       }
 
+      case 'delete_category': {
+        const { category } = body;
+        
+        // Cannot delete Uncategorized
+        if (category === 'Uncategorized') {
+          return new Response(
+            JSON.stringify({ success: false, message: "Cannot delete Uncategorized category" }),
+            { status: 400, headers: { "Content-Type": "application/json" } }
+          );
+        }
+        
+        if (!category || !metadata.categories.includes(category)) {
+          return new Response(
+            JSON.stringify({ success: false, message: "Category not found" }),
+            { status: 404, headers: { "Content-Type": "application/json" } }
+          );
+        }
+        
+        // Move all files in this category to Uncategorized
+        for (const filename in metadata.files) {
+          if (metadata.files[filename].category === category) {
+            metadata.files[filename].category = 'Uncategorized';
+            metadata.files[filename].order = 0;
+          }
+        }
+        
+        // Remove category from list
+        metadata.categories = metadata.categories.filter(c => c !== category);
+        
+        await saveMetadata(kv, metadata);
+        return new Response(
+          JSON.stringify({ 
+            success: true, 
+            message: "Category deleted. Files moved to Uncategorized.", 
+            categories: metadata.categories 
+          }),
+          { status: 200, headers: { "Content-Type": "application/json" } }
+        );
+      }
+
+      case 'reorder_categories': {
+        const { orderedCategories } = body;
+        
+        if (!Array.isArray(orderedCategories)) {
+          return new Response(
+            JSON.stringify({ success: false, message: "Invalid categories array" }),
+            { status: 400, headers: { "Content-Type": "application/json" } }
+          );
+        }
+        
+        // Validate all current categories are present
+        const currentCats = new Set(metadata.categories);
+        const newCats = new Set(orderedCategories);
+        
+        if (currentCats.size !== newCats.size || 
+            ![...currentCats].every(c => newCats.has(c))) {
+          return new Response(
+            JSON.stringify({ success: false, message: "Category list mismatch" }),
+            { status: 400, headers: { "Content-Type": "application/json" } }
+          );
+        }
+        
+        metadata.categories = orderedCategories;
+        await saveMetadata(kv, metadata);
+        
+        return new Response(
+          JSON.stringify({ 
+            success: true, 
+            message: "Categories reordered", 
+            categories: metadata.categories 
+          }),
+          { status: 200, headers: { "Content-Type": "application/json" } }
+        );
+      }
+
       default:
         return new Response(
           JSON.stringify({ success: false, message: "Unknown action" }),

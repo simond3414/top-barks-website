@@ -83,6 +83,85 @@ export const prerender = false;
     .category-section:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
     #dropZone { transition: all 0.3s; }
     #dropZone:hover { border-color: #3d6b3d; background: #f0f7f0; }
+    
+    /* Category Management Styles */
+    .category-item {
+      display: flex;
+      align-items: center;
+      padding: 12px 16px;
+      background: #f8f9fa;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      cursor: move;
+      transition: all 0.2s;
+    }
+    .category-item:hover {
+      background: #e8e8e8;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .category-item.dragging {
+      opacity: 0.5;
+      transform: scale(1.02);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    .category-item.drag-over {
+      border-top: 3px solid #3d6b3d;
+      margin-top: 4px;
+    }
+    .category-item[data-category="Uncategorized"] {
+      background: #fff3e0;
+      border-color: #ffe0b2;
+      cursor: default;
+    }
+    .category-item[data-category="Uncategorized"]:hover {
+      background: #ffe0b2;
+    }
+    .drag-handle {
+      cursor: grab;
+      color: #999;
+      font-size: 18px;
+      margin-right: 12px;
+      user-select: none;
+    }
+    .drag-handle:active {
+      cursor: grabbing;
+    }
+    .category-name {
+      flex: 1;
+      font-weight: 500;
+    }
+    .category-actions {
+      display: flex;
+      gap: 8px;
+    }
+    .btn-icon {
+      padding: 6px 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      background: transparent;
+      transition: all 0.2s;
+    }
+    .btn-rename {
+      color: #3d6b3d;
+    }
+    .btn-rename:hover {
+      background: #e8f5e9;
+    }
+    .btn-delete {
+      color: #c33;
+    }
+    .btn-delete:hover {
+      background: #fee;
+    }
+    .permanent-badge {
+      font-size: 11px;
+      color: #999;
+      font-style: italic;
+      margin-left: 8px;
+    }
   </style>
 </head>
 <body>
@@ -213,9 +292,12 @@ export const prerender = false;
 
   <!-- Category Management Modal -->
   <div class="modal-overlay" id="categoryModal">
-    <div class="modal">
+    <div class="modal" style="max-width: 500px;">
       <h2>Manage Categories</h2>
-      <div id="categoryList" style="margin: 20px 0; max-height: 300px; overflow-y: auto;"></div>
+      <p style="color: #666; font-size: 13px; margin-bottom: 16px;">
+        <span style="font-weight: 600;">⋮⋮</span> Drag to reorder categories
+      </p>
+      <div id="categoryList" style="margin: 20px 0; max-height: 400px; overflow-y: auto;"></div>
       <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #e0e0e0;">
         <h3>Add New Category</h3>
         <div style="display: flex; gap: 8px; margin-top: 8px;">
@@ -225,6 +307,28 @@ export const prerender = false;
       </div>
       <div class="modal-actions" style="margin-top: 24px;">
         <button type="button" class="btn btn-secondary" id="closeCategoryModal">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Category Confirmation Modal -->
+  <div class="modal-overlay" id="deleteCategoryModal">
+    <div class="modal" style="max-width: 400px;">
+      <h2>Delete Category</h2>
+      <p style="margin-bottom: 12px;">
+        Delete "<span id="deleteCategoryName" style="font-weight: 600;"></span>"?
+      </p>
+      <p id="deleteCategoryFileCount" style="color: #666; font-size: 14px; margin-bottom: 16px;">
+        This category contains <span id="fileCountDisplay" style="font-weight: 600;"></span> files.
+      </p>
+      <div style="background: #e8f5e9; padding: 12px; border-radius: 6px; margin-bottom: 20px; border-left: 4px solid #3d6b3d;">
+        <p style="margin: 0; font-size: 14px;">
+          <strong>Files will be moved to:</strong> Uncategorized
+        </p>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-secondary" id="cancelDeleteCategory">Cancel</button>
+        <button type="button" class="btn btn-warning" id="confirmDeleteCategory">Delete Category</button>
       </div>
     </div>
   </div>
@@ -1147,22 +1251,195 @@ export const prerender = false;
     // Category management
     document.getElementById('manageCategoriesBtn')?.addEventListener('click', () => {
       const modal = document.getElementById('categoryModal');
-      const listDiv = document.getElementById('categoryList');
-      
-      if (listDiv) {
-        let html = '';
-        currentCategories.forEach(cat => {
-          html += `
-            <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px; background: #f5f5f5; border-radius: 4px; margin-bottom: 8px;">
-              <span>${escapeHtml(cat)}</span>
-              <button onclick="renameCategoryPrompt('${escapeHtml(cat)}')" style="background: none; border: none; color: #3d6b3d; cursor: pointer; font-size: 12px;">Rename</button>
-            </div>
-          `;
-        });
-        listDiv.innerHTML = html;
-      }
-      
+      displayCategories();
       if (modal) modal.classList.add('show');
+    });
+
+    // Display categories with drag-and-drop
+    function displayCategories() {
+      const listDiv = document.getElementById('categoryList');
+      if (!listDiv) return;
+
+      let html = '';
+      currentCategories.forEach((cat, index) => {
+        const isUncategorized = cat === 'Uncategorized';
+        html += `
+          <div class="category-item" 
+               draggable="${!isUncategorized}" 
+               data-category="${escapeHtml(cat)}"
+               data-index="${index}">
+            ${!isUncategorized ? '<span class="drag-handle">⋮⋮</span>' : '<span style="width: 30px;"></span>'}
+            <span class="category-name">${escapeHtml(cat)}${isUncategorized ? '<span class="permanent-badge">(permanent)</span>' : ''}</span>
+            <div class="category-actions">
+              <button class="btn-icon btn-rename" title="Rename" onclick="renameCategoryPrompt('${escapeHtml(cat)}')">✎</button>
+              ${!isUncategorized ? `<button class="btn-icon btn-delete" title="Delete category" onclick="deleteCategory('${escapeHtml(cat)}')">🗑️</button>` : ''}
+            </div>
+          </div>
+        `;
+      });
+      listDiv.innerHTML = html;
+
+      // Setup drag and drop
+      setupCategoryDragAndDrop();
+    }
+
+    // Category drag and drop
+    let dragSrcCategory = null;
+
+    function setupCategoryDragAndDrop() {
+      const items = document.querySelectorAll('.category-item[draggable="true"]');
+      items.forEach(item => {
+        item.addEventListener('dragstart', handleCategoryDragStart);
+        item.addEventListener('dragend', handleCategoryDragEnd);
+        item.addEventListener('dragover', handleCategoryDragOver);
+        item.addEventListener('dragenter', handleCategoryDragEnter);
+        item.addEventListener('dragleave', handleCategoryDragLeave);
+        item.addEventListener('drop', handleCategoryDrop);
+      });
+    }
+
+    function handleCategoryDragStart(e) {
+      dragSrcCategory = this;
+      this.classList.add('dragging');
+      e.dataTransfer.effectAllowed = 'move';
+      e.dataTransfer.setData('text/html', this.innerHTML);
+    }
+
+    function handleCategoryDragEnd(e) {
+      this.classList.remove('dragging');
+      const items = document.querySelectorAll('.category-item');
+      items.forEach(item => item.classList.remove('drag-over'));
+    }
+
+    function handleCategoryDragOver(e) {
+      if (e.preventDefault) e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      return false;
+    }
+
+    function handleCategoryDragEnter(e) {
+      if (this !== dragSrcCategory) {
+        this.classList.add('drag-over');
+      }
+    }
+
+    function handleCategoryDragLeave(e) {
+      this.classList.remove('drag-over');
+    }
+
+    async function handleCategoryDrop(e) {
+      if (e.stopPropagation) e.stopPropagation();
+
+      if (dragSrcCategory !== this) {
+        // Get current order
+        const listDiv = document.getElementById('categoryList');
+        const items = Array.from(listDiv.querySelectorAll('.category-item'));
+        
+        // Swap positions visually
+        const srcIndex = items.indexOf(dragSrcCategory);
+        const targetIndex = items.indexOf(this);
+        
+        if (srcIndex < targetIndex) {
+          this.parentNode.insertBefore(dragSrcCategory, this.nextSibling);
+        } else {
+          this.parentNode.insertBefore(dragSrcCategory, this);
+        }
+
+        // Get new order
+        const newOrder = Array.from(listDiv.querySelectorAll('.category-item'))
+          .map(item => item.getAttribute('data-category'));
+
+        // Save to server
+        try {
+          const response = await fetch('/api/resources', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              action: 'reorder_categories',
+              orderedCategories: newOrder
+            })
+          });
+
+          const data = await response.json();
+          if (data.success) {
+            currentCategories = data.categories;
+            showMessage('Categories reordered', 'success');
+          } else {
+            showMessage(data.message || 'Failed to reorder', 'error');
+            displayCategories(); // Revert
+          }
+        } catch (error) {
+          showMessage('Error saving order', 'error');
+          displayCategories(); // Revert
+        }
+      }
+
+      return false;
+    }
+
+    // Delete category
+    window.deleteCategory = (categoryName) => {
+      // Count files in this category
+      const fileCount = currentResources.filter(r => r.category === categoryName).length;
+      
+      // Show modal
+      document.getElementById('deleteCategoryName').textContent = categoryName;
+      document.getElementById('fileCountDisplay').textContent = fileCount;
+      document.getElementById('deleteCategoryModal').classList.add('show');
+      
+      // Store category being deleted
+      window.categoryToDelete = categoryName;
+    };
+
+    // Cancel delete
+    document.getElementById('cancelDeleteCategory')?.addEventListener('click', () => {
+      document.getElementById('deleteCategoryModal').classList.remove('show');
+      window.categoryToDelete = null;
+    });
+
+    // Confirm delete
+    document.getElementById('confirmDeleteCategory')?.addEventListener('click', async () => {
+      const category = window.categoryToDelete;
+      if (!category) return;
+
+      try {
+        const response = await fetch('/api/resources', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            action: 'delete_category',
+            category
+          })
+        });
+
+        const data = await response.json();
+        if (data.success) {
+          showMessage('Category deleted. Files moved to Uncategorized.', 'success');
+          currentCategories = data.categories;
+          document.getElementById('deleteCategoryModal').classList.remove('show');
+          window.categoryToDelete = null;
+          await loadResources();
+          displayCategories();
+        } else {
+          showMessage(data.message || 'Failed to delete category', 'error');
+        }
+      } catch (error) {
+        showMessage('Error deleting category', 'error');
+      }
+    });
+
+    // Close modals on overlay click
+    document.getElementById('categoryModal')?.addEventListener('click', (e) => {
+      if (e.target.id === 'categoryModal') {
+        document.getElementById('categoryModal').classList.remove('show');
+      }
+    });
+
+    document.getElementById('deleteCategoryModal')?.addEventListener('click', (e) => {
+      if (e.target.id === 'deleteCategoryModal') {
+        document.getElementById('deleteCategoryModal').classList.remove('show');
+        window.categoryToDelete = null;
+      }
     });
 
     document.getElementById('closeCategoryModal')?.addEventListener('click', () => {
