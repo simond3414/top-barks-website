@@ -28,6 +28,7 @@ const footerLinks = [
       { name: "About us", url: "/about" },
       { name: "Reviews", url: "/reviews" },
       { name: "Contact", url: "/contact" },
+      { name: "Terms & Conditions", url: "/terms" },
       { name: "Resources", url: "/resources" },
     ],
   },
