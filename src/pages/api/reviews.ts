@@ -19,8 +19,7 @@ interface ReviewsData {
   facebookReviews: Review[];
 }
 
-// Admin authentication - simple session-based
-const ADMIN_PASSWORD = 'Mollymoo1';
+// Admin authentication - password from environment variable
 const SESSION_DURATION = 24 * 60 * 60 * 1000; // 24 hours
 
 // Extract Facebook URL from iframe embed code or direct URL

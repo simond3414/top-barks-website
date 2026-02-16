@@ -486,9 +486,9 @@ In Cloudflare Pages dashboard, add these environment variables:
 |----------|-------|-------------|
 | `GOOGLE_PLACES_API_KEY` | Your API key from step 1 | For fetching Google reviews |
 | `PLACE_ID` | `ChIJicTHUo0xeUgRQTRgWtd797A` | Top Barks Google Business ID |
-| `ADMIN_PASSWORD` | `Mollymoo1` | Password for admin interface |
+| `ADMIN_PASSWORD` | (your chosen password) | Password for admin interface |
 
-**To change the admin password**: Edit `ADMIN_PASSWORD` in Cloudflare dashboard.
+**To set the admin password**: Add `ADMIN_PASSWORD` in Cloudflare Dashboard → Pages → Environment Variables.
 
 #### 4. Set Up Cron Job
 
@@ -503,7 +503,7 @@ This will automatically refresh Google reviews daily.
 
 #### 5. First-Time Setup
 
-1. Visit `/admin` and login with password: `Mollymoo1`
+1. Visit `/admin` and login with your `ADMIN_PASSWORD`
 2. Click **"Refresh Google Reviews"** to fetch initial reviews
 3. Add any Facebook reviews manually using the form
 
