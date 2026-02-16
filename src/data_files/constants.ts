@@ -5,10 +5,12 @@ import ogImageSrc from "@images/logos/2026_Logo_V3_with_2006.png";
 export const SITE = {
   title: "Top Barks Dog Training",
   tagline: "Bringing people and their dogs together",
-  description: "Professional dog training and behaviour consultation services in York and North Yorkshire. Expert, reward-based training for all breeds since 2006.",
-  description_short: "Professional dog training in York since 2006. Reward-based, force-free methods.",
+  description: "Expert dog trainer in York. Professional dog training York & North Yorkshire since 2006. Mark Sanderson - qualified dog trainer serving York, Huntington, Haxby and surrounding areas. APDT accredited. Reward-based, force-free methods.",
+  description_short: "Dog trainer York. Professional dog training in York since 2006. Reward-based, force-free methods.",
   url: "https://topbarks.co.uk",
   author: "Mark Sanderson",
+  seoTitle: "Dog Trainer York | Professional Dog Training York | Top Barks",
+  seoTitleHomepage: "Dog Trainer York | Professional Dog Training York & North Yorkshire | Top Barks",
 };
 
 export const SEO = {
@@ -29,15 +31,68 @@ export const SEO = {
       description: SITE.description,
     },
   },
+  localBusiness: {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    name: "Top Barks Dog Training",
+    image: "https://topbarks.co.uk/images/logos/2026_Logo_V3_with_2006.png",
+    description: "Expert dog trainer in York. Professional dog training and behaviour consultation in York and North Yorkshire since 2006.",
+    url: "https://topbarks.co.uk",
+    telephone: "+447932632855",
+    email: "mark@topbarks.co.uk",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "11 Redthorn Drive, Huntington",
+      addressLocality: "York",
+      postalCode: "Y031 9DW",
+      addressCountry: "GB",
+    },
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: "54.0165",
+      longitude: "-1.0759",
+    },
+    openingHoursSpecification: [
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        opens: "09:30",
+        closes: "16:00",
+      },
+    ],
+    areaServed: {
+      "@type": "GeoCircle",
+      geoMidpoint: {
+        "@type": "GeoCoordinates",
+        latitude: "54.0165",
+        longitude: "-1.0759",
+      },
+      geoRadius: "25000",
+    },
+    priceRange: "££",
+    sameAs: [
+      "https://www.facebook.com/topbarks",
+      "https://www.youtube.com/topbarks",
+    ],
+  },
 };
 
 export const OG = {
   locale: "en_GB",
   type: "website",
   url: SITE.url,
-  title: `${SITE.title} - Dog Training & Behaviour Consultation`,
-  description: "Expert dog training and behaviour consultation in York since 2006. Reward-based, force-free methods. APDT accredited member. Individual sessions tailored to you and your dog.",
+  title: "Dog Trainer York | Professional Dog Training York & North Yorkshire | Top Barks",
+  description: "Expert dog trainer in York. Mark Sanderson provides professional dog training in York and North Yorkshire since 2006. Dog trainer York, puppy training York, behaviour problems York. APDT accredited. Serving York, Huntington, Haxby and surrounding areas.",
   image: ogImageSrc,
+};
+
+export const ADDRESS = {
+  streetAddress: "11 Redthorn Drive, Huntington",
+  addressLocality: "York",
+  postalCode: "Y031 9DW",
+  addressCountry: "GB",
+  latitude: "54.0165",
+  longitude: "-1.0759",
 };
 
 export const CONTACT = {
@@ -46,6 +101,16 @@ export const CONTACT = {
   email: "mark@topbarks.co.uk",
   whatsapp: "447932632855",
   whatsappDisplay: "07932 632855",
+};
+
+export const BUSINESS_HOURS = {
+  monday: "09:30-16:00",
+  tuesday: "09:30-16:00",
+  wednesday: "09:30-16:00",
+  thursday: "09:30-16:00",
+  friday: "09:30-16:00",
+  saturday: "Closed",
+  sunday: "Closed",
 };
 
 export const WHATSAPP_MESSAGES = {

@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://topbarks.co.uk/sitemap-index.xml
+
+# Allow all search engines to crawl everything
+# This site uses Astro with static generation
+# Last updated: 2025-02
