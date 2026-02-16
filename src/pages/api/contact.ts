@@ -132,8 +132,19 @@ export const POST: APIRoute = async ({ request, locals }) => {
     // Initialize Resend
     const resend = new Resend(resendApiKey);
     
-    const fromEmail = env.RESEND_FROM_EMAIL || 'noreply@email.snapshothistory.xyz';
-    const toEmail = env.CONTACT_EMAIL || 'mark@topbarks.co.uk';
+    const fromEmail = env.RESEND_FROM_EMAIL;
+    const toEmail = env.CONTACT_EMAIL;
+    
+    if (!fromEmail || !toEmail) {
+      console.error('Email configuration error: RESEND_FROM_EMAIL or CONTACT_EMAIL not set');
+      return new Response(
+        JSON.stringify({ 
+          success: false, 
+          message: 'Server configuration error: email settings not configured' 
+        }), 
+        { status: 500 }
+      );
+    }
     
     // Format service name for display
     const serviceDisplay = service 
