@@ -4,6 +4,11 @@ import { Image } from "astro:assets";
 import showTrainingImg1 from "@images/show_training_1.jpg";
 import showTrainingImg2 from "@images/show_training_2.JPG";
 import showTrainingImg3 from "@images/show_training_3.jpg";
+import clumberImg from "@images/breeds/clumber_breed.jpeg";
+import fieldImg from "@images/breeds/field_breed.jpg";
+import spinoneImg from "@images/breeds/spinone_breed.jpg";
+import cockerImg from "@images/breeds/cocker_breed.jpeg";
+import braccoImg from "@images/breeds/bracco_breed.jpg";
 import { SITE } from "@data/constants";
 
 const pageTitle = `Show Training | ${SITE.title}`;
@@ -171,7 +176,7 @@ const pageTitle = `Show Training | ${SITE.title}`;
           </button>
         </div>
         <div class="p-6">
-          <img src="https://images.unsplash.com/photo-1601758124096-1fd661873b80?w=600&h=400&fit=crop" alt="Clumber Spaniel" class="mb-4 h-48 w-full rounded-lg object-cover" />
+          <img src={clumberImg.src} alt="Clumber Spaniel" class="mb-4 h-48 w-full rounded-lg object-cover" />
           <h3 class="text-xl font-bold text-forest-800 dark:text-forest-200">Clumber Spaniel</h3>
           <p class="mt-2 text-earth-700 dark:text-earth-300">
             The largest of all flushing spaniels. Dignified, gentle, and heavy-set with a white coat featuring lemon or orange markings. Known for their calm demeanor and steady work in the field.
@@ -195,7 +200,7 @@ const pageTitle = `Show Training | ${SITE.title}`;
           </button>
         </div>
         <div class="p-6">
-          <img src="https://images.unsplash.com/photo-1552053831-71594a27632d?w=600&h=400&fit=crop" alt="Field Spaniel" class="mb-4 h-48 w-full rounded-lg object-cover" />
+          <img src={fieldImg.src} alt="Field Spaniel" class="mb-4 h-48 w-full rounded-lg object-cover" />
           <h3 class="text-xl font-bold text-forest-800 dark:text-forest-200">Field Spaniel</h3>
           <p class="mt-2 text-earth-700 dark:text-earth-300">
             A rare, sweet-natured breed similar to the Cocker but larger. Traditionally used for flushing and retrieving game, they have glossy coats and a docile temperament.
@@ -219,7 +224,7 @@ const pageTitle = `Show Training | ${SITE.title}`;
           </button>
         </div>
         <div class="p-6">
-          <img src="https://images.unsplash.com/photo-1568572933382-74d440642117?w=600&h=400&fit=crop" alt="Italian Spinone" class="mb-4 h-48 w-full rounded-lg object-cover" />
+          <img src={spinoneImg.src} alt="Italian Spinone" class="mb-4 h-48 w-full rounded-lg object-cover" />
           <h3 class="text-xl font-bold text-forest-800 dark:text-forest-200">Italian Spinone</h3>
           <p class="mt-2 text-earth-700 dark:text-earth-300">
             An ancient Italian gundog with great stamina. Strong, all-purpose hunter with a distinctive coarse coat and methodical hunting style. Hugely popular in Italy.
@@ -243,7 +248,7 @@ const pageTitle = `Show Training | ${SITE.title}`;
           </button>
         </div>
         <div class="p-6">
-          <img src="https://images.unsplash.com/photo-1596492784531-6e6eb5ea2809?w=600&h=400&fit=crop" alt="Cocker Spaniel" class="mb-4 h-48 w-full rounded-lg object-cover" />
+          <img src={cockerImg.src} alt="Cocker Spaniel" class="mb-4 h-48 w-full rounded-lg object-cover" />
           <h3 class="text-xl font-bold text-forest-800 dark:text-forest-200">Cocker Spaniel</h3>
           <p class="mt-2 text-earth-700 dark:text-earth-300">
             The "merry cocker" - popular family pet and gundog bred originally to hunt woodcock. Known for happy temperament and ever-wagging tail.
@@ -267,7 +272,7 @@ const pageTitle = `Show Training | ${SITE.title}`;
           </button>
         </div>
         <div class="p-6">
-          <img src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=600&h=400&fit=crop" alt="Bracco Italiano" class="mb-4 h-48 w-full rounded-lg object-cover" />
+          <img src={braccoImg.src} alt="Bracco Italiano" class="mb-4 h-48 w-full rounded-lg object-cover" />
           <h3 class="text-xl font-bold text-forest-800 dark:text-forest-200">Bracco Italiano</h3>
           <p class="mt-2 text-earth-700 dark:text-earth-300">
             Ancient Italian pointer breed. Harmoniously built with endurance and power. Gentle demeanor with enthusiastic hunting spirit and a distinctive trotting gait.
