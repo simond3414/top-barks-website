@@ -16,11 +16,12 @@ const crafted: string = "Crafted by";
   <div
     class="mx-auto w-full max-w-[85rem] px-4 py-10 sm:px-6 lg:px-16 lg:pt-20 2xl:max-w-(--breakpoint-2xl)"
   >
-    <div class="grid grid-cols-2 gap-6 md:grid-cols-4 lg:grid-cols-5">
-      <div class="col-span-full lg:col-span-1">
-        <!-- Brand Logo -->
-        <BrandLogo variant="full" class="w-40" />
-      </div>
+    <!-- Brand Logo - Full Width -->
+    <div class="mb-10 flex justify-center lg:mb-12">
+      <BrandLogo variant="full" class="h-auto w-56 sm:w-64 lg:w-72" />
+    </div>
+
+    <div class="grid grid-cols-2 gap-6 md:grid-cols-4">
       <!-- Services Section -->
       <div class="col-span-1">
         <h3 class="font-bold text-neutral-800 dark:text-neutral-200">
