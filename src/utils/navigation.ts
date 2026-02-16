@@ -37,6 +37,7 @@ const socialLinks = {
   facebook: "https://www.facebook.com/topbarks",
   x: "https://twitter.com/topbarks",
   instagram: "https://www.instagram.com/topbarks",
+  whatsapp: "https://wa.me/447932632855?text=Hi%20Mark%2C%20I'm%20interested%20in%20your%20dog%20training%20services",
 };
 
 export default {

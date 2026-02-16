@@ -40,6 +40,27 @@ export const OG = {
   image: ogImageSrc,
 };
 
+export const CONTACT = {
+  phone: "07932 632855",
+  landline: "01904 629186",
+  email: "mark@topbarks.co.uk",
+  whatsapp: "447932632855",
+  whatsappDisplay: "07932 632855",
+};
+
+export const WHATSAPP_MESSAGES = {
+  default: "Hi Mark, I'm interested in your dog training services",
+  homepage: "Hi Mark, I'm interested in learning more about your dog training services",
+  puppy: "Hi Mark, I'm interested in puppy training for my new dog",
+  adolescent: "Hi Mark, I'm interested in adolescent training for my teenage dog",
+  dogTraining: "Hi Mark, I'm interested in dog training sessions",
+  gundog: "Hi Mark, I'm interested in gundog training",
+  behaviour: "Hi Mark, I need help with some behaviour issues with my dog",
+  show: "Hi Mark, I'm interested in show training for my dog",
+  walks: "Hi Mark, I'm interested in training walks for my puppy",
+  preplanning: "Hi Mark, I'm interested in puppy pre-planning advice",
+};
+
 export const partnersData = [
     {
         icon: `<svg
