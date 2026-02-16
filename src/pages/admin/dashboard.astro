@@ -76,6 +76,13 @@ export const prerender = false;
     .api-status.ok { background: #e8f5e9; color: #3d6b3d; }
     .api-status.error { background: #fee; color: #c33; }
     .api-status.warning { background: #fef3c7; color: #92400e; }
+    .resource-item { cursor: move; transition: all 0.2s; }
+    .resource-item:hover { background: #f5f5f5; }
+    .resource-item.drag-over { border: 2px dashed #3d6b3d; background: #f0f7f0; }
+    .category-section { transition: all 0.3s; }
+    .category-section:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    #dropZone { transition: all 0.3s; }
+    #dropZone:hover { border-color: #3d6b3d; background: #f0f7f0; }
   </style>
 </head>
 <body>
@@ -148,7 +155,7 @@ export const prerender = false;
         </div>
         <div class="stat-card">
           <h3>Categories</h3>
-          <div class="number" id="categoriesCount">7</div>
+          <div class="number" id="categoriesCount">-</div>
         </div>
         <div class="stat-card">
           <h3>Storage Used</h3>
@@ -167,8 +174,31 @@ export const prerender = false;
             <span id="resourcesSpinner"></span>
             Refresh Resources List
           </button>
+          <button class="btn btn-secondary" id="uploadResourceBtn">
+            + Upload New Resource
+          </button>
+          <button class="btn btn-secondary" id="manageCategoriesBtn">
+            Manage Categories
+          </button>
         </div>
         <div id="resourcesStatus" class="api-status" style="display: none;"></div>
+      </div>
+
+      <!-- Upload Area (hidden by default) -->
+      <div id="uploadArea" class="actions" style="display: none;">
+        <h3>Upload New Resource</h3>
+        <div id="dropZone" style="border: 2px dashed #ccc; border-radius: 8px; padding: 40px; text-align: center; background: #f9f9f9; margin: 16px 0;">
+          <p style="margin: 0; color: #666;">Drag & drop PDF files here or click to browse</p>
+          <input type="file" id="fileInput" accept=".pdf" multiple style="display: none;">
+          <button class="btn btn-secondary" style="margin-top: 12px;" onclick="document.getElementById('fileInput').click()">Browse Files</button>
+        </div>
+        <div id="uploadPreview" style="display: none;">
+          <div id="uploadFilesList" style="margin: 16px 0;"></div>
+          <div style="display: flex; gap: 12px; margin-top: 16px;">
+            <button class="btn btn-secondary" id="cancelUploadBtn">Cancel</button>
+            <button class="btn btn-primary" id="confirmUploadBtn">Upload Files</button>
+          </div>
+        </div>
       </div>
 
       <div class="reviews-section">
@@ -177,6 +207,44 @@ export const prerender = false;
         <div id="resourcesList">
           <div class="no-reviews">Loading resources...</div>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Category Management Modal -->
+  <div class="modal-overlay" id="categoryModal">
+    <div class="modal">
+      <h2>Manage Categories</h2>
+      <div id="categoryList" style="margin: 20px 0; max-height: 300px; overflow-y: auto;"></div>
+      <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #e0e0e0;">
+        <h3>Add New Category</h3>
+        <div style="display: flex; gap: 8px; margin-top: 8px;">
+          <input type="text" id="newCategoryInput" placeholder="Category name" style="flex: 1; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+          <button class="btn btn-primary" id="addCategoryBtn">Add</button>
+        </div>
+      </div>
+      <div class="modal-actions" style="margin-top: 24px;">
+        <button type="button" class="btn btn-secondary" id="closeCategoryModal">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Resource Modal -->
+  <div class="modal-overlay" id="editResourceModal">
+    <div class="modal">
+      <h2>Edit Resource</h2>
+      <input type="hidden" id="editResourceFilename">
+      <div style="margin-bottom: 16px;">
+        <label style="display: block; margin-bottom: 4px; font-weight: 500;">Display Name</label>
+        <input type="text" id="editResourceDisplayName" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+      </div>
+      <div style="margin-bottom: 16px;">
+        <label style="display: block; margin-bottom: 4px; font-weight: 500;">Category</label>
+        <select id="editResourceCategory" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;"></select>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-secondary" id="cancelEditResource">Cancel</button>
+        <button type="button" class="btn btn-primary" id="saveEditResource">Save Changes</button>
       </div>
     </div>
   </div>
@@ -704,11 +772,15 @@ export const prerender = false;
 
     // Resources management
     let currentResources = [];
+    let currentCategories = [];
+    let selectedFiles = [];
+    let dragSrcEl = null;
 
     async function loadResources() {
       const statusDiv = document.getElementById('resourcesStatus');
       const listDiv = document.getElementById('resourcesList');
       const lastUpdatedDiv = document.getElementById('resourcesLastUpdated');
+      const categoriesCountEl = document.getElementById('categoriesCount');
 
       if (statusDiv) {
         statusDiv.style.display = 'block';
@@ -722,6 +794,13 @@ export const prerender = false;
 
         if (data.success) {
           currentResources = data.files;
+          currentCategories = data.categories || [];
+          
+          // Update categories count
+          if (categoriesCountEl) {
+            categoriesCountEl.textContent = currentCategories.length;
+          }
+          
           displayResources(data.byCategory);
 
           // Update stats
@@ -772,7 +851,7 @@ export const prerender = false;
       if (!container) return;
 
       if (!byCategory || Object.keys(byCategory).length === 0) {
-        container.innerHTML = '<div class="no-reviews">No resources found. Please upload PDFs to the R2 bucket.</div>';
+        container.innerHTML = '<div class="no-reviews">No resources found. Click "Upload New Resource" to add files.</div>';
         return;
       }
 
@@ -780,26 +859,31 @@ export const prerender = false;
 
       for (const [category, files] of Object.entries(byCategory)) {
         html += `
-          <div style="margin-bottom: 32px;">
-            <h3 style="color: #3d6b3d; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid #e0e0e0;">
-              ${escapeHtml(category)}
-            </h3>
-            <div style="display: grid; gap: 12px;">
+          <div class="category-section" data-category="${escapeHtml(category)}" style="margin-bottom: 32px; background: #f9f9f9; border-radius: 8px; padding: 16px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid #3d6b3d;">
+              <h3 style="color: #3d6b3d; margin: 0;">${escapeHtml(category)}</h3>
+              <div style="display: flex; gap: 8px;">
+                <button class="btn btn-secondary" style="padding: 4px 12px; font-size: 12px;" onclick="renameCategory('${escapeHtml(category)}')">Rename</button>
+              </div>
+            </div>
+            <div class="resource-list" style="display: grid; gap: 12px;" data-category="${escapeHtml(category)}">
         `;
 
         for (const file of files) {
           html += `
-            <div class="review-card" style="display: flex; justify-content: space-between; align-items: center;">
-              <div>
-                <div style="font-weight: 600; color: #333; margin-bottom: 4px;">${escapeHtml(file.displayName)}</div>
-                <div style="font-size: 12px; color: #666;">${escapeHtml(file.filename)} • ${escapeHtml(file.size || 'Unknown')}</div>
+            <div class="resource-item review-card" draggable="true" data-filename="${escapeHtml(file.filename)}" style="display: flex; justify-content: space-between; align-items: center; cursor: move;">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="color: #999; cursor: move;">⋮⋮</span>
+                <div>
+                  <div style="font-weight: 600; color: #333; margin-bottom: 4px;">${escapeHtml(file.displayName)}</div>
+                  <div style="font-size: 12px; color: #666;">${escapeHtml(file.filename)} • ${escapeHtml(file.size || 'Unknown')}</div>
+                </div>
               </div>
-              <a href="/api/resources?file=${encodeURIComponent(file.filename)}" 
-                 target="_blank" 
-                 class="btn btn-primary" 
-                 style="text-decoration: none; padding: 8px 16px; font-size: 13px;">
-                Download
-              </a>
+              <div style="display: flex; gap: 8px;">
+                <button class="btn btn-secondary" style="padding: 4px 12px; font-size: 12px;" onclick="editResource('${escapeHtml(file.filename)}')">Edit</button>
+                <button class="btn btn-warning delete-btn" style="padding: 4px 12px; font-size: 12px;" onclick="deleteResource('${escapeHtml(file.filename)}')">Delete</button>
+                <a href="/api/resources?file=${encodeURIComponent(file.filename)}" target="_blank" class="btn btn-primary" style="text-decoration: none; padding: 4px 12px; font-size: 12px;">Download</a>
+              </div>
             </div>
           `;
         }
@@ -808,6 +892,81 @@ export const prerender = false;
       }
 
       container.innerHTML = html;
+      
+      // Add drag and drop event listeners
+      setupDragAndDrop();
+    }
+
+    function setupDragAndDrop() {
+      const items = document.querySelectorAll('.resource-item');
+      items.forEach(item => {
+        item.addEventListener('dragstart', handleDragStart);
+        item.addEventListener('dragend', handleDragEnd);
+        item.addEventListener('dragover', handleDragOver);
+        item.addEventListener('dragenter', handleDragEnter);
+        item.addEventListener('dragleave', handleDragLeave);
+        item.addEventListener('drop', handleDrop);
+      });
+    }
+
+    function handleDragStart(e) {
+      dragSrcEl = this;
+      e.dataTransfer.effectAllowed = 'move';
+      e.dataTransfer.setData('text/html', this.innerHTML);
+      this.style.opacity = '0.4';
+    }
+
+    function handleDragEnd(e) {
+      this.style.opacity = '1';
+      const items = document.querySelectorAll('.resource-item');
+      items.forEach(item => item.classList.remove('drag-over'));
+    }
+
+    function handleDragOver(e) {
+      if (e.preventDefault) e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      return false;
+    }
+
+    function handleDragEnter(e) {
+      this.classList.add('drag-over');
+    }
+
+    function handleDragLeave(e) {
+      this.classList.remove('drag-over');
+    }
+
+    async function handleDrop(e) {
+      if (e.stopPropagation) e.stopPropagation();
+      
+      if (dragSrcEl !== this) {
+        const category = this.closest('.resource-list')?.getAttribute('data-category');
+        const newOrder = Array.from(this.closest('.resource-list')?.children || [])
+          .map((child, index) => ({
+            filename: child.getAttribute('data-filename'),
+            order: index
+          }));
+        
+        // Save new order
+        try {
+          await fetch('/api/resources', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              action: 'reorder',
+              category,
+              files: newOrder.map(item => item.filename)
+            })
+          });
+          showMessage('Order updated', 'success');
+        } catch (error) {
+          showMessage('Error updating order', 'error');
+        }
+        
+        await loadResources();
+      }
+      
+      return false;
     }
 
     document.getElementById('refreshResourcesBtn')?.addEventListener('click', async function() {
@@ -822,6 +981,326 @@ export const prerender = false;
       if (btn) btn.disabled = false;
       if (spinner) spinner.className = '';
     });
+
+    // Upload functionality
+    document.getElementById('uploadResourceBtn')?.addEventListener('click', () => {
+      const uploadArea = document.getElementById('uploadArea');
+      if (uploadArea) {
+        uploadArea.style.display = uploadArea.style.display === 'none' ? 'block' : 'none';
+      }
+    });
+
+    document.getElementById('cancelUploadBtn')?.addEventListener('click', () => {
+      const uploadArea = document.getElementById('uploadArea');
+      const uploadPreview = document.getElementById('uploadPreview');
+      const fileInput = document.getElementById('fileInput');
+      
+      if (uploadArea) uploadArea.style.display = 'none';
+      if (uploadPreview) uploadPreview.style.display = 'none';
+      if (fileInput) fileInput.value = '';
+      selectedFiles = [];
+    });
+
+    // Drag and drop for upload
+    const dropZone = document.getElementById('dropZone');
+    const fileInput = document.getElementById('fileInput');
+
+    if (dropZone) {
+      dropZone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        dropZone.style.borderColor = '#3d6b3d';
+        dropZone.style.background = '#f0f7f0';
+      });
+
+      dropZone.addEventListener('dragleave', (e) => {
+        e.preventDefault();
+        dropZone.style.borderColor = '#ccc';
+        dropZone.style.background = '#f9f9f9';
+      });
+
+      dropZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropZone.style.borderColor = '#ccc';
+        dropZone.style.background = '#f9f9f9';
+        
+        const files = e.dataTransfer?.files;
+        if (files) handleFiles(files);
+      });
+
+      dropZone.addEventListener('click', () => {
+        fileInput?.click();
+      });
+    }
+
+    if (fileInput) {
+      fileInput.addEventListener('change', (e) => {
+        const files = e.target?.files;
+        if (files) handleFiles(files);
+      });
+    }
+
+    /**
+     * @param {FileList} files
+     */
+    function handleFiles(files) {
+      selectedFiles = Array.from(files).filter(f => f.name.toLowerCase().endsWith('.pdf'));
+      
+      const uploadPreview = document.getElementById('uploadPreview');
+      const uploadFilesList = document.getElementById('uploadFilesList');
+      
+      if (uploadFilesList) {
+        let html = '<h4>Files to upload:</h4>';
+        
+        // Category selector
+        html += '<div style="margin-bottom: 16px;"><label style="display: block; margin-bottom: 4px; font-weight: 500;">Select Category:</label>';
+        html += '<select id="uploadCategory" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">';
+        html += '<option value="">-- Select Category --</option>';
+        currentCategories.forEach(cat => {
+          html += `<option value="${escapeHtml(cat)}">${escapeHtml(cat)}</option>`;
+        });
+        html += '</select></div>';
+        
+        // Files list
+        html += '<ul style="list-style: none; padding: 0; margin: 0;">';
+        selectedFiles.forEach((file, index) => {
+          html += `
+            <li style="padding: 8px; background: #f5f5f5; border-radius: 4px; margin-bottom: 4px; display: flex; justify-content: space-between; align-items: center;">
+              <span>${escapeHtml(file.name)} (${(file.size / 1024 / 1024).toFixed(2)} MB)</span>
+              <button onclick="removeFile(${index})" style="background: none; border: none; color: #c33; cursor: pointer;">✕</button>
+            </li>
+          `;
+        });
+        html += '</ul>';
+        
+        uploadFilesList.innerHTML = html;
+      }
+      
+      if (uploadPreview) uploadPreview.style.display = 'block';
+    }
+
+    window.removeFile = (index) => {
+      selectedFiles.splice(index, 1);
+      if (selectedFiles.length === 0) {
+        const uploadPreview = document.getElementById('uploadPreview');
+        if (uploadPreview) uploadPreview.style.display = 'none';
+      } else {
+        handleFiles(selectedFiles);
+      }
+    };
+
+    document.getElementById('confirmUploadBtn')?.addEventListener('click', async () => {
+      const categorySelect = document.getElementById('uploadCategory');
+      const category = categorySelect?.value || 'Uncategorized';
+      
+      if (selectedFiles.length === 0) {
+        showMessage('No files selected', 'error');
+        return;
+      }
+
+      const btn = document.getElementById('confirmUploadBtn');
+      if (btn) {
+        btn.disabled = true;
+        btn.textContent = 'Uploading...';
+      }
+
+      try {
+        for (const file of selectedFiles) {
+          const formData = new FormData();
+          formData.append('file', file);
+          formData.append('category', category);
+          formData.append('displayName', file.name.replace('.pdf', ''));
+
+          const response = await fetch('/api/resources', {
+            method: 'POST',
+            body: formData
+          });
+
+          const data = await response.json();
+          if (!data.success) {
+            throw new Error(data.message || 'Upload failed');
+          }
+        }
+
+        showMessage(`${selectedFiles.length} file(s) uploaded successfully`, 'success');
+        
+        // Reset upload area
+        const uploadArea = document.getElementById('uploadArea');
+        const uploadPreview = document.getElementById('uploadPreview');
+        const fileInput = document.getElementById('fileInput');
+        
+        if (uploadArea) uploadArea.style.display = 'none';
+        if (uploadPreview) uploadPreview.style.display = 'none';
+        if (fileInput) fileInput.value = '';
+        selectedFiles = [];
+        
+        await loadResources();
+      } catch (error) {
+        showMessage('Error uploading files: ' + error.message, 'error');
+      } finally {
+        if (btn) {
+          btn.disabled = false;
+          btn.textContent = 'Upload Files';
+        }
+      }
+    });
+
+    // Category management
+    document.getElementById('manageCategoriesBtn')?.addEventListener('click', () => {
+      const modal = document.getElementById('categoryModal');
+      const listDiv = document.getElementById('categoryList');
+      
+      if (listDiv) {
+        let html = '';
+        currentCategories.forEach(cat => {
+          html += `
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px; background: #f5f5f5; border-radius: 4px; margin-bottom: 8px;">
+              <span>${escapeHtml(cat)}</span>
+              <button onclick="renameCategoryPrompt('${escapeHtml(cat)}')" style="background: none; border: none; color: #3d6b3d; cursor: pointer; font-size: 12px;">Rename</button>
+            </div>
+          `;
+        });
+        listDiv.innerHTML = html;
+      }
+      
+      if (modal) modal.classList.add('show');
+    });
+
+    document.getElementById('closeCategoryModal')?.addEventListener('click', () => {
+      const modal = document.getElementById('categoryModal');
+      if (modal) modal.classList.remove('show');
+    });
+
+    document.getElementById('addCategoryBtn')?.addEventListener('click', async () => {
+      const input = document.getElementById('newCategoryInput');
+      const category = input?.value?.trim();
+      
+      if (!category) {
+        showMessage('Please enter a category name', 'error');
+        return;
+      }
+
+      try {
+        const response = await fetch('/api/resources', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'create_category', category })
+        });
+
+        const data = await response.json();
+        if (data.success) {
+          showMessage('Category created', 'success');
+          input.value = '';
+          currentCategories = data.categories;
+          document.getElementById('manageCategoriesBtn')?.click();
+        } else {
+          showMessage(data.message || 'Failed to create category', 'error');
+        }
+      } catch (error) {
+        showMessage('Error creating category', 'error');
+      }
+    });
+
+    window.renameCategoryPrompt = async (oldName) => {
+      const newName = prompt('Enter new category name:', oldName);
+      if (!newName || newName === oldName) return;
+
+      try {
+        const response = await fetch('/api/resources', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'rename_category', oldName, newName })
+        });
+
+        const data = await response.json();
+        if (data.success) {
+          showMessage('Category renamed', 'success');
+          currentCategories = data.categories;
+          await loadResources();
+          document.getElementById('manageCategoriesBtn')?.click();
+        } else {
+          showMessage(data.message || 'Failed to rename category', 'error');
+        }
+      } catch (error) {
+        showMessage('Error renaming category', 'error');
+      }
+    };
+
+    window.renameCategory = (oldName) => {
+      renameCategoryPrompt(oldName);
+    };
+
+    window.editResource = (filename) => {
+      const file = currentResources.find(r => r.filename === filename);
+      if (!file) return;
+
+      document.getElementById('editResourceFilename').value = filename;
+      document.getElementById('editResourceDisplayName').value = file.displayName;
+      
+      const categorySelect = document.getElementById('editResourceCategory');
+      categorySelect.innerHTML = currentCategories.map(cat => 
+        `<option value="${escapeHtml(cat)}" ${cat === file.category ? 'selected' : ''}>${escapeHtml(cat)}</option>`
+      ).join('');
+      
+      const modal = document.getElementById('editResourceModal');
+      if (modal) modal.classList.add('show');
+    };
+
+    document.getElementById('cancelEditResource')?.addEventListener('click', () => {
+      const modal = document.getElementById('editResourceModal');
+      if (modal) modal.classList.remove('show');
+    });
+
+    document.getElementById('saveEditResource')?.addEventListener('click', async () => {
+      const filename = document.getElementById('editResourceFilename').value;
+      const displayName = document.getElementById('editResourceDisplayName').value;
+      const category = document.getElementById('editResourceCategory').value;
+
+      try {
+        const response = await fetch('/api/resources', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            action: 'update_file',
+            filename,
+            displayName,
+            category
+          })
+        });
+
+        const data = await response.json();
+        if (data.success) {
+          showMessage('Resource updated', 'success');
+          document.getElementById('editResourceModal').classList.remove('show');
+          await loadResources();
+        } else {
+          showMessage(data.message || 'Failed to update', 'error');
+        }
+      } catch (error) {
+        showMessage('Error updating resource', 'error');
+      }
+    });
+
+    window.deleteResource = async (filename) => {
+      if (!confirm(`Are you sure you want to delete "${filename}"?\n\nThis cannot be undone.`)) return;
+
+      try {
+        const response = await fetch('/api/resources', {
+          method: 'DELETE',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ filename })
+        });
+
+        const data = await response.json();
+        if (data.success) {
+          showMessage('Resource deleted', 'success');
+          await loadResources();
+        } else {
+          showMessage(data.message || 'Failed to delete', 'error');
+        }
+      } catch (error) {
+        showMessage('Error deleting resource', 'error');
+      }
+    };
 
     /**
      * @param {string} text
