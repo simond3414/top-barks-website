@@ -27,7 +27,7 @@ interface Props {
 }
 ---
 
-<html lang={lang} class="scrollbar-hide lenis lenis-smooth scroll-pt-16">
+<html lang={lang} class="lenis lenis-smooth scroll-pt-16">
   <head>
     {/* Adding metadata to the HTML document */}
     <Meta
@@ -88,14 +88,15 @@ interface Props {
       import "preline/preline.js";
     </script>
     <style>
-      /* CSS rules for the page scrollbar */
-      .scrollbar-hide::-webkit-scrollbar {
-        display: none;
-      }
-
-      .scrollbar-hide {
-        -ms-overflow-style: none;
-        scrollbar-width: none;
+      /* Hide scrollbar on mobile (screens narrower than 768px) */
+      @media (max-width: 767px) {
+        html::-webkit-scrollbar {
+          display: none;
+        }
+        html {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
       }
     </style>
   </body>
